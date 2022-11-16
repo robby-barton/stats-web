@@ -4,13 +4,13 @@ import Title from '../../../components/title';
 import ResultTable from '../../../components/resultTable';
 import Error from 'next/error';
 import utilStyles from '../../../styles/utils.module.css';
-import { checkRanking, getRanking } from '../../../lib/util';
+import { availableRankings, checkRanking, getRanking } from '../../../lib/util';
 
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 
-const Week = props => {
-  if (!props.results) {
+export default function Week({ rankList, results, division, year, week }) {
+  if (!results) {
     const router = useRouter();
     useEffect(() => {
       router.push('/')
@@ -18,11 +18,11 @@ const Week = props => {
     return null;
   }
 
-  var week = 'Week ' + props.week
-  if (props.week === 'Final') {
-    week = 'Final'
+  var weekTitle = 'Week ' + week
+  if (week === 'Final') {
+    weekTitle = 'Final'
   }
-  const title = [props.division, props.year, week].join(' ')
+  const title = [division, year, weekTitle].join(' ')
 
   return (
     <Layout>
@@ -30,7 +30,13 @@ const Week = props => {
       <section className={utilStyles.headingXl}>
         <p>{title}</p>
       </section>
-      <ResultTable teamList={props.results} />
+      <ResultTable 
+        rankList={rankList}
+        teamList={results}
+        division={division}
+        year={year}
+        week={week}
+      />
     </Layout>
   )
 }
@@ -53,8 +59,10 @@ export async function getServerSideProps({ params, res }) {
 
   const results = await getRanking(division.toLowerCase() === 'fbs' ? true : false, year, week)
 
+  const avail = await availableRankings()
   return {
     props: {
+      rankList: avail,
       division: division.toUpperCase(),
       year: year,
       week: week.toLowerCase() === 'final' ? 'Final' : week,
@@ -62,5 +70,3 @@ export async function getServerSideProps({ params, res }) {
     }
   }
 }
-
-export default Week;

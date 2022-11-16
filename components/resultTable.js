@@ -24,6 +24,7 @@ import {
   rankItem,
   compareItems,
 } from '@tanstack/match-sorter-utils'
+import Selector from './selector';
 
 const fuzzyFilter = (row, columnId, value, addMeta) => {
   const itemRank = rankItem(row.getValue(columnId), value)
@@ -94,7 +95,7 @@ const columns = [
   }),
 ]
 
-export default function ResultTable({ teamList }) {
+export default function ResultTable({ rankList, teamList, division, year, week }) {
   const [globalFilter, setGlobalFilter] = React.useState('')
 
   var data = []
@@ -125,6 +126,7 @@ export default function ResultTable({ teamList }) {
   })
   return (
     <>
+      <Selector rankList={rankList} division={division} year={year} week={week} />
       <table>
         <thead>
           {table.getHeaderGroups().map(headerGroup => (

@@ -5,14 +5,20 @@ import ResultTable from '../components/resultTable';
 import utilStyles from '../styles/utils.module.css';
 import { availableRankings, getRanking } from '../lib/util';
 
-export default function Home({ fbs }) {
+export default function Home({ rankList, fbs, year, week }) {
   return (
     <Layout home>
       <Title />
       <section className={utilStyles.heading2Xl}>
         <p>Robby's Ranking</p>
       </section>
-      <ResultTable teamList={fbs} />
+      <ResultTable 
+        rankList={rankList}
+        teamList={fbs}
+        division={'fbs'}
+        year={year}
+        week={week}
+      />
     </Layout>
   );
 }
@@ -38,7 +44,10 @@ export async function getServerSideProps({ res }) {
 
   return {
     props: {
+      rankList: avail,
       fbs: fbs,
+      year: year,
+      week: currYear.postseason ? 'final' : currYear.weeks.toString()
     },
   }
 }
