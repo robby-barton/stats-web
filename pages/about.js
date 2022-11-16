@@ -1,12 +1,13 @@
 import Head from 'next/head';
-import Layout from '../components/layout';
-import Title from '../components/title';
+import Layout, { siteTitle } from '../components/layout';
 import utilStyles from '../styles/utils.module.css';
 
 export default function Home() {
   return (
-    <Layout home>
-      <Title />
+    <Layout>
+      <Head>
+        <title>{siteTitle} - About</title>
+      </Head>
       <section className={utilStyles.headingMd}>
         <p>Robby's Ranking</p>
         <p>

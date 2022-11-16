@@ -3,7 +3,6 @@ import styles from './layout.module.css';
 import utilStyles from '../styles/utils.module.css';
 import Link from 'next/link';
 
-const name = 'Robby Barton';
 export const siteTitle = 'Robby\'s Ranking';
 
 export default function Layout({ children, home }) {

@@ -1,5 +1,6 @@
 import Head from 'next/head';
-import Layout, { siteTitle } from '../../../components/layout';
+import Layout from '../../../components/layout';
+import Title from '../../../components/title';
 import ResultList from '../../../components/resultList';
 import Error from 'next/error';
 import prisma from '../../../lib/prisma';
@@ -18,9 +19,7 @@ const Week = props => {
 
   return (
     <Layout>
-      <Head>
-        <title>{title}</title>
-      </Head>
+      <Title title={title} />
       <section className={utilStyles.headingXl}>
         <p>{title}</p>
       </section>
