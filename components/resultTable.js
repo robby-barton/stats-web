@@ -1,44 +1,101 @@
-import React, { useMemo, useState, useEffect } from 'react';
-import { useTable } from 'react-table';
+import React from 'react';
+import {
+  Column,
+  Table,
+  createColumnHelper,
+  useReactTable,
+  ColumnFiltersState,
+  getCoreRowModel,
+  getFilteredRowModel,
+  getFacetedRowModel,
+  getFacetedUniqueValues,
+  getFacetedMinMaxValues,
+  getPaginationRowModel,
+  sortingFns,
+  getSortedRowModel,
+  FilterFn,
+  SortingFn,
+  ColumnDef,
+  flexRender,
+  FilterFns,
+} from '@tanstack/react-table'
+import {
+  RankingInfo,
+  rankItem,
+  compareItems,
+} from '@tanstack/match-sorter-utils'
+
+const fuzzyFilter = (row, columnId, value, addMeta) => {
+  const itemRank = rankItem(row.getValue(columnId), value)
+
+  addMeta({
+    itemRank,
+  })
+
+  return itemRank.passed
+}
+
+function DebouncedInput({ value: initialValue, onChange, debounce = 500, ...props }) {
+  const [value, setValue] = React.useState(initialValue)
+  React.useEffect(() => {
+    setValue(initialValue)
+  }, [initialValue])
+
+  React.useEffect(() => {
+    const timeout = setTimeout(() => {
+      onChange(value)
+    }, debounce)
+
+    return () => clearTimeout(timeout)
+  }, [value])
+
+  return (
+    <input {...props} value={value} onChange={e => setValue(e.target.value)} />
+  )
+}
+
+const columnHelper = createColumnHelper()
+
+const columns = [
+  columnHelper.accessor('final_rank', {
+    header: () => 'Rank',
+    cell: info => info.getValue(),
+    footer: info => info.column.id,
+  }),
+  columnHelper.accessor('name', {
+    header: () => 'Team',
+    cell: info => info.getValue(),
+    footer: info => info.column.id,
+  }),
+  columnHelper.accessor('record', {
+    header: () => 'Record',
+    cell: info => info.getValue(),
+    footer: info => info.column.id,
+  }),
+  columnHelper.accessor('srs_rank', {
+    header: () => 'SRS',
+    cell: info => info.getValue(),
+    footer: info => info.column.id,
+  }),
+  columnHelper.accessor('sos_rank', {
+    header: () => 'SOS',
+    cell: info => info.getValue(),
+    footer: info => info.column.id,
+  }),
+  columnHelper.accessor('sov_rank', {
+    header: () => 'SOV',
+    cell: info => info.getValue(),
+    footer: info => info.column.id,
+  }),
+  columnHelper.accessor('final_raw', {
+    header: () => 'Final',
+    cell: info => info.getValue().toFixed(5),
+    footer: info => info.column.id,
+  }),
+]
 
 export default function ResultTable({ teamList }) {
-  const columns = useMemo(() => [
-    {
-      Header: "Rank",
-      accessor: "final_rank",
-    },
-    {
-      Header: "Team",
-      accessor: "name",
-    },
-    {
-      Header: "Record",
-      accessor: "record",
-    },
-    {
-      Header: "SRS",
-      accessor: "srs_rank",
-    },
-    {
-      Header: "SOS",
-      accessor: "sos_rank",
-    },
-    {
-      Header: "SOV",
-      accessor: "sov_rank",
-    },
-    {
-      Header: "Final",
-      accessor: "final_raw",
-      Cell: ({ cell: { value } }) => {
-        return (
-          <>
-            {value.toFixed(5)}
-          </>
-        )
-      }
-    },
-  ])
+  const [globalFilter, setGlobalFilter] = React.useState('')
 
   var data = []
   for (var i = 0; i < teamList.length; i++) {
@@ -52,39 +109,51 @@ export default function ResultTable({ teamList }) {
       final_raw: teamList[i].final_raw,
     })
   }
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    rows,
-    prepareRow
-  } = useTable({
+
+  const table = useReactTable({
+    data,
     columns,
-    data
+    filterFns: {
+      fuzzy: fuzzyFilter,
+    },
+    state: {
+      globalFilter,
+    },
+    onGlobalFilterChange: setGlobalFilter,
+    getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
   })
   return (
-    <table {...getTableProps()}>
-      <thead>
-        {headerGroups.map(headerGroup => (
-          <tr {...headerGroup.getHeaderGroupProps()}>
-            {headerGroup.headers.map(column => (
-              <th {...column.getHeaderProps()}>{column.render("Header")}</th>
+    <>
+      <table>
+        <thead>
+          {table.getHeaderGroups().map(headerGroup => (
+            <tr key={headerGroup.id}>
+            {headerGroup.headers.map(header => (
+              <th key={header.id}>
+                {header.isPlaceholder
+                  ? null
+                  : flexRender(
+                    header.column.columnDef.header,
+                    header.getContext()
+                  )}
+              </th>
             ))}
-          </tr>
-        ))}
-      </thead>
-      <tbody {...getTableBodyProps()}>
-        {rows.map((row, i) => {
-          prepareRow(row);
-          return (
-            <tr {...row.getRowProps()}>
-              {row.cells.map(cell => {
-                return <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
-              })}
             </tr>
-          )
-        })}
-      </tbody>
-    </table>
+          ))}
+        </thead>
+        <tbody>
+          {table.getRowModel().rows.map(row => (
+            <tr key={row.id}>
+            {row.getVisibleCells().map(cell => (
+              <td key={cell.id}>
+                {flexRender(cell.column.columnDef.cell, cell.getContext())}
+              </td>
+            ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </>
   )
 }

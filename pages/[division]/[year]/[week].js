@@ -28,7 +28,7 @@ const Week = props => {
     <Layout>
       <Title title={title} />
       <section className={utilStyles.headingXl}>
-        <div>{title}</div>
+        <p>{title}</p>
       </section>
       <ResultTable teamList={props.results} />
     </Layout>
