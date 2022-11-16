@@ -5,10 +5,18 @@ import ResultList from '../../../components/resultList';
 import Error from 'next/error';
 import prisma from '../../../lib/prisma';
 import utilStyles from '../../../styles/utils.module.css';
+import { checkRanking } from '../../../lib/util';
+
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
 
 const Week = props => {
   if (!props.results) {
-    return <Error statusCode={404} />
+    const router = useRouter();
+    useEffect(() => {
+      router.push('/')
+    }, [])
+    return null;
   }
 
   var week = 'Week ' + props.week
@@ -36,6 +44,15 @@ export async function getServerSideProps({ params, res }) {
 
   const { division, year, week } = params
   var results = null
+
+  if (!await checkRanking(division, year, week)) {
+    return {
+      props: {
+        results: null,
+      }
+    }
+  }
+
   var fbs = false
   if (division === 'fbs') {
     fbs = true
@@ -69,7 +86,11 @@ export async function getServerSideProps({ params, res }) {
         postseason: Number(0),
       },
       include: {
-        team_names: true,
+        team_names: {
+          select: {
+            name: true,
+          },
+        },
       },
       orderBy: [
         {
