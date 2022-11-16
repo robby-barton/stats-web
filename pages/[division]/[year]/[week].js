@@ -1,11 +1,10 @@
 import Head from 'next/head';
 import Layout from '../../../components/layout';
 import Title from '../../../components/title';
-import ResultList from '../../../components/resultList';
+import ResultTable from '../../../components/resultTable';
 import Error from 'next/error';
-import prisma from '../../../lib/prisma';
 import utilStyles from '../../../styles/utils.module.css';
-import { checkRanking } from '../../../lib/util';
+import { checkRanking, getRanking } from '../../../lib/util';
 
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
@@ -29,9 +28,9 @@ const Week = props => {
     <Layout>
       <Title title={title} />
       <section className={utilStyles.headingXl}>
-        <p>{title}</p>
+        <div>{title}</div>
       </section>
-      <ResultList teamList={props.results} />
+      <ResultTable teamList={props.results} />
     </Layout>
   )
 }
@@ -43,7 +42,6 @@ export async function getServerSideProps({ params, res }) {
   )
 
   const { division, year, week } = params
-  var results = null
 
   if (!await checkRanking(division, year, week)) {
     return {
@@ -53,58 +51,13 @@ export async function getServerSideProps({ params, res }) {
     }
   }
 
-  var fbs = false
-  if (division === 'fbs') {
-    fbs = true
-  } else if (division !== 'fcs') {
-    return {
-      props: { results: null }
-    }
-  }
-  if (week === "final") {
-    results = await prisma.team_week_results.findMany({
-      where: {
-        year: Number(year),
-        fbs: fbs,
-        postseason: Number(1),
-      },
-      include: {
-        team_names: true,
-      },
-      orderBy: [
-        {
-          final_rank: 'asc',
-        },
-      ],
-    })
-  } else {
-    results = await prisma.team_week_results.findMany({
-      where: {
-        year: Number(year),
-        week: Number(week),
-        fbs: fbs,
-        postseason: Number(0),
-      },
-      include: {
-        team_names: {
-          select: {
-            name: true,
-          },
-        },
-      },
-      orderBy: [
-        {
-          final_rank: 'asc',
-        },
-      ],
-    })
-  }
+  const results = await getRanking(division.toLowerCase() === 'fbs' ? true : false, year, week)
 
   return {
     props: {
       division: division.toUpperCase(),
       year: year,
-      week: week === 'final' ? 'Final' : week,
+      week: week.toLowerCase() === 'final' ? 'Final' : week,
       results: results,
     }
   }

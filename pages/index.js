@@ -1,10 +1,9 @@
 import Head from 'next/head';
 import Layout from '../components/layout';
 import Title from '../components/title';
-import ResultList from '../components/resultList';
+import ResultTable from '../components/resultTable';
 import utilStyles from '../styles/utils.module.css';
-import { availableRankings } from '../lib/util';
-import prisma from '../lib/prisma';
+import { availableRankings, getRanking } from '../lib/util';
 
 export default function Home({ fbs }) {
   return (
@@ -13,7 +12,7 @@ export default function Home({ fbs }) {
       <section className={utilStyles.heading2Xl}>
         <p>Robby's Ranking</p>
       </section>
-      <ResultList teamList={fbs} />
+      <ResultTable teamList={fbs} />
     </Layout>
   );
 }
@@ -34,46 +33,8 @@ export async function getServerSideProps({ res }) {
 
   const currYear = avail[year]
 
-  var fbs = null
-
-  if (currYear.postseason) {
-    fbs = await prisma.team_week_results.findMany({
-      where: {
-        year: Number(year),
-        fbs: true,
-        postseason: Number(1),
-      },
-      include: {
-        team_names: true,
-      },
-      orderBy: [
-        {
-          final_rank: 'asc',
-        },
-      ],
-    })
-  } else {
-    fbs = await prisma.team_week_results.findMany({
-      where: {
-        year: Number(year),
-        week: Number(currYear.weeks),
-        fbs: true,
-        postseason: Number(0),
-      },
-      include: {
-        team_names: {
-          select: {
-            name: true,
-          },
-        },
-      },
-      orderBy: [
-        {
-          final_rank: 'asc',
-        },
-      ],
-    })
-  }
+  const fbs = await getRanking(true, year,
+    currYear.postseason ? 'final' : currYear.weeks.toString())
 
   return {
     props: {
