@@ -19,6 +19,10 @@
 	align-items: center;
 }
 
+.headerTitle a:hover {
+	text-decoration: none;
+}
+
 .headerLink {
 	display: flex;
 	justify-content: space-between;
