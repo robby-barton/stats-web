@@ -68,6 +68,11 @@ const columns = [
     cell: info => info.getValue(),
     footer: info => info.column.id,
   }),
+  columnHelper.accessor('conf', {
+    header: () => 'Conf',
+    cell: info => info.getValue(),
+    footer: info => info.column.id,
+  }),
   columnHelper.accessor('record', {
     header: () => 'Record',
     cell: info => info.getValue(),
@@ -102,7 +107,8 @@ export default function ResultTable({ rankList, teamList, division, year, week }
   for (var i = 0; i < teamList.length; i++) {
     data.push({
       final_rank: teamList[i].final_rank,
-      name: teamList[i].team_names.name,
+      name: teamList[i].name,
+      conf: teamList[i].conf,
       record: teamList[i].wins + "-" + teamList[i].losses,
       srs_rank: teamList[i].srs_rank,
       sos_rank: teamList[i].sos_rank,
