@@ -1,1 +1,1 @@
-Site for viewing my college football rankings.
+Site for my college football rankings.

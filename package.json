@@ -1,0 +1,23 @@
+{
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "prisma generate && next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
+    "@prisma/client": "^4.6.1",
+    "@tanstack/match-sorter-utils": "^8.5.14",
+    "@tanstack/react-table": "^8.5.30",
+    "next": "latest",
+    "pg": "^8.8.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-icons": "^4.6.0"
+  },
+  "devDependencies": {
+    "prisma": "^4.6.1"
+  }
+}

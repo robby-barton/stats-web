@@ -1,0 +1,30 @@
+.resultStyles table {
+	width: 100%;
+	max-width: 100%;
+	margin-bottom: 1.5rem;
+	overflow-x:auto;
+	display:block;
+	text-align: left;
+}
+
+.resultStyles table, .resultStyles tr {
+	border-top: 1px solid #333;
+	border-bottom: 1px solid #333;
+	border-collapse: collapse;
+}
+
+
+.resultStyles th, .resultStyles td {
+	padding: 0.75rem 0.6rem;
+	line-height: 1.2;
+	vertical-align: top;
+	vertical-align: bottom;
+}
+
+.resultStyles th {
+	font-size: 1.25rem;
+}
+
+.lastColumn {
+	text-align: right;
+}

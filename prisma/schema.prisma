@@ -1,0 +1,272 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model composite {
+  team_id Int
+  year    Int
+  average Int?   @default(0)
+  rating  Float? @default(0) @db.Real
+
+  @@id([team_id, year])
+}
+
+model defensive_stats {
+  player_id        Int
+  team_id          Int
+  game_id          Int
+  passes_def       Int?   @default(0)
+  qb_hurries       Int?   @default(0)
+  sacks            Float? @default(0) @db.Real
+  solo_tackles     Int?   @default(0)
+  touchdowns       Int?   @default(0)
+  tackles_for_loss Float? @default(0) @db.Real
+  total_tackles    Float? @default(0) @db.Real
+  games            games  @relation(fields: [game_id], references: [game_id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@id([player_id, team_id, game_id])
+}
+
+model fumble_stats {
+  player_id    Int
+  team_id      Int
+  game_id      Int
+  fumbles      Int?  @default(0)
+  fumbles_lost Int?  @default(0)
+  fumbles_rec  Int?  @default(0)
+  games        games @relation(fields: [game_id], references: [game_id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@id([player_id, team_id, game_id])
+}
+
+model games {
+  game_id            Int                  @id(map: "game_pkey")
+  neutral            Boolean?             @default(false)
+  conf_game          Boolean?             @default(false)
+  season             Int?                 @default(0)
+  week               Int?                 @default(0)
+  postseason         Int?                 @default(0)
+  home_id            Int
+  away_id            Int
+  retry              Int?                 @default(0)
+  start_time         DateTime?            @db.Timestamptz(6)
+  home_score         Int?                 @default(0)
+  away_score         Int?                 @default(0)
+  defensive_stats    defensive_stats[]
+  fumble_stats       fumble_stats[]
+  interception_stats interception_stats[]
+  kick_stats         kick_stats[]
+  passing_stats      passing_stats[]
+  punt_stats         punt_stats[]
+  receiving_stats    receiving_stats[]
+  return_stats       return_stats[]
+  rushing_stats      rushing_stats[]
+  team_game_stats    team_game_stats[]
+
+  @@index([away_id], map: "game_away_index")
+  @@index([home_id], map: "game_home_index")
+  @@index([retry], map: "game_retry_index")
+  @@index([season], map: "game_season_index")
+  @@index([start_time], map: "game_start_time_index")
+  @@index([week], map: "game_week_index")
+}
+
+model interception_stats {
+  player_id     Int
+  team_id       Int
+  game_id       Int
+  interceptions Int?  @default(0)
+  touchdowns    Int?  @default(0)
+  int_yards     Int?  @default(0)
+  games         games @relation(fields: [game_id], references: [game_id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@id([player_id, team_id, game_id])
+}
+
+model kick_stats {
+  player_id Int
+  team_id   Int
+  game_id   Int
+  fga       Int?  @default(0)
+  fgm       Int?  @default(0)
+  fg_long   Int?  @default(0)
+  xpa       Int?  @default(0)
+  xpm       Int?  @default(0)
+  points    Int?  @default(0)
+  games     games @relation(fields: [game_id], references: [game_id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@id([player_id, team_id, game_id])
+}
+
+model passing_stats {
+  player_id     Int
+  team_id       Int
+  game_id       Int
+  completions   Int?  @default(0)
+  attempts      Int?  @default(0)
+  yards         Int?  @default(0)
+  touchdowns    Int?  @default(0)
+  interceptions Int?  @default(0)
+  games         games @relation(fields: [game_id], references: [game_id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@id([player_id, team_id, game_id])
+}
+
+model players {
+  player_id Int
+  team_id   Int
+  year      Int
+  name      String
+  position  String
+  rating    Int?   @default(50)
+  grade     String
+  hometown  String
+  status    String
+
+  @@id([player_id, team_id, year])
+}
+
+model punt_stats {
+  player_id  Int
+  team_id    Int
+  game_id    Int
+  punt_long  Int?  @default(0)
+  punt_no    Int?  @default(0)
+  punt_yards Int?  @default(0)
+  touchbacks Int?  @default(0)
+  inside_20  Int?  @default(0)
+  games      games @relation(fields: [game_id], references: [game_id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@id([player_id, team_id, game_id])
+}
+
+model receiving_stats {
+  player_id  Int
+  team_id    Int
+  game_id    Int
+  receptions Int?  @default(0)
+  rec_yards  Int?  @default(0)
+  rec_long   Int?  @default(0)
+  touchdowns Int?  @default(0)
+  games      games @relation(fields: [game_id], references: [game_id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@id([player_id, team_id, game_id])
+}
+
+model recruiting {
+  team_id Int
+  year    Int
+  commits Int?   @default(0)
+  rating  Float? @default(0) @db.Real
+
+  @@id([team_id, year])
+}
+
+model return_stats {
+  player_id  Int
+  team_id    Int
+  game_id    Int
+  punt_kick  String
+  return_no  Int?   @default(0)
+  touchdowns Int?   @default(0)
+  ret_yards  Int?   @default(0)
+  ret_long   Int?   @default(0)
+  games      games  @relation(fields: [game_id], references: [game_id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@id([player_id, team_id, game_id, punt_kick])
+}
+
+model roster {
+  player_id Int
+  team_id   Int     @default(0)
+  year      Int
+  name      String?
+  num       Int?    @default(0)
+  position  String?
+  height    Int?    @default(0)
+  weight    Int?    @default(0)
+  grade     String?
+  hometown  String?
+
+  @@id([player_id, team_id, year])
+}
+
+model rushing_stats {
+  player_id  Int
+  team_id    Int
+  game_id    Int
+  carries    Int?  @default(0)
+  rush_yards Int?  @default(0)
+  rush_long  Int?  @default(0)
+  touchdowns Int?  @default(0)
+  games      games @relation(fields: [game_id], references: [game_id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@id([player_id, team_id, game_id])
+}
+
+model team_game_stats {
+  game_id             Int
+  team_id             Int
+  score               Int?  @default(0)
+  drives              Int?  @default(0)
+  pass_yards          Int?  @default(0)
+  completions         Int?  @default(0)
+  completion_attempts Int?  @default(0)
+  rush_yards          Int?  @default(0)
+  rush_attempts       Int?  @default(0)
+  first_downs         Int?  @default(0)
+  third_downs         Int?  @default(0)
+  third_downs_conv    Int?  @default(0)
+  fourth_downs        Int?  @default(0)
+  fourth_downs_conv   Int?  @default(0)
+  fumbles             Int?  @default(0)
+  interceptions       Int?  @default(0)
+  possession          Int?  @default(0)
+  penalties           Int?  @default(0)
+  penalty_yards       Int?  @default(0)
+  games               games @relation(fields: [game_id], references: [game_id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@id([game_id, team_id])
+}
+
+model team_names {
+  team_id           Int                 @id(map: "team_name_pkey")
+  name              String
+  flair             String?
+  team_week_results team_week_results[]
+}
+
+model team_seasons {
+  team_id    Int
+  year       Int
+  fbs        Int?    @default(0)
+  power_five Int?    @default(0)
+  conf       String?
+
+  @@id([team_id, year], map: "team_season_pkey")
+}
+
+model team_week_results {
+  team_id    Int
+  year       Int
+  week       Int
+  postseason Int        @default(0)
+  final_rank Int?       @default(0)
+  final_raw  Float?     @default(0) @db.Real
+  wins       Int?       @default(0)
+  losses     Int?       @default(0)
+  srs_rank   Int?       @default(0)
+  sos_rank   Int?       @default(0)
+  sov_rank   Int?       @default(0)
+  fbs        Boolean?
+  name       String?
+  conf       String?
+  team_names team_names @relation(fields: [team_id], references: [team_id], onDelete: Cascade, onUpdate: NoAction, map: "team_week_result_team_id_fkey")
+
+  @@id([team_id, year, week, postseason], map: "team_week_result_pkey")
+}

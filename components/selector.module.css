@@ -1,0 +1,31 @@
+.selectorStyling {
+	position: sticky;
+	top: 5rem;
+	margin: 1rem 0;
+}
+
+.selectorStyling select {
+	appearance: none;
+	background-color: white;
+	border-radius: 5rem;
+	border: 1px solid;
+	cursor: inherit;
+	font-family: inherit;
+	font-size: 0.9rem;
+	line-height: inherit;
+	text-align-last: center;
+	text-align: center;
+	margin: 0 0.1rem;
+}
+
+.divisionDropdown {
+	width: 3rem;
+}
+
+.yearDropdown {
+	width: 3.25rem;
+}
+
+.weekDropdown {
+	width: 4.5rem;
+}
