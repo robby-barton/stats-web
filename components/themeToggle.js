@@ -47,6 +47,12 @@ const ToggleThumb = styled.span`
       : "none"};
 `;
 
+const ScaleToggle = styled.div`
+  transform: scale(0.5);
+  display: flex;
+  align-items: center;
+`
+
 const ThemeToggle = () => {
   const [activeTheme, setActiveTheme] = useState(document.body.dataset.theme);
   const inactiveTheme = activeTheme === "light" ? "dark" : "light";
@@ -56,16 +62,18 @@ const ThemeToggle = () => {
     window.localStorage.setItem("theme", activeTheme);
   }, [activeTheme]);
   return (
-    <ToggleButton
-      aria-label={`Change to ${inactiveTheme} mode`}
-      title={`Change to ${inactiveTheme} mode`}
-      type="button"
-      onClick={() => setActiveTheme(inactiveTheme)}
-    >
-      <ToggleThumb activeTheme={activeTheme} />
-      <span>🌙</span>
-      <span>☀️</span>
-    </ToggleButton>
+    <ScaleToggle>
+      <ToggleButton
+        aria-label={`Change to ${inactiveTheme} mode`}
+        title={`Change to ${inactiveTheme} mode`}
+        type="button"
+        onClick={() => setActiveTheme(inactiveTheme)}
+      >
+        <ToggleThumb activeTheme={activeTheme} />
+        <span>🌙</span>
+        <span>☀️</span>
+      </ToggleButton>
+    </ScaleToggle>
   );
 };
 
