@@ -1,6 +1,7 @@
 .selectorStyling {
 	position: sticky;
-	top: 0.5rem;
+	top: 5rem;
+	margin: 1rem 0;
 }
 
 .selectorStyling select {
@@ -12,10 +13,9 @@
 	font-family: inherit;
 	font-size: 0.9rem;
 	line-height: inherit;
-	margin: 0 0.1rem;
-	margin-bottom: 0.5rem;
 	text-align-last: center;
 	text-align: center;
+	margin: 0 0.1rem;
 }
 
 .divisionDropdown {

@@ -6,6 +6,8 @@
     "start": "next start"
   },
   "dependencies": {
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
     "@prisma/client": "^4.6.1",
     "@tanstack/match-sorter-utils": "^8.5.14",
     "@tanstack/react-table": "^8.5.30",

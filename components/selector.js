@@ -82,10 +82,10 @@ export default function Selector({ rankList, division, year, week }) {
   }
   years.sort().reverse()
   return (
-    <span className={styles.selectorStyling}>
+    <div className={styles.selectorStyling}>
       <DivisionDropdown options={['fbs', 'fcs']} initialValue={division} />
       <YearDropdown options={years} initialValue={year} />
       <WeekDropdown options={rankList[year]} initialValue={week} />
-    </span>
+    </div>
   );
 }
