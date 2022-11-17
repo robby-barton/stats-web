@@ -11,19 +11,17 @@ function DivisionDropdown({ options, initialValue }) {
   const [selected, setSelected] = useState(initialValue.toLowerCase())
 
   return (
-    <span>
-      <select
-        className={styles.divisionDropdown}
-        value={selected}
-        onChange={e => window.location.href=`/${e.target.value}/${currYear}/${currWeek}`}
-      >
-        {options.map(option => (
-          <option key={option} value={option.toLowerCase()}>
-            {option.toUpperCase()}
-          </option>
-        ))}
-      </select>
-    </span>
+    <select
+      className={styles.divisionDropdown}
+      value={selected}
+      onChange={e => window.location.href=`/${e.target.value}/${currYear}/${currWeek}`}
+    >
+      {options.map(option => (
+        <option key={option} value={option.toLowerCase()}>
+          {option.toUpperCase()}
+        </option>
+      ))}
+    </select>
   )
 }
 
@@ -31,19 +29,17 @@ function YearDropdown({ options, initialValue }) {
   const [selected, setSelected] = useState(initialValue)
 
   return (
-    <span>
-      <select
-        className={styles.yearDropdown}
-        value={selected}
-        onChange={e => window.location.href=`/${currDiv}/${e.target.value}/${currWeek}`}
-      >
-        {options.map(option => (
-          <option key={option} value={option}>
-            {option}
-          </option>
-        ))}
-      </select>
-    </span>
+    <select
+      className={styles.yearDropdown}
+      value={selected}
+      onChange={e => window.location.href=`/${currDiv}/${e.target.value}/${currWeek}`}
+    >
+      {options.map(option => (
+        <option key={option} value={option}>
+          {option}
+        </option>
+      ))}
+    </select>
   )
 }
 
