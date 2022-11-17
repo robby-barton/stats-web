@@ -15,11 +15,6 @@ export default function Layout({ children, home }) {
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <main>{children}</main>
-        {!home && (
-          <div className={styles.backToHome}>
-            <Link href="/">← Go to current rankings</Link>
-          </div>
-        )}
       </div>
     </div>
   );

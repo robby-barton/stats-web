@@ -11,7 +11,9 @@ export default function Header() {
   return (
     <div className={styles.header}>
       <div className={styles.headerTitle}>
-        Robby's Ranking
+        <Link href="/">
+          Robby's Ranking
+        </Link>
       </div>
       <div className={styles.headerLink}>
         <Link href="/about">

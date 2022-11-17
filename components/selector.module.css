@@ -9,27 +9,27 @@
 }
 
 .selectorStyling select {
-	appearance: none;
-	background-color: white;
 	border-radius: 5rem;
-	border: 1px solid;
+	border: 0.25px solid;
 	cursor: inherit;
+	outline: none;
 	font-family: inherit;
-	font-size: 0.9rem;
+	font-size: 1.1rem;
+	font-weight: 550;
 	line-height: inherit;
 	text-align-last: center;
 	text-align: center;
-	margin: 0 0.1rem;
+	margin-right: 0.4rem;
 }
 
 .divisionDropdown {
-	width: 3rem;
+	width: 4.25rem;
 }
 
 .yearDropdown {
-	width: 3.25rem;
+	width: 4.75rem;
 }
 
 .weekDropdown {
-	width: 4.5rem;
+	width: 6.5rem;
 }
