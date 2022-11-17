@@ -6,15 +6,16 @@
 .selectorStyling select {
 	appearance: none;
 	background-color: white;
-	border: 1px solid;
 	border-radius: 5rem;
-	margin: 0;
-	font-family: inherit;
+	border: 1px solid;
 	cursor: inherit;
+	font-family: inherit;
+	font-size: 0.9rem;
 	line-height: inherit;
 	margin: 0 0.1rem;
 	margin-bottom: 0.5rem;
 	text-align-last: center;
+	text-align: center;
 }
 
 .divisionDropdown {
