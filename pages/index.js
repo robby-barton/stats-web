@@ -1,17 +1,12 @@
-import Head from 'next/head';
 import Layout from '../components/layout';
 import Title from '../components/title';
 import ResultTable from '../components/resultTable';
-import utilStyles from '../styles/utils.module.css';
 import { availableRankings, getRanking } from '../lib/util';
 
 export default function Home({ rankList, fbs, year, week }) {
   return (
     <Layout home>
       <Title />
-      <section className={utilStyles.heading2Xl}>
-        <p>Robby's Ranking</p>
-      </section>
       <ResultTable 
         rankList={rankList}
         teamList={fbs}

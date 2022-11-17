@@ -1,13 +1,7 @@
-import Head from 'next/head';
 import Layout from '../../../components/layout';
 import Title from '../../../components/title';
 import ResultTable from '../../../components/resultTable';
-import Error from 'next/error';
-import utilStyles from '../../../styles/utils.module.css';
 import { availableRankings, getRanking } from '../../../lib/util';
-
-import { useEffect } from 'react';
-import { useRouter } from 'next/router';
 
 export default function Week({ rankList, results, division, year, week }) {
   var weekTitle = 'Week ' + week
@@ -19,9 +13,6 @@ export default function Week({ rankList, results, division, year, week }) {
   return (
     <Layout>
       <Title title={title} />
-      <section className={utilStyles.headingXl}>
-        <p>{title}</p>
-      </section>
       <ResultTable 
         rankList={rankList}
         teamList={results}
