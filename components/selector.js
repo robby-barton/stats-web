@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import styles from './selector.module.css';
 
 var currDiv = null
 var currYear = null
@@ -9,16 +10,19 @@ function DivisionDropdown({ options, initialValue }) {
   const [selected, setSelected] = useState(initialValue.toLowerCase())
 
   return (
-    <select
-      value={selected}
-      onChange={e => window.location.href=`/${e.target.value}/${currYear}/${currWeek}`}
-    >
-      {options.map(option => (
-        <option key={option} value={option.toLowerCase()}>
-          {option.toUpperCase()}
-        </option>
-      ))}
-    </select>
+    <span>
+      <select
+        className={styles.divisionDropdown}
+        value={selected}
+        onChange={e => window.location.href=`/${e.target.value}/${currYear}/${currWeek}`}
+      >
+        {options.map(option => (
+          <option key={option} value={option.toLowerCase()}>
+            {option.toUpperCase()}
+          </option>
+        ))}
+      </select>
+    </span>
   )
 }
 
@@ -26,16 +30,19 @@ function YearDropdown({ options, initialValue }) {
   const [selected, setSelected] = useState(initialValue)
 
   return (
-    <select
-      value={selected}
-      onChange={e => window.location.href=`/${currDiv}/${e.target.value}/${currWeek}`}
-    >
-      {options.map(option => (
-        <option key={option} value={option}>
-          {option}
-        </option>
-      ))}
-    </select>
+    <span>
+      <select
+        className={styles.yearDropdown}
+        value={selected}
+        onChange={e => window.location.href=`/${currDiv}/${e.target.value}/${currWeek}`}
+      >
+        {options.map(option => (
+          <option key={option} value={option}>
+            {option}
+          </option>
+        ))}
+      </select>
+    </span>
   )
 }
 
@@ -51,16 +58,17 @@ function WeekDropdown({ options, initialValue }) {
   const [selected, setSelected] = useState(initialValue.toLowerCase())
 
   return (
-    <select
-      value={selected}
-      onChange={e => window.location.href=`/${currDiv}/${currYear}/${e.target.value}`}
-    >
-      {optionList.map(option => (
-        <option key={option.value} value={option.value}>
-          {option.text}
-        </option>
-      ))}
-    </select>
+      <select
+        className={styles.weekDropdown}
+        value={selected}
+        onChange={e => window.location.href=`/${currDiv}/${currYear}/${e.target.value}`}
+      >
+        {optionList.map(option => (
+          <option key={option.value} value={option.value}>
+            {option.text}
+          </option>
+        ))}
+      </select>
   )
 }
 
@@ -74,10 +82,10 @@ export default function Selector({ rankList, division, year, week }) {
   }
   years.sort().reverse()
   return (
-    <div>
+    <span className={styles.selectorStyling}>
       <DivisionDropdown options={['fbs', 'fcs']} initialValue={division} />
       <YearDropdown options={years} initialValue={year} />
       <WeekDropdown options={rankList[year]} initialValue={week} />
-    </div>
+    </span>
   );
 }

@@ -25,6 +25,7 @@ import {
   compareItems,
 } from '@tanstack/match-sorter-utils'
 import Selector from './selector';
+import styles from './resultTable.module.css';
 
 const fuzzyFilter = (row, columnId, value, addMeta) => {
   const itemRank = rankItem(row.getValue(columnId), value)
@@ -131,14 +132,14 @@ export default function ResultTable({ rankList, teamList, division, year, week }
     getSortedRowModel: getSortedRowModel(),
   })
   return (
-    <>
+    <div className={styles.resultStyles}>
       <Selector rankList={rankList} division={division} year={year} week={week} />
       <table>
         <thead>
           {table.getHeaderGroups().map(headerGroup => (
             <tr key={headerGroup.id}>
-            {headerGroup.headers.map(header => (
-              <th key={header.id}>
+            {headerGroup.headers.map((header, i, row) => (
+              <th key={header.id} className={i + 1 === row.length ? styles.lastColumn : ""}>
                 {header.isPlaceholder
                   ? null
                   : flexRender(
@@ -153,8 +154,8 @@ export default function ResultTable({ rankList, teamList, division, year, week }
         <tbody>
           {table.getRowModel().rows.map(row => (
             <tr key={row.id}>
-            {row.getVisibleCells().map(cell => (
-              <td key={cell.id}>
+            {row.getVisibleCells().map((cell, i, row) => (
+              <td key={cell.id} className={i + 1 === row.length ? styles.lastColumn : ""}>
                 {flexRender(cell.column.columnDef.cell, cell.getContext())}
               </td>
             ))}
@@ -162,6 +163,6 @@ export default function ResultTable({ rankList, teamList, division, year, week }
           ))}
         </tbody>
       </table>
-    </>
+    </div>
   )
 }
