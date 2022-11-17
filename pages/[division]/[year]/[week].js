@@ -4,20 +4,12 @@ import Title from '../../../components/title';
 import ResultTable from '../../../components/resultTable';
 import Error from 'next/error';
 import utilStyles from '../../../styles/utils.module.css';
-import { availableRankings, checkRanking, getRanking } from '../../../lib/util';
+import { availableRankings, getRanking } from '../../../lib/util';
 
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 
 export default function Week({ rankList, results, division, year, week }) {
-  if (!results) {
-    const router = useRouter();
-    useEffect(() => {
-      router.push('/')
-    }, [])
-    return null;
-  }
-
   var weekTitle = 'Week ' + week
   if (week === 'Final') {
     weekTitle = 'Final'
@@ -41,6 +33,7 @@ export default function Week({ rankList, results, division, year, week }) {
   )
 }
 
+const divisions = ['fbs', 'fcs']
 export async function getServerSideProps({ params, res }) {
   res.setHeader(
     'Cache-Control',
@@ -49,17 +42,51 @@ export async function getServerSideProps({ params, res }) {
 
   const { division, year, week } = params
 
-  if (!await checkRanking(division, year, week)) {
+  const avail = await availableRankings()
+  if (!divisions.includes(division.toLowerCase()) || !(year in avail)) {
     return {
-      props: {
-        results: null,
-      }
+      redirect: {
+        permanent: false,
+        destination: "/",
+      },
+      props: {},
+    }
+  } else if (week.toLowerCase() === 'final' && !avail[year].postseason) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: `/${division}/${year}/${avail[year].weeks}`
+      },
+      props: {},
+    }
+  } else if (week.toLowerCase() !== 'final' && isNaN(week)) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: `/${division}/${year}/${avail[year].postseason ? 'final' : avail[year].weeks}`
+      },
+      props: {},
+    }
+  } else if (week > avail[year].weeks) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: `/${division}/${year}/${avail[year].postseason ? 'final' : avail[year].weeks}`
+      },
+      props: {},
+    }
+  } else if (week < 1) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: `/${division}/${year}/1`
+      },
+      props: {},
     }
   }
 
   const results = await getRanking(division.toLowerCase() === 'fbs' ? true : false, year, week)
 
-  const avail = await availableRankings()
   return {
     props: {
       rankList: avail,

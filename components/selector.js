@@ -8,15 +8,11 @@ var currWeek = null
 function DivisionDropdown({ options, initialValue }) {
   const [selected, setSelected] = useState(initialValue.toLowerCase())
 
-  const handleChange = event => {
-    console.log(event.target.value);
-    setSelected(event.target.value);
-
-    window.location.href=`/${event.target.value}/${currYear}/${currWeek}`
-  }
-
   return (
-    <select value={selected} onChange={handleChange}>
+    <select
+      value={selected}
+      onChange={e => window.location.href=`/${e.target.value}/${currYear}/${currWeek}`}
+    >
       {options.map(option => (
         <option key={option} value={option.toLowerCase()}>
           {option.toUpperCase()}
@@ -29,15 +25,11 @@ function DivisionDropdown({ options, initialValue }) {
 function YearDropdown({ options, initialValue }) {
   const [selected, setSelected] = useState(initialValue)
 
-  const handleChange = event => {
-    console.log(event.target.value);
-    setSelected(event.target.value);
-
-    window.location.href=`/${currDiv}/${event.target.value}/${currWeek}`
-  }
-
   return (
-    <select value={selected} onChange={handleChange}>
+    <select
+      value={selected}
+      onChange={e => window.location.href=`/${currDiv}/${e.target.value}/${currWeek}`}
+    >
       {options.map(option => (
         <option key={option} value={option}>
           {option}
@@ -58,15 +50,11 @@ function WeekDropdown({ options, initialValue }) {
 
   const [selected, setSelected] = useState(initialValue.toLowerCase())
 
-  const handleChange = event => {
-    console.log(event.target.value);
-    setSelected(event.target.value);
-
-    window.location.href=`/${currDiv}/${currYear}/${event.target.value}`
-  }
-
   return (
-    <select value={selected} onChange={handleChange}>
+    <select
+      value={selected}
+      onChange={e => window.location.href=`/${currDiv}/${currYear}/${e.target.value}`}
+    >
       {optionList.map(option => (
         <option key={option.value} value={option.value}>
           {option.text}
