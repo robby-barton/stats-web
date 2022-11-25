@@ -1,12 +1,12 @@
 .footer {
 	background: var(--color-bg-primary);
-	display: flex;
 	border-top: 2px solid;
-	flex: 0 1 5rem;
+	height: 6vh;
 }
 
 .footerLinks {
 	margin: 0 auto;
 	text-align: center;
-	padding-top: 1rem;
+	padding-top: 0.5rem;
+	line-height: 1.75rem;
 }

@@ -1,5 +1,6 @@
 import Layout from '../../../components/layout';
 import Title from '../../../components/title';
+import Meta from '../../../components/meta';
 import ResultTable from '../../../components/resultTable';
 import { availableRankings, getRanking } from '../../../lib/util';
 
@@ -9,10 +10,12 @@ export default function Week({ rankList, results, division, year, week }) {
     weekTitle = 'Final'
   }
   const title = [division, year, weekTitle].join(' ')
+  const meta = `${weekTitle} computer rankings for the ${year} ${division} college football season.`
 
   return (
     <Layout>
       <Title title={title} />
+      <Meta desc={meta} />
       <ResultTable 
         rankList={rankList}
         teamList={results}

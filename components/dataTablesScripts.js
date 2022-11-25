@@ -20,9 +20,10 @@ export default function DataTablesScripts() {
               searching: true,
               orderClasses: false,
               info: false,
-              scrollY: '50vh',
+              scrollY: 100,
               scrollResize: true,
-              scrollCollapse: true
+              scrollCollapse: true,
+              lengthChange: false
             })
           })
         }, [])
