@@ -1,9 +1,7 @@
 .selectorStyling {
-	position: sticky;
-	top: 5em;
+	position: absolute;
 	background: var(--color-bg-primary);
 	margin: 0;
-	height: 3rem;
 	display: flex;
 	align-items: center;
 }
