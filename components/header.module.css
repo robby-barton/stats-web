@@ -2,11 +2,9 @@
 	background: var(--color-bg-primary);
 	padding: 0 1rem;
 	display: flex;
-	position: sticky;
-	top: 0;
 	border-bottom: 2px solid;
 	margin: 0;
-	height: 5rem;
+	flex: 0 1 5rem;
 }
 
 .headerTitle {

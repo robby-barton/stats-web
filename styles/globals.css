@@ -35,7 +35,7 @@ html, body {
 
 html {
 	display: table;
-	margin: auto;
+	margin: 0 auto;
 }
 
 body {
@@ -54,4 +54,14 @@ a {
 
 a:hover {
 	text-decoration: underline;
+}
+
+.dataTables_filter > * {
+	float: right;
+}
+
+.dataTables_filter input {
+	padding: 5px;
+	margin-bottom: 5px;
+	margin-left: 4px;
 }

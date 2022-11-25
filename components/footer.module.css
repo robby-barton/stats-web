@@ -1,0 +1,12 @@
+.footer {
+	background: var(--color-bg-primary);
+	display: flex;
+	border-top: 2px solid;
+	flex: 0 1 5rem;
+}
+
+.footerLinks {
+	margin: 0 auto;
+	text-align: center;
+	padding-top: 1rem;
+}
