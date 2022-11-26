@@ -16,6 +16,12 @@ export default function Week({ rankList, results, division, year, week }) {
     <Layout>
       <Title title={title} />
       <Meta desc={meta} />
+      <Header
+        rankList={rankList}
+        division={division}
+        year={year}
+        week={week}
+      />
       <ResultTable 
         rankList={rankList}
         teamList={results}

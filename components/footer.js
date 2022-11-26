@@ -7,11 +7,11 @@ export default function Footer() {
     <div className={styles.footer}>
       <div className={styles.footerLinks}>
         <Link href="https://github.com/robby-barton/stats-web">
-          Site &lt;/&gt;
+          &lt;/&gt; - Site source
         </Link>
         <br/>
         <Link href="https://github.com/robby-barton/stats-go">
-          Ranking &lt;/&gt;
+          &lt;/&gt; - Ranking source
         </Link>
       </div>
     </div>

@@ -32,8 +32,8 @@ html, body {
 	font-variant-numeric: tabular-nums;
 	font-size: 16px;
 	max-width: 55rem;
+	min-width: 20rem;
 	width: 100%;
-	height: 100vh;
 }
 
 html {
@@ -44,10 +44,6 @@ html {
 body {
 	display: table-cell;
 	vertical-align: middle;
-}
-
-body > div {
-	height: 100%;
 }
 
 * {
@@ -68,8 +64,10 @@ a:hover {
 }
 
 .dataTables_filter input {
-	padding: 5px;
-	margin-bottom: 5px;
-	margin-left: 4px;
+	margin: 0.5rem 0;
 	background-color: white !important;
+}
+
+table.fixedHeader-floating {
+  background-color: var(--color-bg-primary) !important;
 }

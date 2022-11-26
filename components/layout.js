@@ -13,7 +13,6 @@ export default function Layout({ children, home }) {
       <Head>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Header />
       {children}
       <Footer />
     </div>
