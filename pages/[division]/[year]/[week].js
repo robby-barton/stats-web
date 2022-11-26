@@ -1,5 +1,6 @@
 import Layout from '../../../components/layout';
 import Title from '../../../components/title';
+import Header from '../../../components/header';
 import Meta from '../../../components/meta';
 import ResultTable from '../../../components/resultTable';
 import { availableRankings, getRanking } from '../../../lib/util';

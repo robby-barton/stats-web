@@ -65,9 +65,46 @@ a:hover {
 
 .dataTables_filter input {
 	margin: 0.5rem 0;
+	margin-left: 0.25rem;
 	background-color: white !important;
 }
 
-table.fixedHeader-floating {
-  background-color: var(--color-bg-primary) !important;
+table {
+	overflow-x:auto;
+	text-align: left !important;
+	width: 100%;
+}
+
+table, tr {
+	border-top: 1px solid #333;
+	border-bottom: 1px solid #333;
+	border-collapse: collapse;
+}
+
+th {
+	background: var(--color-bg-primary) !important;
+}
+
+th, td {
+	padding: 0.75rem;
+	line-height: 1.2;
+}
+
+table.dataTable thead .sorting:after {
+	padding-left: 0.1rem;
+	letter-spacing: -0.25rem;
+	content: "\2191\2193";
+	opacity: .3;
+}
+
+/* sorted ascending */
+table.dataTable thead .sorting_asc:after {
+	padding-left: 0.1rem;
+	content: "\2191";
+}
+
+/* sorted descending */
+table.dataTable thead .sorting_desc:after {
+	padding-left: 0.1rem;
+	content: "\2193";
 }
