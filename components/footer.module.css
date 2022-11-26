@@ -1,7 +1,7 @@
 .footer {
 	background: var(--color-bg-primary);
 	border-top: 2px solid;
-	height: 6vh;
+	height: 6%;
 }
 
 .footerLinks {
