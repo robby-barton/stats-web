@@ -2,14 +2,15 @@ import dynamic from "next/dynamic";
 import styles from "./header.module.css";
 import utilStyles from "../styles/utils.module.css";
 import Link from "next/link";
+import Selector from "./selector";
 
 const ThemeToggle = dynamic(() => import("../components/themeToggle"), {
   ssr: false,
 });
 
-export default function Header() {
+export default function Header({ rankList, division, year, week }) {
   return (
-    <div className={styles.header}>
+    <div id='fixed' className={styles.header}>
       <div className={styles.headerTitle}>
         <Link href="/">
           Robby's Ranking
@@ -17,7 +18,7 @@ export default function Header() {
       </div>
       <div className={styles.headerLink}>
         <Link href="/about">
-          <span className={utilStyles.headingLg}>
+          <span className={utilStyles.headingMd}>
             About
           </span>
         </Link>
@@ -25,6 +26,12 @@ export default function Header() {
       <div className={styles.headerToggle}>
         <ThemeToggle />
       </div>
+      {rankList && (
+          <div className={styles.headerSelector}>
+            <Selector rankList={rankList} division={division} year={year} week={week} />
+          </div>
+        )
+      }
     </div>
   );
 }

@@ -2,19 +2,23 @@
 	background: var(--color-bg-primary);
 	padding: 0 1rem;
 	display: flex;
+	position: sticky;
+	top: 0;
 	border-bottom: 2px solid;
 	margin: 0;
-	height: 8%;
+	height: 4rem;
+	z-index: 1;
+	width: 100%;
 }
 
 .headerTitle {
 	display: flex;
 	font-size: 2rem;
-	line-height: 1.3;
 	font-weight: 800;
 	letter-spacing: -0.05rem;
-	margin-right: 2rem;
+	margin-right: 1rem;
 	align-items: center;
+	flex-grow: 1;
 }
 
 .headerTitle a:hover {
@@ -31,4 +35,8 @@
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+}
+
+.headerSelector {
+	flex-basis: 50%;
 }
