@@ -91,20 +91,20 @@ th, td {
 }
 
 table.dataTable thead .sorting:after {
-	padding-left: 0.1rem;
-	letter-spacing: -0.25rem;
+	padding-left: 0.2rem;
+	letter-spacing: -0.3rem;
 	content: "\2191\2193";
 	opacity: .3;
 }
 
 /* sorted ascending */
 table.dataTable thead .sorting_asc:after {
-	padding-left: 0.1rem;
+	padding-left: 0.2rem;
 	content: "\2191";
 }
 
 /* sorted descending */
 table.dataTable thead .sorting_desc:after {
-	padding-left: 0.1rem;
+	padding-left: 0.2rem;
 	content: "\2193";
 }

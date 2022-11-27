@@ -18,7 +18,7 @@
 	letter-spacing: -0.05rem;
 	margin-right: 1rem;
 	align-items: center;
-	flex-grow: 1;
+	flex-basis: content;
 }
 
 .headerTitle a:hover {
@@ -38,5 +38,5 @@
 }
 
 .headerSelector {
-	flex-basis: 50%;
+	flex-grow: 1;
 }
