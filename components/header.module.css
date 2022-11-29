@@ -1,14 +1,15 @@
 .header {
 	background: var(--color-bg-primary);
+	width: 100%;
 	padding: 0 1rem;
 	display: flex;
+	gap: 0 1rem;
 	position: sticky;
 	top: 0;
+	height: 4rem;
 	border-bottom: 2px solid;
 	margin: 0;
-	height: 4rem;
 	z-index: 1;
-	width: 100%;
 }
 
 .headerTitle {
@@ -16,9 +17,8 @@
 	font-size: 2rem;
 	font-weight: 800;
 	letter-spacing: -0.05rem;
-	margin-right: 1rem;
 	align-items: center;
-	flex-basis: content;
+	flex-grow: 1;
 }
 
 .headerTitle a:hover {
@@ -35,8 +35,4 @@
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-}
-
-.headerSelector {
-	flex-grow: 1;
 }

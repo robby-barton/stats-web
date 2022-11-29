@@ -8,7 +8,7 @@ const ThemeToggle = dynamic(() => import("../components/themeToggle"), {
   ssr: false,
 });
 
-export default function Header({ rankList, division, year, week }) {
+export default function Header() {
   return (
     <div id='fixed' className={styles.header}>
       <div className={styles.headerTitle}>
@@ -26,12 +26,6 @@ export default function Header({ rankList, division, year, week }) {
       <div className={styles.headerToggle}>
         <ThemeToggle />
       </div>
-      {rankList && (
-          <div className={styles.headerSelector}>
-            <Selector rankList={rankList} division={division} year={year} week={week} />
-          </div>
-        )
-      }
     </div>
   );
 }
