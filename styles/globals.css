@@ -1,28 +1,26 @@
-/* styles/globals.css */
-
 body,
 body[data-theme="light"] {
-  --color-text-primary: #27201a;
-  --color-text-secondary: #076963;
-  --color-bg-primary: #f6f0e8;
-  --color-bg-toggle: #1E90FF; 
+	--color-text-primary: #27201a;
+	--color-text-secondary: #076963;
+	--color-bg-primary: #f6f0e8;
+	--color-bg-toggle: #1E90FF; 
 }
 
 body[data-theme="dark"] {
-  --color-text-primary: #e3e3e3;
-  --color-text-secondary: #ff6b00;
-  --color-bg-primary: #15232d;
-  --color-bg-toggle: #a9a9a9; 
+	--color-text-primary: #e3e3e3;
+	--color-text-secondary: #ff6b00;
+	--color-bg-primary: #15232d;
+	--color-bg-toggle: #a9a9a9; 
 }
 
 body {
-  background: var(--color-bg-primary);
-  color: var(--color-text-primary);
-  font-family: sans-serif;
+	background: var(--color-bg-primary);
+	color: var(--color-text-primary);
+	font-family: sans-serif;
 }
 
 h1 {
-  color: var(--color-text-secondary);
+	color: var(--color-text-secondary);
 }
 
 html, body {
@@ -107,4 +105,23 @@ table.dataTable thead .sorting_asc:after {
 table.dataTable thead .sorting_desc:after {
 	padding-left: 0.2rem;
 	content: "\2193";
+}
+
+table.fixedHeader-floating {
+	z-index: 1;
+}
+
+div.dom_wrapper {
+	background: var(--color-bg-primary) !important;
+	width: 100%;
+	position: sticky;
+	top: 4rem;
+	height: 3rem;
+	padding-top: 0.1rem;
+	z-index: 1;
+}
+
+#tableTop {
+	position: sticky;
+	top: 7rem;
 }
