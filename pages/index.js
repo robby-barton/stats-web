@@ -1,21 +1,14 @@
 import Layout from '../components/layout';
 import Title from '../components/title';
-import Header from '../components/header';
 import Meta from '../components/meta';
 import ResultTable from '../components/resultTable';
 import { availableRankings, getRanking } from '../lib/util';
 
 export default function Home({ rankList, fbs, year, week }) {
   return (
-    <Layout home>
+    <Layout>
       <Title />
       <Meta desc="Computer rankings for to FBS and FCS college football seasons." />
-      <Header
-        rankList={rankList}
-        division={'fbs'}
-        year={year}
-        week={week}
-      />
       <ResultTable 
         rankList={rankList}
         teamList={fbs}

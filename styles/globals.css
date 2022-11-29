@@ -57,16 +57,6 @@ a:hover {
 	text-decoration: underline;
 }
 
-.dataTables_filter > * {
-	float: right;
-}
-
-.dataTables_filter input {
-	margin: 0.5rem 0;
-	margin-left: 0.25rem;
-	background-color: white !important;
-}
-
 table {
 	overflow-x:auto;
 	text-align: left !important;
@@ -117,9 +107,19 @@ div.dom_wrapper {
 	position: sticky;
 	top: 4rem;
 	height: 3rem;
-	padding-top: 0.1rem;
 	z-index: 1;
 }
+
+.dataTables_filter > * {
+	float: right;
+}
+
+.dataTables_filter input {
+	margin: 0.70rem 0;
+	margin-left: 0.25rem;
+	background-color: white !important;
+}
+
 
 #tableTop {
 	position: sticky;

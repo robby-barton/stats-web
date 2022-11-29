@@ -80,6 +80,7 @@ export default function ResultTable({ rankList, teamList, division, year, week }
 
   return (
     <div className={styles.resultStyles}>
+      <Selector rankList={rankList} division={division} year={year} week={week} />
       <div id="tableTop">
       </div>
       <DataTablesScripts />

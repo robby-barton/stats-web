@@ -4,15 +4,15 @@ import { useState, useEffect } from "react";
 import styled from "@emotion/styled";
 
 const ToggleButton = styled.button`
-  --toggle-width: 80px;
-  --toggle-height: 38px;
-  --toggle-padding: 4px;
+  --toggle-width: 2.5rem;
+  --toggle-height: 1.25rem;
+  --toggle-padding: 0.125rem;
   position: relative;
   float: right;
   display: flex;
   align-items: center;
   justify-content: space-around;
-  font-size: 1.5rem;
+  font-size: 0.70rem;
   width: var(--toggle-width);
   height: var(--toggle-height);
   padding: var(--toggle-padding);
@@ -47,12 +47,6 @@ const ToggleThumb = styled.span`
       : "none"};
 `;
 
-const ScaleToggle = styled.div`
-  transform: scale(0.5);
-  display: flex;
-  align-items: center;
-`
-
 const ThemeToggle = () => {
   const [activeTheme, setActiveTheme] = useState(document.body.dataset.theme);
   const inactiveTheme = activeTheme === "light" ? "dark" : "light";
@@ -62,18 +56,16 @@ const ThemeToggle = () => {
     window.localStorage.setItem("theme", activeTheme);
   }, [activeTheme]);
   return (
-    <ScaleToggle>
-      <ToggleButton
-        aria-label={`Change to ${inactiveTheme} mode`}
-        title={`Change to ${inactiveTheme} mode`}
-        type="button"
-        onClick={() => setActiveTheme(inactiveTheme)}
-      >
-        <ToggleThumb activeTheme={activeTheme} />
-        <span>🌙</span>
-        <span>☀️</span>
-      </ToggleButton>
-    </ScaleToggle>
+    <ToggleButton
+      aria-label={`Change to ${inactiveTheme} mode`}
+      title={`Change to ${inactiveTheme} mode`}
+      type="button"
+      onClick={() => setActiveTheme(inactiveTheme)}
+    >
+      <ToggleThumb activeTheme={activeTheme} />
+      <span>🌙</span>
+      <span>☀️</span>
+    </ToggleButton>
   );
 };
 
