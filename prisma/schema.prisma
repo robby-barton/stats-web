@@ -266,6 +266,7 @@ model team_week_results {
   fbs        Boolean?
   name       String?
   conf       String?
+  sol_rank   Int?       @default(0)
   team_names team_names @relation(fields: [team_id], references: [team_id], onDelete: Cascade, onUpdate: NoAction, map: "team_week_result_team_id_fkey")
 
   @@id([team_id, year, week, postseason], map: "team_week_result_pkey")
