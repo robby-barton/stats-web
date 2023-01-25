@@ -12,8 +12,6 @@ RUN yarn --frozen-lockfile
 # Rebuild the source code only when needed
 FROM node:18-alpine AS builder
 
-# Need to explicitly install libssl1.1 for `prisma generate`
-RUN apk add --no-cache libssl1.1
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
