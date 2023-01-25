@@ -45,16 +45,6 @@ const columns = [
     cell: info => info.getValue(),
     footer: info => info.column.id,
   }),
-  columnHelper.accessor('sov_rank', {
-    header: () => 'SOV',
-    cell: info => info.getValue(),
-    footer: info => info.column.id,
-  }),
-  columnHelper.accessor('sol_rank', {
-    header: () => 'SOL',
-    cell: info => info.getValue(),
-    footer: info => info.column.id,
-  }),
   columnHelper.accessor('final_raw', {
     header: () => 'Final',
     cell: info => info.getValue().toFixed(5),
@@ -72,8 +62,6 @@ export default function ResultTable({ rankList, teamList, division, year, week }
       record: teamList[i].wins + "-" + teamList[i].losses,
       srs_rank: teamList[i].srs_rank,
       sos_rank: teamList[i].sos_rank,
-      sov_rank: teamList[i].sov_rank,
-      sol_rank: teamList[i].sol_rank,
       final_raw: teamList[i].final_raw,
     })
   }
