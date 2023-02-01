@@ -59,7 +59,9 @@ export default function ResultTable({ rankList, teamList, division, year, week }
       final_rank: teamList[i].final_rank,
       name: teamList[i].name,
       conf: teamList[i].conf,
-      record: teamList[i].wins + "-" + teamList[i].losses,
+      record: teamList[i].ties === 0 ?
+        teamList[i].wins + "-" + teamList[i].losses :
+        teamList[i].wins + "-" + teamList[i].losses + "-" + teamList[i].ties,
       srs_rank: teamList[i].srs_rank,
       sos_rank: teamList[i].sos_rank,
       final_raw: teamList[i].final_raw,
