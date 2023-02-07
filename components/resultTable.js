@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from "next/link";
 import {
   Column,
   Table,
@@ -57,7 +58,7 @@ export default function ResultTable({ rankList, teamList, division, year, week }
   for (var i = 0; i < teamList.length; i++) {
     data.push({
       final_rank: teamList[i].final_rank,
-      name: teamList[i].name,
+      name: <Link href={"/team/" + teamList[i].team_id}>{teamList[i].name}</Link>,
       conf: teamList[i].conf,
       record: teamList[i].ties === 0 ?
         teamList[i].wins + "-" + teamList[i].losses :
