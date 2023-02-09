@@ -1,98 +1,147 @@
 import React from 'react';
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-  Filler,
-} from 'chart.js';
-import zoomPlugin from 'chartjs-plugin-zoom';
-import { Bar, Line, Scatter, Bubble } from 'react-chartjs-2';
-
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Filler,
-  Title,
-  Tooltip,
-  Legend,
-  zoomPlugin
-);
+import Chart from 'react-apexcharts';
 
 export default function TeamChart({ rankList }) {
-  const finalRank = [];
   const labels = [];
+  const data = [];
   for (var i = 0; i < rankList.length; i++) {
-    finalRank.push(rankList[i].final_rank)
     labels.push(`${rankList[i].year} Week ${rankList[i].postseason ? "Final" : rankList[i].week}`)
+    data.push(rankList[i].final_rank)
   }
+
   const options = {
-    plugins: {
-      legend: {
-        display: false,
+    chart: {
+      id: "ranking",
+      toolbar: {
+        autoSelected: 'pan',
+        show: false,
       },
-      tooltip: {
-        mode: 'nearest',
-        axis: 'x',
-        intersect: false,
-      },
-      zoom: {
-        zoom: {
-          mode: 'x',
-          wheel: {
-            enabled: true,
-            speed: 0.3,
-          }
+      events: {
+        markerClick: function(event, chartContext, { seriesIndex, dataPointIndex, config }) {
+          const week = rankList[dataPointIndex]
+
+          window.location.href=`/ranking/${week.fbs ? "fbs" : "fcs"}/${week.year}/${week.week}`
         },
-        limits: {
-          x: {
-            minRange: 15,
-          },
-        },
-        pan: {
-          enabled: true,
-          mode: 'x',
+      }
+    },
+    xaxis: {
+      categories: labels,
+      labels: {
+        style: {
+          cssClass: 'apexcharts-label',
         }
       }
     },
-    datasets: {
-      line: {
-        borderJoinStyle: 'round',
-        borderWidth: 2,
+    yaxis: {
+      reversed: true,
+      labels: {
+        style: {
+          cssClass: 'apexcharts-label',
+        }
       }
     },
-    scales: {
-      y: {
-        reverse: true,
-        suggestedMin: 1,
-        suggestedMax: 140,
+    markers: {
+      size: 1,
+    },
+    grid: {
+      xaxis: {
+        lines: {
+          show: false,
+        }
       }
+    },
+    stroke: {
+      width: 3,
+      lineCap: "round",
+    },
+    dataLabels: {
+      enabled: false,
+    },
+    fill: {
+      opacity: 1,
     },
   }
 
-  var style = getComputedStyle(document.body);
-  var primCol = style.getPropertyValue('--color-text-primary')
-
-  const data = {
-    labels: labels,
-    datasets: [
-      {
-        data: finalRank,
-        borderColor: primCol,
-        backgroundColor: primCol,
+  const brush = {
+    chart: {
+      id: 'brush',
+      brush: {
+        target: 'ranking',
+        enabled: true,
       },
-    ],
+      selection: {
+        enabled: true,
+        xaxis: {
+          min: labels.length - 30,
+          max: labels.length,
+        }
+      }
+    },
+    plotOptions: {
+      area: {
+        fillTo: 'end',
+      },
+    },
+    fill: {
+      type: 'gradient',
+      gradient: {
+        opacityFrom: 0.91,
+        opacityTo: 0.1,
+      }
+    },
+    grid: {
+      xaxis: {
+        lines: {
+          show: false
+        }
+      }
+    },
+    xaxis: {
+      categories: labels,
+      labels: {
+        show: false,
+      },
+      axisBorder: {
+        show: false,
+      },
+      axisTicks: {
+        show: false,
+      },
+      tooltip: {
+        enabled: false
+      }
+    },
+    yaxis: {
+      reversed: true,
+      tickAmount: 4,
+      min: 1,
+      max: 140,
+      labels: {
+        style: {
+          cssClass: 'apexcharts-label',
+        }
+      }
+    }
   }
+
+  const series = [{
+    name: "Ranking",
+    data: data
+  }]
 
   return (
     <div>
-      <Line data={data} options={options} />
+      <Chart
+        options={options}
+        series={series}
+        type="line"
+      />
+      <Chart
+        options={brush}
+        series={series}
+        type="area"
+        height="175"
+      />
     </div>
   )
 }
