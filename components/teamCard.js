@@ -7,7 +7,7 @@ export default function TeamCard({ name, id }) {
   return (
       <Link href={`/team/${id}`}>
         <div className={styles.card}>
-          <span className={utilStyles.headingLg}>
+          <span className={utilStyles.headingMd}>
             {name}
           </span>
         </div>
