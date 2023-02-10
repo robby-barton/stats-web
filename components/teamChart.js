@@ -72,7 +72,7 @@ export default function TeamChart({ rankList }) {
       selection: {
         enabled: true,
         xaxis: {
-          min: labels.length - 30,
+          min: Math.max(labels.length - 30, 0),
           max: labels.length,
         }
       }
