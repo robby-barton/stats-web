@@ -1,7 +1,7 @@
 .card {
 	box-shadow: 3px 3px 5px #000000;
-	margin: 0.5em 0.5em;
+	margin: 0.5rem 0.5rem;
 	border: 1px solid #000000;
-	padding: 0.5em 1em;
+	padding: 0.5rem 1rem;
 	display: flex;
 }
