@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import TeamList from './teamList';
+import styles from './teamSearch.module.css'
 
 export default function TeamSearch({ teams }) {
   const [searchField, setSearchField] = useState("")
@@ -23,9 +24,16 @@ export default function TeamSearch({ teams }) {
   }
 
   return (
-    <>
-      <input type="search" placehodler="Search Teams" onChange={handleChange} />
+    <div>
+      <div>
+        <input
+          className={styles.teamSearch}
+          type="search"
+          placeholder="Search Teams"
+          onChange={handleChange}
+        />
+      </div>
       {searchTeams()}
-    </>
+    </div>
   )
 }

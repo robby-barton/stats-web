@@ -1,13 +1,16 @@
 import React from 'react';
 import Link from "next/link";
+import styles from "./teamCard.module.css";
 import utilStyles from "../styles/utils.module.css";
 
 export default function TeamCard({ name, id }) {
   return (
-    <Link href={`/team/${id}`}>
-      <div className={utilStyles.headingMd}>
-        {name}
-      </div>
-    </Link>
+      <Link href={`/team/${id}`}>
+        <div className={styles.card}>
+          <span className={utilStyles.headingLg}>
+            {name}
+          </span>
+        </div>
+      </Link>
   );
 }
