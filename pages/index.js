@@ -27,8 +27,8 @@ export async function getServerSideProps({ res }) {
   )
 
   const avail = await availableRankings()
-  var year = 0
-  for (var key in avail) {
+  let year = 0
+  for (let key in avail) {
     if (key > year) {
       year = key
     }

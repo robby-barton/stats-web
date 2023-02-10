@@ -3,9 +3,9 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import styles from './selector.module.css';
 
-var currDiv = null
-var currYear = null
-var currWeek = null
+let currDiv = null
+let currYear = null
+let currWeek = null
 
 function DivisionDropdown({ options, initialValue }) {
   const [selected, setSelected] = useState(initialValue.toLowerCase())
@@ -45,7 +45,7 @@ function YearDropdown({ options, initialValue }) {
 
 function WeekDropdown({ options, initialValue }) {
   const optionList = []
-  for (var i = 1; i <= options.weeks; i++) {
+  for (let i = 1; i <= options.weeks; i++) {
     optionList.push({ value: i, text: 'Week ' + i })
   }
   if (options.postseason) {
@@ -74,7 +74,7 @@ export default function Selector({ rankList, division, year, week }) {
   currYear = year
   currWeek = week.toLowerCase()
   const years = []
-  for (var key in rankList) {
+  for (let key in rankList) {
     years.push(key)
   }
   years.sort().reverse()

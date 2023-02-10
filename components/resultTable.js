@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Link from "next/link";
 import {
   Column,
@@ -10,8 +10,13 @@ import {
   flexRender,
 } from '@tanstack/react-table'
 import Selector from './selector';
-import DataTablesScripts from './dataTablesScripts';
 import styles from './resultTable.module.css';
+
+import 'jquery/dist/jquery.min.js';
+import 'datatables.net-dt/js/dataTables.dataTables.min.js';
+import 'datatables.net-fixedheader-dt/js/fixedHeader.dataTables.min.js';
+
+import $ from 'jquery';
 
 const columnHelper = createColumnHelper()
 
@@ -54,11 +59,35 @@ const columns = [
 ]
 
 export default function ResultTable({ rankList, teamList, division, year, week }) {
-  var data = []
-  for (var i = 0; i < teamList.length; i++) {
+  useEffect(() => {
+    let table
+    $(document).ready(function () {
+      table = $('#resultTable').DataTable({
+        dom: '<"dom_wrapper"f>t',
+        paging: false,
+        searching: true,
+        orderClasses: false,
+        info: false,
+        fixedHeader: {
+          header: true,
+          headerOffset: $('#tableTop').offset().top + $('#tableTop').outerHeight(true)
+        }
+      })
+    })
+
+    return () => {
+      if (table) {
+        table.destroy()
+      }
+    }
+  }, [])
+
+  const data = []
+  for (let i = 0; i < teamList.length; i++) {
     data.push({
+      team_id: teamList[i].team_id,
       final_rank: teamList[i].final_rank,
-      name: <Link href={"/team/" + teamList[i].team_id}>{teamList[i].name}</Link>,
+      name: teamList[i].name,
       conf: teamList[i].conf,
       record: teamList[i].ties === 0 ?
         teamList[i].wins + "-" + teamList[i].losses :
@@ -69,9 +98,14 @@ export default function ResultTable({ rankList, teamList, division, year, week }
     })
   }
 
-  const table = useReactTable({
+  const getRowId = (row, relativeIndex, parent) => {
+    return parent ? [parent.id, row.team_id].join('.') : row.team_id
+  }
+
+  const reactTable = useReactTable({
     data,
     columns,
+    getRowId,
     getCoreRowModel: getCoreRowModel(),
   })
 
@@ -80,10 +114,9 @@ export default function ResultTable({ rankList, teamList, division, year, week }
       <Selector rankList={rankList} division={division} year={year} week={week} />
       <div id="tableTop">
       </div>
-      <DataTablesScripts />
       <table id="resultTable">
         <thead>
-          {table.getHeaderGroups().map(headerGroup => (
+          {reactTable.getHeaderGroups().map(headerGroup => (
             <tr key={headerGroup.id}>
             {headerGroup.headers.map((header, i, row) => (
               <th key={header.id} className={i + 1 === row.length ? styles.lastColumn : ""}>
@@ -99,8 +132,8 @@ export default function ResultTable({ rankList, teamList, division, year, week }
           ))}
         </thead>
         <tbody>
-          {table.getRowModel().rows.map(row => (
-            <tr key={row.id}>
+          {reactTable.getRowModel().rows.map(row => (
+            <tr key={row.id} onClick={() => window.location.href = `/team/${row.id}`}>
             {row.getVisibleCells().map((cell, i, row) => (
               <td key={cell.id} className={i + 1 === row.length ? styles.lastColumn : ""}>
                 {flexRender(cell.column.columnDef.cell, cell.getContext())}
