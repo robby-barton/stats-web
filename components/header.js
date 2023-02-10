@@ -17,6 +17,13 @@ export default function Header() {
         </Link>
       </div>
       <div className={styles.headerLink}>
+        <Link href="/teams">
+          <span className={utilStyles.headingMd}>
+            Teams
+          </span>
+        </Link>
+      </div>
+      <div className={styles.headerLink}>
         <Link href="/about">
           <span className={utilStyles.headingMd}>
             About

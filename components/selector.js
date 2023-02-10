@@ -14,7 +14,7 @@ function DivisionDropdown({ options, initialValue }) {
     <select
       className={styles.divisionDropdown}
       value={selected}
-      onChange={e => window.location.href=`/${e.target.value}/${currYear}/${currWeek}`}
+      onChange={e => window.location.href=`/ranking/${e.target.value}/${currYear}/${currWeek}`}
     >
       {options.map(option => (
         <option key={option} value={option.toLowerCase()}>
@@ -32,7 +32,7 @@ function YearDropdown({ options, initialValue }) {
     <select
       className={styles.yearDropdown}
       value={selected}
-      onChange={e => window.location.href=`/${currDiv}/${e.target.value}/${currWeek}`}
+      onChange={e => window.location.href=`/ranking/${currDiv}/${e.target.value}/${currWeek}`}
     >
       {options.map(option => (
         <option key={option} value={option}>
@@ -58,7 +58,7 @@ function WeekDropdown({ options, initialValue }) {
       <select
         className={styles.weekDropdown}
         value={selected}
-        onChange={e => window.location.href=`/${currDiv}/${currYear}/${e.target.value}`}
+        onChange={e => window.location.href=`/ranking/${currDiv}/${currYear}/${e.target.value}`}
       >
         {optionList.map(option => (
           <option key={option.value} value={option.value}>

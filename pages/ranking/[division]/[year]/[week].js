@@ -1,9 +1,9 @@
-import Layout from '../../../components/layout';
-import Title from '../../../components/title';
-import Header from '../../../components/header';
-import Meta from '../../../components/meta';
-import ResultTable from '../../../components/resultTable';
-import { availableRankings, getRanking } from '../../../lib/util';
+import Layout from '../../../../components/layout';
+import Title from '../../../../components/title';
+import Header from '../../../../components/header';
+import Meta from '../../../../components/meta';
+import ResultTable from '../../../../components/resultTable';
+import { availableRankings, getRanking } from '../../../../lib/util';
 
 export default function Week({ rankList, results, division, year, week }) {
   var weekTitle = 'Week ' + week
