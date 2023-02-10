@@ -6,7 +6,7 @@ import ResultTable from '../../../../components/resultTable';
 import { availableRankings, getRanking } from '../../../../lib/util';
 
 export default function Week({ rankList, results, division, year, week }) {
-  var weekTitle = 'Week ' + week
+  let weekTitle = 'Week ' + week
   if (week === 'Final') {
     weekTitle = 'Final'
   }

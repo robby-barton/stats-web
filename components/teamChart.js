@@ -4,7 +4,7 @@ import Chart from 'react-apexcharts';
 export default function TeamChart({ rankList }) {
   const labels = [];
   const data = [];
-  for (var i = 0; i < rankList.length; i++) {
+  for (let i = 0; i < rankList.length; i++) {
     labels.push(`${rankList[i].year} Week ${rankList[i].postseason ? "Final" : rankList[i].week}`)
     data.push(rankList[i].final_rank)
   }
@@ -60,6 +60,9 @@ export default function TeamChart({ rankList }) {
     fill: {
       opacity: 1,
     },
+    noData: {
+      text: "Loading...",
+    }
   }
 
   const brush = {
@@ -121,6 +124,9 @@ export default function TeamChart({ rankList }) {
           cssClass: 'apexcharts-label',
         }
       }
+    },
+    noData: {
+      text: "Loading...",
     }
   }
 
