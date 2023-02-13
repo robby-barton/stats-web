@@ -12,6 +12,7 @@ export default function Layout({ children }) {
     <div className={styles.container}>
       <Head>
         <link rel="icon" href="/favicon.ico" />
+        <meta name="viewport" content="width=device-width" />
       </Head>
       <Header />
       {children}
