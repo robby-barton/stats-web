@@ -79,7 +79,7 @@ export default function GameTable({ games }) {
         info: false,
         fixedHeader: {
           header: true,
-          headerOffset: $('#gameTableTop').offset().top + $('#gameTableTop').outerHeight(true)
+          headerOffset: $('#tableTop').offset().top + $('#tableTop').outerHeight(true)
         },
         columnDefs: [
           {
@@ -114,7 +114,7 @@ export default function GameTable({ games }) {
 
   return (
     <div>
-      <div id="gameTableTop">
+      <div id="tableTop">
       </div>
       <table id="gameTable">
         <thead>
