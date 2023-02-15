@@ -60,9 +60,6 @@ export default function TeamChart({ rankList }) {
     fill: {
       opacity: 1,
     },
-    noData: {
-      text: "Loading...",
-    }
   }
 
   const brush = {
@@ -125,9 +122,6 @@ export default function TeamChart({ rankList }) {
         }
       }
     },
-    noData: {
-      text: "Loading...",
-    }
   }
 
   const series = [{

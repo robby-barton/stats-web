@@ -50,7 +50,7 @@ export async function getServerSideProps({ params, res }) {
     return {
       redirect: {
         permanent: false,
-        destination: `/${division}/${year}/${avail[year].weeks}`
+        destination: `/ranking/${division}/${year}/${avail[year].weeks}`
       },
       props: {},
     }
@@ -58,7 +58,7 @@ export async function getServerSideProps({ params, res }) {
     return {
       redirect: {
         permanent: false,
-        destination: `/${division}/${year}/${avail[year].postseason ? 'final' : avail[year].weeks}`
+        destination: `/ranking/${division}/${year}/${avail[year].postseason ? 'final' : avail[year].weeks}`
       },
       props: {},
     }
@@ -66,7 +66,7 @@ export async function getServerSideProps({ params, res }) {
     return {
       redirect: {
         permanent: false,
-        destination: `/${division}/${year}/${avail[year].postseason ? 'final' : avail[year].weeks}`
+        destination: `/ranking/${division}/${year}/${avail[year].postseason ? 'final' : avail[year].weeks}`
       },
       props: {},
     }
@@ -74,7 +74,7 @@ export async function getServerSideProps({ params, res }) {
     return {
       redirect: {
         permanent: false,
-        destination: `/${division}/${year}/1`
+        destination: `/ranking/${division}/${year}/1`
       },
       props: {},
     }
