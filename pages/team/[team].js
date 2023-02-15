@@ -6,7 +6,7 @@ import Header from '../../components/header';
 import Meta from '../../components/meta';
 import { getTeamRankings } from '../../lib/util';
 
-const TeamChartNoSSR = dynamic(
+const TeamChart = dynamic(
   () => import('../../components/teamChart'),
   { ssr: false }
 )
@@ -21,7 +21,7 @@ export default function Team({ rankList }) {
       <Title title={title} />
       <Meta desc={meta} />
       <h2>{teamName}</h2>
-      <TeamChartNoSSR 
+      <TeamChart
         rankList={rankList}
       />
     </Layout>
