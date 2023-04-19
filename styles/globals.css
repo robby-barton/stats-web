@@ -75,58 +75,14 @@ tbody > tr:hover {
 
 th {
 	background: var(--color-bg-primary) !important;
+	position: sticky;
+	top: 6.99rem;
+	z-index: 1;
 }
 
 th, td {
 	padding: 0.75rem;
 	line-height: 1.2;
-}
-
-table.dataTable thead .sorting:after {
-	padding-left: 0.2rem;
-	letter-spacing: -0.1rem;
-	content: "\2191\2193";
-	opacity: .3;
-}
-
-/* sorted ascending */
-table.dataTable thead .sorting_asc:after {
-	padding-left: 0.2rem;
-	content: "\2191";
-}
-
-/* sorted descending */
-table.dataTable thead .sorting_desc:after {
-	padding-left: 0.2rem;
-	content: "\2193";
-}
-
-table.fixedHeader-floating {
-	z-index: 1;
-}
-
-div.dom_wrapper {
-	background: var(--color-bg-primary) !important;
-	width: 100%;
-	position: sticky;
-	top: 4rem;
-	height: 3rem;
-	z-index: 1;
-}
-
-.dataTables_filter > * {
-	float: right;
-}
-
-.dataTables_filter input {
-	margin: 0.70rem 0;
-	margin-left: 0.25rem;
-	background-color: white !important;
-}
-
-#tableTop {
-	position: sticky;
-	top: 7rem;
 }
 
 .apexcharts-tooltip {

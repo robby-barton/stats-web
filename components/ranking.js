@@ -54,8 +54,6 @@ export default function Ranking({ rankList, teamList, division, year, week }) {
           />
         </div>
       </div>
-      <div id="tableTop">
-      </div>
       {searchTeams()}
     </div>
   )

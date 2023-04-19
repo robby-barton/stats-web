@@ -36,8 +36,6 @@ export default function Games({ games }) {
           />
         </div>
       </div>
-      <div id="tableTop">
-      </div>
       {searchTeams()}
     </div>
   )

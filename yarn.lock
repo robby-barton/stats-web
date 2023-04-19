@@ -257,17 +257,17 @@
   dependencies:
     tslib "^2.4.0"
 
-"@tanstack/react-table@^8.5.30":
-  version "8.7.6"
-  resolved "https://registry.yarnpkg.com/@tanstack/react-table/-/react-table-8.7.6.tgz#1420d69da458fe13c08af73b6f3c98d5e49e63f6"
-  integrity sha512-/QijmMFeP7wDLBnr0MQ/5MlbXePbIL/1nOtkxBC9zvmBu4gDKJEDBqipUyM7Wc/iBpSd0IFyqBlvZvTPD9FYDA==
+"@tanstack/react-table@^8.8.5":
+  version "8.8.5"
+  resolved "https://registry.yarnpkg.com/@tanstack/react-table/-/react-table-8.8.5.tgz#d345fd855bb8067cd32b7a9b5231bdefd9cbde55"
+  integrity sha512-g/t21E/ICHvaCOJOhsDNr5QaB/6aDQEHFbx/YliwwU/CJThMqG+dS28vnToIBV/5MBgpeXoGRi2waDJVJlZrtg==
   dependencies:
-    "@tanstack/table-core" "8.7.6"
+    "@tanstack/table-core" "8.8.5"
 
-"@tanstack/table-core@8.7.6":
-  version "8.7.6"
-  resolved "https://registry.yarnpkg.com/@tanstack/table-core/-/table-core-8.7.6.tgz#5ad8a67ef6312c56c4a075326afcb2813c030a22"
-  integrity sha512-sqiNTMzB6cpyL8DFH6/VqW48SwiflLqxQqYpo2wNock7rdVGvlm0BLNI8vZUJbr1+fmmWmHwBvi5OMgZw8n1DA==
+"@tanstack/table-core@8.8.5":
+  version "8.8.5"
+  resolved "https://registry.yarnpkg.com/@tanstack/table-core/-/table-core-8.8.5.tgz#4d75b452a9989a273174df1b9249157292a15bd5"
+  integrity sha512-Xnwa1qxpgvSW7ozLiexmKp2PIYcLBiY/IizbdGriYCL6OOHuZ9baRhrrH51zjyz+61ly6K59rmt6AI/3RR+97Q==
 
 "@types/parse-json@^4.0.0":
   version "4.0.0"
@@ -408,38 +408,6 @@ csstype@^3.0.2:
   resolved "https://registry.yarnpkg.com/csstype/-/csstype-3.1.1.tgz#841b532c45c758ee546a11d5bd7b7b473c8c30b9"
   integrity sha512-DJR/VvkAvSZW9bTouZue2sSxDwdTN92uHjqeKVm+0dAqdfNykRzQ95tay8aXMBAAPpUiq4Qcug2L7neoRh2Egw==
 
-datatables.net-dt@>=1.12.1, datatables.net-dt@^1.13.1:
-  version "1.13.1"
-  resolved "https://registry.yarnpkg.com/datatables.net-dt/-/datatables.net-dt-1.13.1.tgz#c3e31c8ae85dabe6895e740f6fbe0ed2e8276c39"
-  integrity sha512-J5ul/Y+Hpyfh8y02DKwgbmUij4e4R6bstnx4iYvY7FV2b2XuCP0Qow/Uuc0gtxDHSz2bTsoeRHqg4teoGftVDg==
-  dependencies:
-    datatables.net ">=1.12.1"
-    jquery ">=1.7"
-
-datatables.net-fixedheader-dt@^3.3.1:
-  version "3.3.1"
-  resolved "https://registry.yarnpkg.com/datatables.net-fixedheader-dt/-/datatables.net-fixedheader-dt-3.3.1.tgz#3e9a986bb18444131b981feeda89cc38c961a230"
-  integrity sha512-IrhH5zQVYOhcjUWQpij3gJKH9JOnKwWPq9fggJLO+intF23wgFHjoHO/+JZJY4Fp1DEcsSNgdmWMI7IjaTUyJA==
-  dependencies:
-    datatables.net-dt ">=1.12.1"
-    datatables.net-fixedheader ">=3.2.4"
-    jquery ">=1.7"
-
-datatables.net-fixedheader@>=3.2.4:
-  version "3.3.1"
-  resolved "https://registry.yarnpkg.com/datatables.net-fixedheader/-/datatables.net-fixedheader-3.3.1.tgz#71aafa169b91f0fc1b3fa353d50f575ad67ad50d"
-  integrity sha512-m1ip5dOOsdjaFw2e5G77o+XLjqy5wWKnBnp+BwbnFCq4J5hFbMqcIV1r5z9X+NeAiKlADqZqteeLoO2xYRXBVA==
-  dependencies:
-    datatables.net ">=1.12.1"
-    jquery ">=1.7"
-
-datatables.net@>=1.12.1:
-  version "1.13.1"
-  resolved "https://registry.yarnpkg.com/datatables.net/-/datatables.net-1.13.1.tgz#199f7cb63f4536c135e161f95254212835a1c130"
-  integrity sha512-cX5dDHsbVdLLYKsWOSE0MvuGUcV88zU5dZ/taK2puJV6F9Fw0CFsP3+U/kr+qpDSFOBLWISRyM4Q9wWWovPTNg==
-  dependencies:
-    jquery ">=1.7"
-
 duplexer@^0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/duplexer/-/duplexer-0.1.2.tgz#3abe43aef3835f8ae077d136ddce0f276b0400e6"
@@ -522,11 +490,6 @@ is-core-module@^2.9.0:
   integrity sha512-RRjxlvLDkD1YJwDbroBHMb+cukurkDWNyHx7D3oNB5x9rb5ogcksMC5wHCadcXoo67gVr/+3GFySh3134zi6rw==
   dependencies:
     has "^1.0.3"
-
-jquery@>=1.7, jquery@^3.6.1:
-  version "3.6.3"
-  resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.6.3.tgz#23ed2ffed8a19e048814f13391a19afcdba160e6"
-  integrity sha512-bZ5Sy3YzKo9Fyc8wH2iIQK4JImJ6R0GWI9kL1/k7Z91ZBNgkRXE6U0JfHIizZbort8ZunhSI3jw9I6253ahKfg==
 
 "js-tokens@^3.0.0 || ^4.0.0", js-tokens@^4.0.0:
   version "4.0.0"
