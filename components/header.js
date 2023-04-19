@@ -17,9 +17,9 @@ export default function Header() {
         </Link>
       </div>
       <div className={styles.headerLink}>
-        <Link href="/games-per-day">
+        <Link href="/game-count">
           <span className={utilStyles.headingMd}>
-            Games Per Day
+            Game Count
           </span>
         </Link>
       </div>

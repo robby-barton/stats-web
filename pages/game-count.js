@@ -1,15 +1,15 @@
 import Layout from '../components/layout';
 import Title from '../components/title';
 import Meta from '../components/meta';
-import GameTable from '../components/gameTable'
+import Games from '../components/games'
 import { makeSerializable, allGames } from '../lib/util'
 
-export default function GamesPerDay({ games }) {
+export default function GameCount({ games }) {
   return (
     <Layout>
-      <Title title='Games by Day' />
-      <Meta desc='Games played by day per team' />
-      <GameTable games={games} />
+      <Title title='Game Count' />
+      <Meta desc='Count of games played by day per team' />
+      <Games games={games} />
     </Layout>
   );
 }

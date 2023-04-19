@@ -49,3 +49,16 @@
 .lightText {
   color: #666;
 }
+
+.inputArea {
+	background: var(--color-bg-primary);
+	width: 100%;
+	padding: 0 1rem;
+	position: sticky;
+	top: 4rem;
+	height: 3rem;
+	line-height: 3rem;
+	z-index: 2;
+	display: flex;
+	align-items: center;
+}
