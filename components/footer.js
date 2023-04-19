@@ -1,6 +1,6 @@
 import Link from "next/link";
 import styles from "./footer.module.css";
-import utilStyles from "../styles/common.module.css";
+import commonStyles from "../styles/common.module.css";
 
 export default function Footer() {
   return (

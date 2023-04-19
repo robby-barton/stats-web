@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import utilStyles from "../styles/common.module.css";
+import commonStyles from "../styles/common.module.css";
 import styles from './selector.module.css';
 
 let currDiv = null
