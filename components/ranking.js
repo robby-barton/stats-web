@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Selector from './selector';
-import TeamTable from './teamTable';
+import RankingTable from './rankingTable';
 import styles from './ranking.module.css';
 
 export default function Ranking({ rankList, teamList, division, year, week }) {
@@ -37,7 +37,7 @@ export default function Ranking({ rankList, teamList, division, year, week }) {
 
   function searchTeams() {
     return (
-      <TeamTable teams={filteredTeams} />
+      <RankingTable teams={filteredTeams} />
     )
   }
 

@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import styles from './teamTable.module.css';
+import styles from './rankingTable.module.css';
 
-export default function TeamTable({ teams }) {
+export default function RankingTable({ teams }) {
   return (
-    <table id="resultTable">
+    <table>
       <thead>
         <tr key="head">
           <th key="headRank">Rank</th>
