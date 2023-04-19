@@ -45,12 +45,14 @@ export default function Ranking({ rankList, teamList, division, year, week }) {
     <div>
       <div className={styles.inputArea}>
         <Selector rankList={rankList} division={division} year={year} week={week} />
-        <input
-          className={styles.teamSearch}
-          type="search"
-          placeholder="Search Teams"
-          onChange={handleChange}
-        />
+        <div className={styles.searchDiv}>
+          <input
+            className={styles.searchInput}
+            type="search"
+            placeholder="Search Teams"
+            onChange={handleChange}
+          />
+        </div>
       </div>
       <div id="tableTop">
       </div>

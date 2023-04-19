@@ -24,7 +24,7 @@ export default function RankingTable({ teams }) {
             <td key={row.team_id+"record"}>{row.record}</td>
             <td key={row.team_id+"srs"}>{row.srs_rank}</td>
             <td key={row.team_id+"sos"}>{row.sos_rank}</td>
-            <td key={row.team_id+"final"} className={styles.lastColumn}>{row.final_raw}</td>
+            <td key={row.team_id+"final"} className={styles.lastColumn}>{row.final_raw.toFixed(5)}</td>
           </tr>
         ))}
       </tbody>
