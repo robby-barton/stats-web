@@ -2,7 +2,7 @@ import Layout from '../../../../components/layout';
 import Title from '../../../../components/title';
 import Header from '../../../../components/header';
 import Meta from '../../../../components/meta';
-import ResultTable from '../../../../components/resultTable';
+import Ranking from '../../../../components/ranking';
 import { availableRankings, getRanking } from '../../../../lib/util';
 
 export default function Week({ rankList, results, division, year, week }) {
@@ -17,7 +17,7 @@ export default function Week({ rankList, results, division, year, week }) {
     <Layout>
       <Title title={title} />
       <Meta desc={meta} />
-      <ResultTable 
+      <Ranking 
         rankList={rankList}
         teamList={results}
         division={division}

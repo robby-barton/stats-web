@@ -1,6 +1,6 @@
 import dynamic from "next/dynamic";
 import styles from "./header.module.css";
-import utilStyles from "../styles/utils.module.css";
+import commonStyles from "../styles/common.module.css";
 import Link from "next/link";
 import Selector from "./selector";
 
@@ -17,22 +17,22 @@ export default function Header() {
         </Link>
       </div>
       <div className={styles.headerLink}>
-        <Link href="/games-per-day">
-          <span className={utilStyles.headingMd}>
-            Games Per Day
+        <Link href="/game-count">
+          <span className={commonStyles.headingMd}>
+            Game Count
           </span>
         </Link>
       </div>
       <div className={styles.headerLink}>
         <Link href="/teams">
-          <span className={utilStyles.headingMd}>
+          <span className={commonStyles.headingMd}>
             Teams
           </span>
         </Link>
       </div>
       <div className={styles.headerLink}>
         <Link href="/about">
-          <span className={utilStyles.headingMd}>
+          <span className={commonStyles.headingMd}>
             About
           </span>
         </Link>

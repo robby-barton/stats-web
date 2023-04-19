@@ -1,4 +1,6 @@
 import React from 'react';
+import styles from './rankingTable.module.css';
+import commonStyles from '../styles/common.module.css';
 import {
   ColumnDef,
   flexRender,
@@ -8,7 +10,7 @@ import {
   useReactTable,
 } from '@tanstack/react-table';
 
-export default function GameTable({ teams }) {
+export default function RankingTable({ teams }) {
   const rerender = React.useReducer(() => ({}), {})[1]
 
   const [sorting, setSorting] = React.useState([])
@@ -16,49 +18,42 @@ export default function GameTable({ teams }) {
   const columns = React.useMemo(
     () => [
       {
+        accessorKey: 'final_rank',
+        header: "Rank",
+        cell: info => info.getValue(),
+        sortDescFirst: false,
+      },
+      {
         accessorKey: 'name',
         header: "Team",
         cell: info => info.getValue(),
       },
       {
-        accessorKey: 'sun',
-        header: "Sun",
+        accessorKey: 'conf',
+        header: "Conf",
         cell: info => info.getValue(),
       },
       {
-        accessorKey: 'mon',
-        header: "Mon",
+        accessorKey: 'record',
+        header: "Record",
         cell: info => info.getValue(),
       },
       {
-        accessorKey: 'tue',
-        header: "Tue",
+        accessorKey: 'srs_rank',
+        header: "SRS",
         cell: info => info.getValue(),
+        sortDescFirst: false,
       },
       {
-        accessorKey: 'wed',
-        header: "Wed",
+        accessorKey: 'sos_rank',
+        header: "SOS",
         cell: info => info.getValue(),
+        sortDescFirst: false,
       },
       {
-        accessorKey: 'thu',
-        header: "Thu",
-        cell: info => info.getValue(),
-      },
-      {
-        accessorKey: 'fri',
-        header: "Fri",
-        cell: info => info.getValue(),
-      },
-      {
-        accessorKey: 'sat',
-        header: "Sat",
-        cell: info => info.getValue(),
-      },
-      {
-        accessorKey: 'total',
-        header: "Total",
-        cell: info => info.getValue(),
+        accessorKey: 'final_raw',
+        header: "Final",
+        cell: info => info.getValue().toFixed(5),
       },
     ],
     []
@@ -87,7 +82,7 @@ export default function GameTable({ teams }) {
           <tr key={headerGroup.id}>
             {headerGroup.headers.map((header, i, row) => {
               return (
-                <th key={header.id} colSpan={header.colSpan}>
+                <th key={header.id} colSpan={header.colSpan} className={i + 1 === row.length ? styles.lastColumn : ""}>
                   {header.isPlaceholder? null : (
                     <div
                       {...{
@@ -116,10 +111,10 @@ export default function GameTable({ teams }) {
       <tbody>
         {table.getRowModel().rows.map(row=> {
           return (
-            <tr key={row.id}>
+            <tr key={row.id} onClick={() => window.location.href = `/team/${row.id}`}>
               {row.getVisibleCells().map((cell, i, row) => {
                 return (
-                  <td key={cell.id}>
+                  <td key={cell.id} className={i + 1 === row.length ? styles.lastColumn : ""}>
                     {flexRender(
                       cell.column.columnDef.cell,
                       cell.getContext()
