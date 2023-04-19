@@ -9,7 +9,7 @@ import {
   ColumnDef,
   flexRender,
 } from '@tanstack/react-table'
-import utilStyles from "../styles/utils.module.css";
+import utilStyles from "../styles/common.module.css";
 
 import 'jquery/dist/jquery.min.js';
 import 'datatables.net-dt/js/dataTables.dataTables.min.js';

@@ -1,3 +1,7 @@
+.selectorStyling {
+	display: flex;
+}
+
 .selectorStyling select {
 	border-radius: 5rem;
 	border: 0.25px solid;

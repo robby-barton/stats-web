@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from "next/link";
 import styles from "./teamCard.module.css";
-import utilStyles from "../styles/utils.module.css";
+import utilStyles from "../styles/common.module.css";
 
 export default function TeamCard({ name, id }) {
   return (

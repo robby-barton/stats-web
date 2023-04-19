@@ -1,6 +1,6 @@
 import dynamic from "next/dynamic";
 import styles from "./header.module.css";
-import utilStyles from "../styles/utils.module.css";
+import utilStyles from "../styles/common.module.css";
 import Link from "next/link";
 import Selector from "./selector";
 

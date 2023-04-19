@@ -1,87 +1,9 @@
-import React, { useEffect } from 'react';
-import Link from "next/link";
-import {
-  Column,
-  Table,
-  createColumnHelper,
-  useReactTable,
-  getCoreRowModel,
-  ColumnDef,
-  flexRender,
-} from '@tanstack/react-table'
+import React, { useState } from 'react';
 import Selector from './selector';
+import TeamTable from './teamTable';
 import styles from './resultTable.module.css';
 
-import 'jquery/dist/jquery.min.js';
-import 'datatables.net-dt/js/dataTables.dataTables.min.js';
-import 'datatables.net-fixedheader-dt/js/fixedHeader.dataTables.min.js';
-
-import $ from 'jquery';
-
-const columnHelper = createColumnHelper()
-
-const columns = [
-  columnHelper.accessor('final_rank', {
-    header: () => 'Rank',
-    cell: info => info.getValue(),
-    footer: info => info.column.id,
-  }),
-  columnHelper.accessor('name', {
-    header: () => 'Team',
-    cell: info => info.getValue(),
-    footer: info => info.column.id,
-  }),
-  columnHelper.accessor('conf', {
-    header: () => 'Conf',
-    cell: info => info.getValue(),
-    footer: info => info.column.id,
-  }),
-  columnHelper.accessor('record', {
-    header: () => 'Record',
-    cell: info => info.getValue(),
-    footer: info => info.column.id,
-  }),
-  columnHelper.accessor('srs_rank', {
-    header: () => 'SRS',
-    cell: info => info.getValue(),
-    footer: info => info.column.id,
-  }),
-  columnHelper.accessor('sos_rank', {
-    header: () => 'SOS',
-    cell: info => info.getValue(),
-    footer: info => info.column.id,
-  }),
-  columnHelper.accessor('final_raw', {
-    header: () => 'Final',
-    cell: info => info.getValue().toFixed(5),
-    footer: info => info.column.id,
-  }),
-]
-
 export default function ResultTable({ rankList, teamList, division, year, week }) {
-  useEffect(() => {
-    let table
-    $(document).ready(function () {
-      table = $('#resultTable').DataTable({
-        dom: '<"dom_wrapper"f>t',
-        paging: false,
-        searching: true,
-        orderClasses: false,
-        info: false,
-        fixedHeader: {
-          header: true,
-          headerOffset: $('#tableTop').offset().top + $('#tableTop').outerHeight(true)
-        }
-      })
-    })
-
-    return () => {
-      if (table) {
-        table.destroy()
-      }
-    }
-  }, [])
-
   const data = []
   for (let i = 0; i < teamList.length; i++) {
     data.push({
@@ -98,51 +20,41 @@ export default function ResultTable({ rankList, teamList, division, year, week }
     })
   }
 
-  const getRowId = (row, relativeIndex, parent) => {
-    return parent ? [parent.id, row.team_id].join('.') : row.team_id
+  const [searchField, setSearchField] = useState("")
+
+  const filteredTeams = data.filter(
+    team => {
+      return (
+        team.name.toLowerCase().includes(searchField.toLowerCase()) ||
+        team.conf.toLowerCase().includes(searchField.toLowerCase())
+      );
+    }
+  );
+
+  const handleChange = e => {
+    setSearchField(e.target.value)
+  };
+
+  function searchTeams() {
+    return (
+      <TeamTable teams={filteredTeams} />
+    )
   }
 
-  const reactTable = useReactTable({
-    data,
-    columns,
-    getRowId,
-    getCoreRowModel: getCoreRowModel(),
-  })
-
   return (
-    <div className={styles.resultStyles}>
-      <Selector rankList={rankList} division={division} year={year} week={week} />
+    <div>
+      <div className={styles.inputArea}>
+        <Selector rankList={rankList} division={division} year={year} week={week} />
+        <input
+          className={styles.teamSearch}
+          type="search"
+          placeholder="Search Teams"
+          onChange={handleChange}
+        />
+      </div>
       <div id="tableTop">
       </div>
-      <table id="resultTable">
-        <thead>
-          {reactTable.getHeaderGroups().map(headerGroup => (
-            <tr key={headerGroup.id}>
-            {headerGroup.headers.map((header, i, row) => (
-              <th key={header.id} className={i + 1 === row.length ? styles.lastColumn : ""}>
-                {header.isPlaceholder
-                  ? null
-                  : flexRender(
-                    header.column.columnDef.header,
-                    header.getContext()
-                  )}
-              </th>
-            ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody>
-          {reactTable.getRowModel().rows.map(row => (
-            <tr key={row.id} onClick={() => window.location.href = `/team/${row.id}`}>
-            {row.getVisibleCells().map((cell, i, row) => (
-              <td key={cell.id} className={i + 1 === row.length ? styles.lastColumn : ""}>
-                {flexRender(cell.column.columnDef.cell, cell.getContext())}
-              </td>
-            ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      {searchTeams()}
     </div>
   )
 }
