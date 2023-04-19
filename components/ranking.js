@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import Selector from './selector';
 import TeamTable from './teamTable';
-import styles from './resultTable.module.css';
+import styles from './ranking.module.css';
 
-export default function ResultTable({ rankList, teamList, division, year, week }) {
+export default function Ranking({ rankList, teamList, division, year, week }) {
   const data = []
   for (let i = 0; i < teamList.length; i++) {
     data.push({
