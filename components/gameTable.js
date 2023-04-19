@@ -9,6 +9,7 @@ import {
   ColumnDef,
   flexRender,
 } from '@tanstack/react-table'
+import utilStyles from "../styles/utils.module.css";
 
 import 'jquery/dist/jquery.min.js';
 import 'datatables.net-dt/js/dataTables.dataTables.min.js';
@@ -114,6 +115,8 @@ export default function GameTable({ games }) {
 
   return (
     <div>
+      <div className={utilStyles.searchBoxArea}>
+      </div>
       <div id="tableTop">
       </div>
       <table id="gameTable">
