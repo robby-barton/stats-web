@@ -49,3 +49,16 @@
 .lightText {
   color: #666;
 }
+
+.searchBoxArea {
+	position: sticky;
+	top: 4rem;
+	height: 3rem;
+	display: flex;
+	justify-content: space-between;
+	margin: 0;
+	align-items: center;
+	float: left;
+	z-index: 2;
+	width: 16rem;
+}

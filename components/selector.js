@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import utilStyles from "../styles/utils.module.css";
 import styles from './selector.module.css';
 
 let currDiv = null
@@ -79,10 +80,12 @@ export default function Selector({ rankList, division, year, week }) {
   }
   years.sort().reverse()
   return (
-    <div className={styles.selectorStyling}>
-      <DivisionDropdown options={['fbs', 'fcs']} initialValue={division} />
-      <YearDropdown options={years} initialValue={year} />
-      <WeekDropdown options={rankList[year]} initialValue={week} />
+    <div className={utilStyles.searchBoxArea}>
+      <div className={styles.selectorStyling}>
+        <DivisionDropdown options={['fbs', 'fcs']} initialValue={division} />
+        <YearDropdown options={years} initialValue={year} />
+        <WeekDropdown options={rankList[year]} initialValue={week} />
+      </div>
     </div>
   );
 }
