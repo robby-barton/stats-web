@@ -2,7 +2,7 @@ import Layout from '../components/layout';
 import Title from '../components/title';
 import Meta from '../components/meta';
 import Games from '../components/games'
-import { makeSerializable, allGames } from '../lib/util'
+import { allGames } from '../lib/utils'
 
 export default function GameCount({ games }) {
   return (
@@ -24,7 +24,7 @@ export async function getServerSideProps({ res }) {
 
   return {
     props: {
-      games: makeSerializable(results),
+      games: results,
     }
   }
 }

@@ -2,7 +2,7 @@ import Layout from '../components/layout';
 import Title from '../components/title';
 import Meta from '../components/meta';
 import Ranking from '../components/ranking';
-import { availableRankings, getRanking } from '../lib/util';
+import { availableRankings, getRanking } from '../lib/utils';
 
 export default function Home({ rankList, fbs, year, week }) {
   return (

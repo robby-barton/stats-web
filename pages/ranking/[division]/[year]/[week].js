@@ -3,7 +3,7 @@ import Title from '../../../../components/title';
 import Header from '../../../../components/header';
 import Meta from '../../../../components/meta';
 import Ranking from '../../../../components/ranking';
-import { availableRankings, getRanking } from '../../../../lib/util';
+import { availableRankings, getRanking } from '../../../../lib/utils';
 
 export default function Week({ rankList, results, division, year, week }) {
   let weekTitle = 'Week ' + week

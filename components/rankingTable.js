@@ -73,7 +73,6 @@ export default function RankingTable({ teams }) {
     onSortingChange: setSorting,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
-    debugTable: true,
   })
   return (
     <table>

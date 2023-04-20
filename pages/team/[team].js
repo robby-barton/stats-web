@@ -4,7 +4,7 @@ import Layout from '../../components/layout';
 import Title from '../../components/title';
 import Header from '../../components/header';
 import Meta from '../../components/meta';
-import { getTeamRankings } from '../../lib/util';
+import { getTeamRankings } from '../../lib/utils';
 
 const TeamChart = dynamic(
   () => import('../../components/teamChart'),
