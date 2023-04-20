@@ -1,24 +1,22 @@
 {
   "private": true,
   "scripts": {
-    "prisma": "npx prisma db pull && npx prisma generate",
     "dev": "next dev",
-    "build": "prisma generate && next build",
+    "build": "next build",
     "start": "next start"
   },
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
-    "@prisma/client": "^4.6.1",
     "@tanstack/react-table": "^8.8.5",
     "apexcharts": "^3.37.0",
     "next": "^13.1.5",
+    "postgres": "^3.3.4",
     "react": "18.2.0",
     "react-apexcharts": "^1.4.0",
     "react-dom": "18.2.0"
   },
   "devDependencies": {
-    "@next/bundle-analyzer": "^13.3.0",
-    "prisma": "^4.6.1"
+    "@next/bundle-analyzer": "^13.3.0"
   }
 }

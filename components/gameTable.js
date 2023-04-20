@@ -24,41 +24,49 @@ export default function GameTable({ teams }) {
         accessorKey: 'sun',
         header: "Sun",
         cell: info => info.getValue(),
+        sortDescFirst: true,
       },
       {
         accessorKey: 'mon',
         header: "Mon",
         cell: info => info.getValue(),
+        sortDescFirst: true,
       },
       {
         accessorKey: 'tue',
         header: "Tue",
         cell: info => info.getValue(),
+        sortDescFirst: true,
       },
       {
         accessorKey: 'wed',
         header: "Wed",
         cell: info => info.getValue(),
+        sortDescFirst: true,
       },
       {
         accessorKey: 'thu',
         header: "Thu",
         cell: info => info.getValue(),
+        sortDescFirst: true,
       },
       {
         accessorKey: 'fri',
         header: "Fri",
         cell: info => info.getValue(),
+        sortDescFirst: true,
       },
       {
         accessorKey: 'sat',
         header: "Sat",
         cell: info => info.getValue(),
+        sortDescFirst: true,
       },
       {
         accessorKey: 'total',
         header: "Total",
         cell: info => info.getValue(),
+        sortDescFirst: true,
       },
     ],
     []
@@ -78,7 +86,6 @@ export default function GameTable({ teams }) {
     onSortingChange: setSorting,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
-    debugTable: true,
   })
   return (
     <table>
