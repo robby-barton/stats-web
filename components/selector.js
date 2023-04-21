@@ -10,12 +10,18 @@ let currWeek = null
 
 function DivisionDropdown({ options, initialValue }) {
   const [selected, setSelected] = useState(initialValue.toLowerCase())
+  const router = useRouter()
+
+  const handleChange = e => {
+    setSelected(e.target.value)
+    router.push(`/ranking/${e.target.value}/${currYear}/${currWeek}`)
+  };
 
   return (
     <select
       className={styles.divisionDropdown}
       value={selected}
-      onChange={e => window.location.href=`/ranking/${e.target.value}/${currYear}/${currWeek}`}
+      onChange={handleChange}
     >
       {options.map(option => (
         <option key={option} value={option.toLowerCase()}>
@@ -28,12 +34,18 @@ function DivisionDropdown({ options, initialValue }) {
 
 function YearDropdown({ options, initialValue }) {
   const [selected, setSelected] = useState(initialValue)
+  const router = useRouter()
+
+  const handleChange = e => {
+    setSelected(e.target.value)
+    router.push(`/ranking/${currDiv}/${e.target.value}/${currWeek}`)
+  };
 
   return (
     <select
       className={styles.yearDropdown}
       value={selected}
-      onChange={e => window.location.href=`/ranking/${currDiv}/${e.target.value}/${currWeek}`}
+      onChange={handleChange}
     >
       {options.map(option => (
         <option key={option} value={option}>
@@ -54,12 +66,18 @@ function WeekDropdown({ options, initialValue }) {
   }
 
   const [selected, setSelected] = useState(initialValue.toLowerCase())
+  const router = useRouter()
+
+  const handleChange = e => {
+    setSelected(e.target.value)
+    router.push(`/ranking/${currDiv}/${currYear}/${e.target.value}`)
+  };
 
   return (
       <select
         className={styles.weekDropdown}
         value={selected}
-        onChange={e => window.location.href=`/ranking/${currDiv}/${currYear}/${e.target.value}`}
+        onChange={handleChange}
       >
         {optionList.map(option => (
           <option key={option.value} value={option.value}>

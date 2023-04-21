@@ -20,12 +20,7 @@ export default function Home({ rankList, fbs, year, week }) {
   );
 }
 
-export async function getServerSideProps({ res }) {
-  res.setHeader(
-    'Cache-Control',
-    'public, s-maxage=10, stale-while-revalidate=59'
-  )
-
+export async function getStaticProps() {
   const avail = await availableRankings()
   let year = 0
   for (let key in avail) {
@@ -46,5 +41,6 @@ export async function getServerSideProps({ res }) {
       year: year,
       week: currYear.postseason ? 'final' : currYear.weeks.toString()
     },
+    revalidate: 60,
   }
 }

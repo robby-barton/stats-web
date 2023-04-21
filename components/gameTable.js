@@ -1,4 +1,4 @@
-import React from 'react';
+import { useReducer, useState, useMemo } from 'react';
 import {
   ColumnDef,
   flexRender,
@@ -9,11 +9,11 @@ import {
 } from '@tanstack/react-table';
 
 export default function GameTable({ teams }) {
-  const rerender = React.useReducer(() => ({}), {})[1]
+  const rerender = useReducer(() => ({}), {})[1]
 
-  const [sorting, setSorting] = React.useState([])
+  const [sorting, setSorting] = useState([])
 
-  const columns = React.useMemo(
+  const columns = useMemo(
     () => [
       {
         accessorKey: 'name',

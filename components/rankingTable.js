@@ -1,4 +1,5 @@
-import React from 'react';
+import { useReducer, useState, useMemo } from 'react';
+import { useRouter } from 'next/router';
 import styles from './rankingTable.module.css';
 import commonStyles from '../styles/common.module.css';
 import {
@@ -11,11 +12,12 @@ import {
 } from '@tanstack/react-table';
 
 export default function RankingTable({ teams }) {
-  const rerender = React.useReducer(() => ({}), {})[1]
+  const rerender = useReducer(() => ({}), {})[1]
 
-  const [sorting, setSorting] = React.useState([])
+  const [sorting, setSorting] = useState([])
+  const router = useRouter()
 
-  const columns = React.useMemo(
+  const columns = useMemo(
     () => [
       {
         accessorKey: 'final_rank',
@@ -110,7 +112,7 @@ export default function RankingTable({ teams }) {
       <tbody>
         {table.getRowModel().rows.map(row=> {
           return (
-            <tr key={row.id} onClick={() => window.location.href = `/team/${row.id}`}>
+            <tr key={row.id} onClick={() => router.push(`/team/${row.id}`)}>
               {row.getVisibleCells().map((cell, i, row) => {
                 return (
                   <td key={cell.id} className={i + 1 === row.length ? styles.lastColumn : ""}>
