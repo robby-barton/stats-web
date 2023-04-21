@@ -14,17 +14,13 @@ export default function GameCount({ games }) {
   );
 }
 
-export async function getServerSideProps({ res }) {
-  res.setHeader(
-    'Cache-Control',
-    'public, s-maxage=10, stale-while-revalidate=59'
-  )
-
+export async function getStaticProps() {
   const results = await allGames()
 
   return {
     props: {
       games: results,
-    }
+    },
+    revalidate: 60,
   }
 }

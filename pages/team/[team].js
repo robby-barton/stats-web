@@ -4,7 +4,7 @@ import Layout from '../../components/layout';
 import Title from '../../components/title';
 import Header from '../../components/header';
 import Meta from '../../components/meta';
-import { getTeamRankings } from '../../lib/utils';
+import { getTeamRankings, getUniqueTeams } from '../../lib/utils';
 
 const TeamChart = dynamic(
   () => import('../../components/teamChart'),
@@ -28,12 +28,7 @@ export default function Team({ rankList }) {
   )
 }
 
-export async function getServerSideProps({ params, res }) {
-  res.setHeader(
-    'Cache-Control',
-    'public, s-maxage=10, stale-while-revalidate=59'
-  )
-
+export async function getStaticProps({ params }) {
   const { team } = params
 
   const results = await getTeamRankings(team)
@@ -41,6 +36,16 @@ export async function getServerSideProps({ params, res }) {
   return {
     props: {
       rankList: results,
-    }
+    },
+    revalidate: 60,
+  }
+}
+
+export async function getStaticPaths() {
+  const results = await getUniqueTeams()
+  const paths = results.map(team => ({ params: { team: team.team_id.toString() }}))
+  return {
+    paths: paths,
+    fallback: 'blocking',
   }
 }

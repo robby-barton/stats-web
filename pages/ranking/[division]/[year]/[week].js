@@ -29,12 +29,7 @@ export default function Week({ rankList, results, division, year, week }) {
 }
 
 const divisions = ['fbs', 'fcs']
-export async function getServerSideProps({ params, res }) {
-  res.setHeader(
-    'Cache-Control',
-    'public, s-maxage=10, stale-while-revalidate=59'
-  )
-
+export async function getStaticProps({ params }) {
   const { division, year, week } = params
 
   const avail = await availableRankings()
@@ -89,6 +84,28 @@ export async function getServerSideProps({ params, res }) {
       year: year,
       week: week.toLowerCase() === 'final' ? 'Final' : week,
       results: results,
-    }
+    },
+    revalidate: 60,
+  }
+}
+
+export async function getStaticPaths() {
+  const avail = await availableRankings()
+  const paths = []
+  divisions.map(division => (
+    Object.entries(avail).forEach(entry => {
+      const [ year, value ] = entry
+      const { weeks, postseason } = value
+      for (let i = 1; i <= weeks; i++) {
+        paths.push({params: { division: division, year: year.toString(), week: i.toString() }})
+      }
+      if (postseason) {
+        paths.push({params: { division: division, year: year.toString(), week: 'final' }})
+      }
+    })
+  ))
+  return {
+    paths: paths,
+    fallback: 'blocking',
   }
 }
