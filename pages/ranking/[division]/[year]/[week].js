@@ -3,7 +3,8 @@ import Title from '../../../../components/title';
 import Header from '../../../../components/header';
 import Meta from '../../../../components/meta';
 import Ranking from '../../../../components/ranking';
-import { availableRankings, getRanking } from '../../../../lib/utils';
+import { availableRankings, getRanking, getRankingPathParams } from '../../../../lib/utils';
+import { DIVISIONS } from '../../../../lib/constants';
 
 export default function Week({ rankList, results, division, year, week }) {
   let weekTitle = 'Week ' + week
@@ -28,12 +29,11 @@ export default function Week({ rankList, results, division, year, week }) {
   )
 }
 
-const divisions = ['fbs', 'fcs']
 export async function getStaticProps({ params }) {
   const { division, year, week } = params
 
   const avail = await availableRankings()
-  if (!divisions.includes(division.toLowerCase()) || !(year in avail)) {
+  if (!DIVISIONS.includes(division.toLowerCase()) || !(year in avail)) {
     return {
       redirect: {
         permanent: false,
@@ -90,20 +90,7 @@ export async function getStaticProps({ params }) {
 }
 
 export async function getStaticPaths() {
-  const avail = await availableRankings()
-  const paths = []
-  divisions.map(division => (
-    Object.entries(avail).forEach(entry => {
-      const [ year, value ] = entry
-      const { weeks, postseason } = value
-      for (let i = 1; i <= weeks; i++) {
-        paths.push({params: { division: division, year: year.toString(), week: i.toString() }})
-      }
-      if (postseason) {
-        paths.push({params: { division: division, year: year.toString(), week: 'final' }})
-      }
-    })
-  ))
+  const paths = await getRankingPathParams()
   return {
     paths: paths,
     fallback: 'blocking',
