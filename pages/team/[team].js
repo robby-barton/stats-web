@@ -4,7 +4,7 @@ import Layout from '../../components/layout';
 import Title from '../../components/title';
 import Header from '../../components/header';
 import Meta from '../../components/meta';
-import { getTeamRankings, getUniqueTeams } from '../../lib/utils';
+import { getTeamRankings, getTeamPathParams } from '../../lib/utils';
 
 const TeamChart = dynamic(
   () => import('../../components/teamChart'),
@@ -42,8 +42,7 @@ export async function getStaticProps({ params }) {
 }
 
 export async function getStaticPaths() {
-  const results = await getUniqueTeams()
-  const paths = results.map(team => ({ params: { team: team.team_id.toString() }}))
+  const paths = await getTeamPathParams()
   return {
     paths: paths,
     fallback: 'blocking',
