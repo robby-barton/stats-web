@@ -1,2 +1,4 @@
 User-agent: *
 Allow: /
+
+Sitemap: https://cfb.robbybarton.com/sitemap.xml
