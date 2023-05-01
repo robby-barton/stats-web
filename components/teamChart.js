@@ -51,6 +51,7 @@ function createValueRange(start, axis, label) {
 
 export default function TeamChart({ rankList, years }) {
   const rootRef = useRef(null)
+  const seriesRef = useRef(null)
 
   useLayoutEffect(() => {
     let root = am5.Root.new("chartDiv");
@@ -69,8 +70,8 @@ export default function TeamChart({ rankList, years }) {
       am5xy.XYChart.new(root, {
         panX: true,
         wheelX: "panX",
-        WheelY: "zoomX",
-        pinchZoom: true
+        wheelY: "zoomX",
+        pinchZoomX: true,
       })
     )
 
@@ -91,7 +92,7 @@ export default function TeamChart({ rankList, years }) {
     })
 
     let yAxis = chart.yAxes.push(am5xy.ValueAxis.new(root, {
-      min: 1,
+      min: 0,
       max: CHART_MAX_Y,
       strictMinMax: true,
       renderer: am5xy.AxisRendererY.new(root, {
@@ -108,7 +109,11 @@ export default function TeamChart({ rankList, years }) {
       tooltip: am5.Tooltip.new(root, {
         labelText: "{categoryX}: {valueY}",
         test: am5.color(0x000000)
-      })
+      }),
+      background: am5.Rectangle.new(root, {
+        fillOpacity: 0,
+        stroke: colorByTheme(theme)
+      }),
     }))
     let defaultColor = series.get("stroke")
     series.strokes.template.setAll({
@@ -138,7 +143,6 @@ export default function TeamChart({ rankList, years }) {
     rendererY.grid.template.set("forceHidden", true)
     rendererY.labels.template.set("forceHidden", true)
 
-    createValueRange(1, yAxis, 1)
     createValueRange(25, yAxis, 25)
     createValueRange(50, yAxis, 50)
     createValueRange(75, yAxis, 75)
@@ -170,7 +174,7 @@ export default function TeamChart({ rankList, years }) {
     sbxAxis.data.setAll(rankList)
 
     let sbyAxis = scrollbar.chart.yAxes.push(am5xy.ValueAxis.new(root, {
-      min: 1,
+      min: 0,
       max: CHART_MAX_Y,
       strictMinMax: true,
       renderer: am5xy.AxisRendererY.new(root, {
@@ -201,6 +205,7 @@ export default function TeamChart({ rankList, years }) {
     sbSeries.data.setAll(rankList)
 
     rootRef.current = root
+    seriesRef.current = series
 
     return () => {
       root.dispose()
@@ -215,7 +220,13 @@ export default function TeamChart({ rankList, years }) {
         text: colorByTheme(theme)
       })
     }
+    if (seriesRef.current) {
+      seriesRef.current.get("background").setAll({
+        stroke: colorByTheme(theme)
+      })
+    }
   })
+
   return (
     <div id="chartDiv" style={{ width: "100%", height: "400px" }}></div>
   )
