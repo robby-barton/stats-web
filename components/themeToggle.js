@@ -54,6 +54,7 @@ const ThemeToggle = () => {
   useEffect(() => {
     document.body.dataset.theme = activeTheme;
     window.localStorage.setItem("theme", activeTheme);
+    window.dispatchEvent(new Event("theme"))
   }, [activeTheme]);
   return (
     <ToggleButton
