@@ -92,7 +92,7 @@ export default function TeamChart({ rankList, years }) {
     })
 
     let yAxis = chart.yAxes.push(am5xy.ValueAxis.new(root, {
-      min: 0,
+      min: 1,
       max: CHART_MAX_Y,
       strictMinMax: true,
       renderer: am5xy.AxisRendererY.new(root, {
@@ -106,13 +106,15 @@ export default function TeamChart({ rankList, years }) {
       yAxis: yAxis,
       categoryXField: "week",
       valueYField: "rank",
+      maskBullets: false,
       tooltip: am5.Tooltip.new(root, {
         labelText: "{categoryX}: {valueY}",
         test: am5.color(0x000000)
       }),
       background: am5.Rectangle.new(root, {
         fillOpacity: 0,
-        stroke: colorByTheme(theme)
+        stroke: colorByTheme(theme),
+        strokeOpacity: 0.4,
       }),
     }))
     let defaultColor = series.get("stroke")
@@ -120,12 +122,22 @@ export default function TeamChart({ rankList, years }) {
       strokeWidth: 1
     })
     series.bullets.push(function() {
+      let circle = am5.Circle.new(root, {
+        radius: 3,
+        fill: defaultColor
+      })
+
+      circle.on("x", function(x, circle) {
+        if ((x < 0) || (x > chart.plotContainer.width())) {
+          circle.hide(0)
+        } else {
+          circle.show(0)
+        }
+      })
+
       return am5.Bullet.new(root, {
         locationY: 0,
-        sprite: am5.Circle.new(root, {
-          radius: 3,
-          fill: defaultColor,
-        })
+        sprite: circle,
       })
     })
 
@@ -143,11 +155,13 @@ export default function TeamChart({ rankList, years }) {
     rendererY.grid.template.set("forceHidden", true)
     rendererY.labels.template.set("forceHidden", true)
 
+    createValueRange(1, yAxis, 1)
     createValueRange(25, yAxis, 25)
     createValueRange(50, yAxis, 50)
     createValueRange(75, yAxis, 75)
-    createValueRange(100, yAxis, 150)
+    createValueRange(100, yAxis, 100)
     createValueRange(125, yAxis, 125)
+    createValueRange(150, yAxis, 150)
 
     let scrollbar = chart.set("scrollbarX", am5xy.XYChartScrollbar.new(root, {
       orientation: "horizontal",
