@@ -2,7 +2,6 @@ import dynamic from "next/dynamic";
 import styles from "./header.module.css";
 import commonStyles from "../styles/common.module.css";
 import Link from "next/link";
-import Selector from "./selector";
 
 const ThemeToggle = dynamic(() => import("../components/themeToggle"), {
   ssr: false,
@@ -10,7 +9,7 @@ const ThemeToggle = dynamic(() => import("../components/themeToggle"), {
 
 export default function Header() {
   return (
-    <div id='fixed' className={styles.header}>
+    <div className={styles.header}>
       <div className={styles.headerTitle}>
         <Link href="/">
           Robby's Ranking

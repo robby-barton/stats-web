@@ -2,6 +2,7 @@
 	background: var(--color-bg-primary);
 	border-top: 2px solid;
 	height: 6rem;
+	width: 100%;
 	margin: 0 auto;
 	text-align: center;
 	padding-top: 0.5rem;

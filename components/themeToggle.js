@@ -1,5 +1,3 @@
-// components/ThemeToggle.js
-
 import { useState, useEffect } from "react";
 import styled from "@emotion/styled";
 

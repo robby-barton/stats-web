@@ -1,19 +1,14 @@
 import { useReducer, useState, useMemo } from 'react';
 import { useRouter } from 'next/router';
 import styles from './rankingTable.module.css';
-import commonStyles from '../styles/common.module.css';
 import {
-  ColumnDef,
   flexRender,
   getCoreRowModel,
   getSortedRowModel,
-  SortingState,
   useReactTable,
 } from '@tanstack/react-table';
 
 export default function RankingTable({ teams }) {
-  const rerender = useReducer(() => ({}), {})[1]
-
   const [sorting, setSorting] = useState([])
   const router = useRouter()
 
@@ -84,7 +79,7 @@ export default function RankingTable({ teams }) {
             {headerGroup.headers.map((header, i, row) => {
               return (
                 <th key={header.id} colSpan={header.colSpan} className={i + 1 === row.length ? styles.lastColumn : ""}>
-                  {header.isPlaceholder? null : (
+                  {header.isPlaceholder ? null : (
                     <div
                       {...{
                         className: header.column.getCanSort()
@@ -110,7 +105,7 @@ export default function RankingTable({ teams }) {
         ))}
       </thead>
       <tbody>
-        {table.getRowModel().rows.map(row=> {
+        {table.getRowModel().rows.map(row => {
           return (
             <tr key={row.id} onClick={() => router.push(`/team/${row.id}`)}>
               {row.getVisibleCells().map((cell, i, row) => {
