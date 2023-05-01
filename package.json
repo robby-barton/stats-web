@@ -6,14 +6,13 @@
     "start": "next start"
   },
   "dependencies": {
+    "@amcharts/amcharts5": "^5.3.11",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@tanstack/react-table": "^8.8.5",
-    "apexcharts": "^3.37.0",
     "next": "^13.1.5",
     "postgres": "^3.3.4",
     "react": "18.2.0",
-    "react-apexcharts": "^1.4.0",
     "react-dom": "18.2.0"
   },
   "devDependencies": {

@@ -4,14 +4,14 @@ import Meta from '../components/meta';
 import Ranking from '../components/ranking';
 import { availableRankings, getRanking } from '../lib/utils';
 
-export default function Home({ rankList, fbs, year, week }) {
+export default function Home({ availRanks, fbs, year, week }) {
   return (
     <Layout>
       <Title />
       <Meta desc="Computer rankings for to FBS and FCS college football seasons." />
-      <Ranking 
-        rankList={rankList}
-        teamList={fbs}
+      <Ranking
+        availRanks={availRanks}
+        ranking={fbs}
         division={'fbs'}
         year={year}
         week={week}
@@ -36,7 +36,7 @@ export async function getStaticProps() {
 
   return {
     props: {
-      rankList: avail,
+      availRanks: avail,
       fbs: fbs,
       year: year,
       week: currYear.postseason ? 'final' : currYear.weeks.toString()

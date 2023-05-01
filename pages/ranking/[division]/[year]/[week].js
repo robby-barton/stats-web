@@ -1,12 +1,11 @@
 import Layout from '../../../../components/layout';
 import Title from '../../../../components/title';
-import Header from '../../../../components/header';
 import Meta from '../../../../components/meta';
 import Ranking from '../../../../components/ranking';
 import { availableRankings, getRanking, getRankingPathParams } from '../../../../lib/utils';
 import { DIVISIONS } from '../../../../lib/constants';
 
-export default function Week({ rankList, results, division, year, week }) {
+export default function Week({ availRanks, ranking, division, year, week }) {
   let weekTitle = 'Week ' + week
   if (week === 'Final') {
     weekTitle = 'Final'
@@ -18,9 +17,9 @@ export default function Week({ rankList, results, division, year, week }) {
     <Layout>
       <Title title={title} />
       <Meta desc={meta} />
-      <Ranking 
-        rankList={rankList}
-        teamList={results}
+      <Ranking
+        availRanks={availRanks}
+        ranking={ranking}
         division={division}
         year={year}
         week={week}
@@ -79,11 +78,11 @@ export async function getStaticProps({ params }) {
 
   return {
     props: {
-      rankList: avail,
+      availRanks: avail,
+      ranking: results,
       division: division.toUpperCase(),
       year: year,
       week: week.toLowerCase() === 'final' ? 'Final' : week,
-      results: results,
     },
     revalidate: 60,
   }

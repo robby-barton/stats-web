@@ -1,7 +1,5 @@
-import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/router';
-import commonStyles from "../styles/common.module.css";
 import styles from './selector.module.css';
 
 let currDiv = null
@@ -74,26 +72,26 @@ function WeekDropdown({ options, initialValue }) {
   };
 
   return (
-      <select
-        className={styles.weekDropdown}
-        value={selected}
-        onChange={handleChange}
-      >
-        {optionList.map(option => (
-          <option key={option.value} value={option.value}>
-            {option.text}
-          </option>
-        ))}
-      </select>
+    <select
+      className={styles.weekDropdown}
+      value={selected}
+      onChange={handleChange}
+    >
+      {optionList.map(option => (
+        <option key={option.value} value={option.value}>
+          {option.text}
+        </option>
+      ))}
+    </select>
   )
 }
 
-export default function Selector({ rankList, division, year, week }) {
+export default function Selector({ availRanks, division, year, week }) {
   currDiv = division.toLowerCase()
   currYear = year
   currWeek = week.toLowerCase()
   const years = []
-  for (let key in rankList) {
+  for (let key in availRanks) {
     years.push(key)
   }
   years.sort().reverse()
@@ -101,7 +99,7 @@ export default function Selector({ rankList, division, year, week }) {
     <div className={styles.selectorStyling}>
       <DivisionDropdown options={['fbs', 'fcs']} initialValue={division} />
       <YearDropdown options={years} initialValue={year} />
-      <WeekDropdown options={rankList[year]} initialValue={week} />
+      <WeekDropdown options={availRanks[year]} initialValue={week} />
     </div>
   );
 }

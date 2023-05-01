@@ -1,16 +1,12 @@
-import { useReducer, useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import {
-  ColumnDef,
   flexRender,
   getCoreRowModel,
   getSortedRowModel,
-  SortingState,
   useReactTable,
 } from '@tanstack/react-table';
 
 export default function GameTable({ teams }) {
-  const rerender = useReducer(() => ({}), {})[1]
-
   const [sorting, setSorting] = useState([])
 
   const columns = useMemo(
@@ -95,7 +91,7 @@ export default function GameTable({ teams }) {
             {headerGroup.headers.map((header, i, row) => {
               return (
                 <th key={header.id} colSpan={header.colSpan}>
-                  {header.isPlaceholder? null : (
+                  {header.isPlaceholder ? null : (
                     <div
                       {...{
                         className: header.column.getCanSort()
@@ -121,7 +117,7 @@ export default function GameTable({ teams }) {
         ))}
       </thead>
       <tbody>
-        {table.getRowModel().rows.map(row=> {
+        {table.getRowModel().rows.map(row => {
           return (
             <tr key={row.id}>
               {row.getVisibleCells().map((cell, i, row) => {
