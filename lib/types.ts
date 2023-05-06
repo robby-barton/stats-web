@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 export type YearRanks = {
 	weeks: number;
 	postseason: boolean;

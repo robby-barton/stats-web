@@ -1,7 +1,6 @@
 import { DIVISIONS } from "@lib/constants";
 import sql from "@lib/db";
-
-import { AvailRanks, Rank, RankingPathParams, Team, TeamGames, TeamPathParams, TeamRank } from "./types";
+import { AvailRanks, Rank, RankingPathParams, Team, TeamGames, TeamPathParams, TeamRank } from "@lib/types";
 
 let rankings: AvailRanks = {};
 let rankingsExpire = -1;

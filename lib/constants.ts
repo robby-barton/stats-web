@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 export const SITE_TITLE = "Robby's Ranking";
 
 export const DIVISIONS: string[] = ["fbs", "fcs"];

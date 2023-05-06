@@ -1,0 +1,238 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Game Count page renders correctly 1`] = `
+<body
+  data-theme="undefined"
+>
+  <div>
+    <div
+      class="container"
+    >
+      <div
+        class="header"
+      >
+        <div
+          class="headerTitle"
+        >
+          <a
+            href="/"
+          >
+            Robby's Ranking
+          </a>
+        </div>
+        <div
+          class="headerLink"
+        >
+          <a
+            href="/game-count"
+          >
+            <span
+              class="headingMd"
+            >
+              Game Count
+            </span>
+          </a>
+        </div>
+        <div
+          class="headerLink"
+        >
+          <a
+            href="/teams"
+          >
+            <span
+              class="headingMd"
+            >
+              Teams
+            </span>
+          </a>
+        </div>
+        <div
+          class="headerLink"
+        >
+          <a
+            href="/about"
+          >
+            <span
+              class="headingMd"
+            >
+              About
+            </span>
+          </a>
+        </div>
+        <div
+          class="headerToggle"
+        >
+          <button
+            aria-label="Change to light mode"
+            class="css-1f6jnp0"
+            title="Change to light mode"
+            type="button"
+          >
+            <span
+              class="css-194expn"
+            />
+            <span>
+              🌙
+            </span>
+            <span>
+              ☀️
+            </span>
+          </button>
+        </div>
+      </div>
+      <div
+        class="contentWrap"
+      >
+        <div>
+          <div
+            class="inputArea"
+          >
+            <div
+              class="searchDiv"
+            >
+              <input
+                class="searchInput"
+                placeholder="Search Teams"
+                type="search"
+              />
+            </div>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th
+                  colspan="1"
+                >
+                  <div
+                    class="cursor-pointer select-none"
+                  >
+                    Team
+                  </div>
+                </th>
+                <th
+                  colspan="1"
+                >
+                  <div
+                    class="cursor-pointer select-none"
+                  >
+                    Sun
+                  </div>
+                </th>
+                <th
+                  colspan="1"
+                >
+                  <div
+                    class="cursor-pointer select-none"
+                  >
+                    Mon
+                  </div>
+                </th>
+                <th
+                  colspan="1"
+                >
+                  <div
+                    class="cursor-pointer select-none"
+                  >
+                    Tue
+                  </div>
+                </th>
+                <th
+                  colspan="1"
+                >
+                  <div
+                    class="cursor-pointer select-none"
+                  >
+                    Wed
+                  </div>
+                </th>
+                <th
+                  colspan="1"
+                >
+                  <div
+                    class="cursor-pointer select-none"
+                  >
+                    Thu
+                  </div>
+                </th>
+                <th
+                  colspan="1"
+                >
+                  <div
+                    class="cursor-pointer select-none"
+                  >
+                    Fri
+                  </div>
+                </th>
+                <th
+                  colspan="1"
+                >
+                  <div
+                    class="cursor-pointer select-none"
+                  >
+                    Sat
+                  </div>
+                </th>
+                <th
+                  colspan="1"
+                >
+                  <div
+                    class="cursor-pointer select-none"
+                  >
+                    Total
+                  </div>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  South Carolina
+                </td>
+                <td>
+                  1
+                </td>
+                <td>
+                  2
+                </td>
+                <td>
+                  3
+                </td>
+                <td>
+                  4
+                </td>
+                <td>
+                  5
+                </td>
+                <td>
+                  6
+                </td>
+                <td>
+                  7
+                </td>
+                <td>
+                  8
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div
+        class="footer"
+      >
+        <a
+          href="https://github.com/robby-barton/stats-web"
+        >
+          &lt;/&gt; - Site source
+        </a>
+        <br />
+        <a
+          href="https://github.com/robby-barton/stats-go"
+        >
+          &lt;/&gt; - Ranking source
+        </a>
+      </div>
+    </div>
+  </div>
+</body>
+`;

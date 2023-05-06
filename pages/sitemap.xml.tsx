@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 import { GetServerSidePropsContext, GetServerSidePropsResult } from "next";
 
 import { getRankingPathParams, getTeamPathParams } from "@lib/dbFuncs";

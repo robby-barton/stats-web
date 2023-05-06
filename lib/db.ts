@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 import postgres from "postgres";
 
 function getDatabaseUrl(): string {
