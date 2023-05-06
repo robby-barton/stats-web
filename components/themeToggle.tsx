@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
 import styled from "@emotion/styled";
+import { useEffect, useState } from "react";
 
 const ToggleButton = styled("button")`
   --toggle-width: 2.5rem;
@@ -32,8 +32,8 @@ const ToggleButton = styled("button")`
 
 type ThumbProps = {
 	activeTheme: string;
-}
-const ToggleThumb = styled("span") <ThumbProps>`
+};
+const ToggleThumb = styled("span")<ThumbProps>`
 	position: absolute;
 	top: var(--toggle-padding);
 	left: var(--toggle-padding);
@@ -43,9 +43,7 @@ const ToggleThumb = styled("span") <ThumbProps>`
 	background: white;
 	transition: transform 0.25s ease-in-out;
 	transform: ${(p: ThumbProps) =>
-		p.activeTheme === "dark"
-			? "translate3d(calc(var(--toggle-width) - var(--toggle-height)), 0, 0)"
-			: "none"};
+		p.activeTheme === "dark" ? "translate3d(calc(var(--toggle-width) - var(--toggle-height)), 0, 0)" : "none"};
 `;
 
 export default function ThemeToggle() {
@@ -55,7 +53,7 @@ export default function ThemeToggle() {
 	useEffect(() => {
 		document.body.dataset.theme = activeTheme;
 		window.localStorage.setItem("theme", activeTheme);
-		window.dispatchEvent(new Event("theme"))
+		window.dispatchEvent(new Event("theme"));
 	}, [activeTheme]);
 	return (
 		<ToggleButton
@@ -69,4 +67,4 @@ export default function ThemeToggle() {
 			<span>☀️</span>
 		</ToggleButton>
 	);
-};
+}

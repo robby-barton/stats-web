@@ -1,4 +1,3 @@
-import { useState, useMemo } from 'react';
 import {
 	ColumnDef,
 	Row,
@@ -7,77 +6,79 @@ import {
 	getCoreRowModel,
 	getSortedRowModel,
 	useReactTable,
-} from '@tanstack/react-table';
-import { TeamGames } from '../lib/types';
+} from "@tanstack/react-table";
+import { useMemo, useState } from "react";
+
+import { TeamGames } from "@lib/types";
 
 type GameTableProps = {
 	teams: TeamGames[];
-}
+};
 export default function GameTable({ teams }: GameTableProps) {
-	const [sorting, setSorting] = useState<SortingState>([])
+	const [sorting, setSorting] = useState<SortingState>([]);
 
 	const columns = useMemo<ColumnDef<TeamGames>[]>(
 		() => [
 			{
-				accessorKey: 'name',
+				accessorKey: "name",
 				header: "Team",
-				cell: info => info.getValue(),
+				cell: (info) => info.getValue(),
 			},
 			{
-				accessorKey: 'sun',
+				accessorKey: "sun",
 				header: "Sun",
-				cell: info => info.getValue(),
+				cell: (info) => info.getValue(),
 				sortDescFirst: true,
 			},
 			{
-				accessorKey: 'mon',
+				accessorKey: "mon",
 				header: "Mon",
-				cell: info => info.getValue(),
+				cell: (info) => info.getValue(),
 				sortDescFirst: true,
 			},
 			{
-				accessorKey: 'tue',
+				accessorKey: "tue",
 				header: "Tue",
-				cell: info => info.getValue(),
+				cell: (info) => info.getValue(),
 				sortDescFirst: true,
 			},
 			{
-				accessorKey: 'wed',
+				accessorKey: "wed",
 				header: "Wed",
-				cell: info => info.getValue(),
+				cell: (info) => info.getValue(),
 				sortDescFirst: true,
 			},
 			{
-				accessorKey: 'thu',
+				accessorKey: "thu",
 				header: "Thu",
-				cell: info => info.getValue(),
+				cell: (info) => info.getValue(),
 				sortDescFirst: true,
 			},
 			{
-				accessorKey: 'fri',
+				accessorKey: "fri",
 				header: "Fri",
-				cell: info => info.getValue(),
+				cell: (info) => info.getValue(),
 				sortDescFirst: true,
 			},
 			{
-				accessorKey: 'sat',
+				accessorKey: "sat",
 				header: "Sat",
-				cell: info => info.getValue(),
+				cell: (info) => info.getValue(),
 				sortDescFirst: true,
 			},
 			{
-				accessorKey: 'total',
+				accessorKey: "total",
 				header: "Total",
-				cell: info => info.getValue(),
+				cell: (info) => info.getValue(),
 				sortDescFirst: true,
 			},
 		],
 		[]
-	)
+	);
 
 	const getRowId = (row: TeamGames, index: number, parent: Row<TeamGames> | undefined) => {
-		return parent ? [parent.id, row.team_id].join('.') : row.team_id.toString()
-	}
+		return parent ? [parent.id, row.team_id].join(".") : row.team_id.toString();
+	};
 
 	const table = useReactTable({
 		data: teams,
@@ -89,28 +90,25 @@ export default function GameTable({ teams }: GameTableProps) {
 		onSortingChange: setSorting,
 		getCoreRowModel: getCoreRowModel(),
 		getSortedRowModel: getSortedRowModel(),
-	})
+	});
 	return (
 		<table>
 			<thead>
-				{table.getHeaderGroups().map(headerGroup => (
+				{table.getHeaderGroups().map((headerGroup) => (
 					<tr key={headerGroup.id}>
-						{headerGroup.headers.map(header => {
+						{headerGroup.headers.map((header) => {
 							return (
 								<th key={header.id} colSpan={header.colSpan}>
 									{header.isPlaceholder ? null : (
 										<div
 											{...{
 												className: header.column.getCanSort()
-													? 'cursor-pointer select-none'
-													: '',
+													? "cursor-pointer select-none"
+													: "",
 												onClick: header.column.getToggleSortingHandler(),
 											}}
 										>
-											{flexRender(
-												header.column.columnDef.header,
-												header.getContext()
-											)}
+											{flexRender(header.column.columnDef.header, header.getContext())}
 											{{
 												asc: "\u2191",
 												desc: "\u2193",
@@ -118,29 +116,24 @@ export default function GameTable({ teams }: GameTableProps) {
 										</div>
 									)}
 								</th>
-							)
+							);
 						})}
 					</tr>
 				))}
 			</thead>
 			<tbody>
-				{table.getRowModel().rows.map(row => {
+				{table.getRowModel().rows.map((row) => {
 					return (
 						<tr key={row.id}>
-							{row.getVisibleCells().map(cell => {
+							{row.getVisibleCells().map((cell) => {
 								return (
-									<td key={cell.id}>
-										{flexRender(
-											cell.column.columnDef.cell,
-											cell.getContext()
-										)}
-									</td>
-								)
+									<td key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</td>
+								);
 							})}
 						</tr>
-					)
+					);
 				})}
 			</tbody>
 		</table>
-	)
+	);
 }
