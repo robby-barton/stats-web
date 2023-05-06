@@ -1,43 +1,33 @@
-import { ChangeEvent, useState } from 'react';
-import TeamList from './teamList';
-import styles from './teamSearch.module.css'
-import { Team } from '../lib/types';
+import { ChangeEvent, useState } from "react";
+
+import TeamList from "@components/teamList";
+import styles from "@components/teamSearch.module.css";
+import { Team } from "@lib/types";
 
 type TeamSearchProps = {
 	teams: Team[];
-}
+};
 export default function TeamSearch({ teams }: TeamSearchProps) {
-	const [searchField, setSearchField] = useState("")
+	const [searchField, setSearchField] = useState("");
 
-	const filteredTeams = teams.filter(
-		team => {
-			return (
-				team.name.toLowerCase().includes(searchField.toLowerCase())
-			);
-		}
-	);
+	const filteredTeams = teams.filter((team) => {
+		return team.name.toLowerCase().includes(searchField.toLowerCase());
+	});
 
 	const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-		setSearchField(e.target.value)
+		setSearchField(e.target.value);
 	};
 
 	function searchTeams() {
-		return (
-			<TeamList teams={filteredTeams} />
-		)
+		return <TeamList teams={filteredTeams} />;
 	}
 
 	return (
 		<div>
 			<div>
-				<input
-					className={styles.teamSearch}
-					type="search"
-					placeholder="Search Teams"
-					onChange={handleChange}
-				/>
+				<input className={styles.teamSearch} type="search" placeholder="Search Teams" onChange={handleChange} />
 			</div>
 			{searchTeams()}
 		</div>
-	)
+	);
 }

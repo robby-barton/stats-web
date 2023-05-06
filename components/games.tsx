@@ -1,31 +1,26 @@
-import { ChangeEvent, useState } from 'react';
-import GameTable from './gameTable';
-import commonStyles from '../styles/common.module.css';
-import styles from './games.module.css';
-import { TeamGames } from '../lib/types';
+import { ChangeEvent, useState } from "react";
+
+import styles from "@components/games.module.css";
+import GameTable from "@components/gameTable";
+import { TeamGames } from "@lib/types";
+import commonStyles from "@styles/common.module.css";
 
 type GamesProps = {
 	games: TeamGames[];
-}
+};
 export default function Games({ games }: GamesProps) {
-	const [searchField, setSearchField] = useState("")
+	const [searchField, setSearchField] = useState("");
 
-	const filteredTeams = games.filter(
-		team => {
-			return (
-				team.name.toLowerCase().includes(searchField.toLowerCase())
-			);
-		}
-	);
+	const filteredTeams = games.filter((team) => {
+		return team.name.toLowerCase().includes(searchField.toLowerCase());
+	});
 
 	const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-		setSearchField(e.target.value)
+		setSearchField(e.target.value);
 	};
 
 	function searchTeams() {
-		return (
-			<GameTable teams={filteredTeams} />
-		)
+		return <GameTable teams={filteredTeams} />;
 	}
 
 	return (
@@ -42,5 +37,5 @@ export default function Games({ games }: GamesProps) {
 			</div>
 			{searchTeams()}
 		</div>
-	)
+	);
 }

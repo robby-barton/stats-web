@@ -1,14 +1,14 @@
 // @ts-check
 
 // next.config.js
-const withBundleAnalyzer = require('@next/bundle-analyzer')({
-  enabled: process.env.ANALYZE === 'true',
-})
+const withBundleAnalyzer = require("@next/bundle-analyzer")({
+	enabled: process.env.ANALYZE === "true",
+});
 
 module.exports = withBundleAnalyzer({
-  i18n: {
-    locales: ['en'],
-    defaultLocale: 'en',
-  },
-  output: 'standalone',
-})
+	i18n: {
+		locales: ["en"],
+		defaultLocale: "en",
+	},
+	output: "standalone",
+});

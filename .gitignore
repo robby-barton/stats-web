@@ -1,5 +1,6 @@
 node_modules
 .next
 next-env.d.ts
+yarn-error.log
 # Keep environment variables out of version control
 .env

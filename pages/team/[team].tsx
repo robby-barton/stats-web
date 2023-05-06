@@ -1,60 +1,58 @@
-import { GetStaticPathsResult, GetStaticPropsContext, GetStaticPropsResult } from 'next';
-import dynamic from 'next/dynamic'
-import Layout from '../../components/layout';
-import Title from '../../components/title';
-import Meta from '../../components/meta';
-import { getTeamRankings, getTeamPathParams } from '../../lib/dbFuncs';
-import { CHART_MAX_Y } from '../../lib/constants';
-import { ChartPoint, TeamPathParams, TeamRank } from '../../lib/types';
-import { ParsedUrlQuery } from 'querystring';
+import { ParsedUrlQuery } from "querystring";
 
-const TeamChart = dynamic(
-	() => import('../../components/teamChart'),
-	{ ssr: false }
-)
+import { GetStaticPathsResult, GetStaticPropsContext, GetStaticPropsResult } from "next";
+import dynamic from "next/dynamic";
+
+import Layout from "@components/layout";
+import Meta from "@components/meta";
+import Title from "@components/title";
+import { CHART_MAX_Y } from "@lib/constants";
+import { getTeamPathParams, getTeamRankings } from "@lib/dbFuncs";
+import { ChartPoint, TeamPathParams, TeamRank } from "@lib/types";
+
+const TeamChart = dynamic(() => import("@components/teamChart"), {
+	ssr: false,
+});
 
 type TeamProps = {
 	team: string;
 	rankList: ChartPoint[];
 	years: number[];
-}
+};
 
 export default function Team({ team, rankList, years }: TeamProps) {
-	const meta: string = `${team} historical rankings.`
+	const meta = `${team} historical rankings.`;
 
 	return (
 		<Layout>
 			<Title title={team} />
 			<Meta desc={meta} />
 			<h2>{team}</h2>
-			<TeamChart
-				rankList={rankList}
-				years={years}
-			/>
+			<TeamChart rankList={rankList} years={years} />
 		</Layout>
-	)
+	);
 }
 
 function validateParams(params: ParsedUrlQuery | undefined): number {
 	if (params === undefined) {
-		return 0
+		return 0;
 	}
 
-	const teamString = params["team"]
+	const teamString = params["team"];
 	if (typeof teamString !== "string") {
-		return 0
+		return 0;
 	}
 
-	const teamId = Number(teamString)
+	const teamId = Number(teamString);
 	if (!Number.isInteger(teamId)) {
-		return 0
+		return 0;
 	}
 
-	return teamId
+	return teamId;
 }
 
 export async function getStaticProps({ params }: GetStaticPropsContext): Promise<GetStaticPropsResult<TeamProps>> {
-	const team: number = validateParams(params)
+	const team: number = validateParams(params);
 	if (!team) {
 		return {
 			redirect: {
@@ -62,10 +60,10 @@ export async function getStaticProps({ params }: GetStaticPropsContext): Promise
 				destination: "/teams",
 			},
 			revalidate: 60,
-		}
+		};
 	}
 
-	const results: TeamRank[] = await getTeamRankings(team)
+	const results: TeamRank[] = await getTeamRankings(team);
 	if (!results.length) {
 		return {
 			redirect: {
@@ -73,7 +71,7 @@ export async function getStaticProps({ params }: GetStaticPropsContext): Promise
 				destination: "/teams",
 			},
 			revalidate: 60,
-		}
+		};
 	}
 
 	const data: ChartPoint[] = [];
@@ -83,9 +81,9 @@ export async function getStaticProps({ params }: GetStaticPropsContext): Promise
 			week: `${results[i].year} Week ${results[i].postseason ? "Final" : results[i].week}`,
 			rank: results[i].final_rank,
 			fillLevel: CHART_MAX_Y,
-		})
+		});
 		if (!years.includes(results[i].year)) {
-			years.push(results[i].year)
+			years.push(results[i].year);
 		}
 	}
 
@@ -96,13 +94,13 @@ export async function getStaticProps({ params }: GetStaticPropsContext): Promise
 			years: years,
 		},
 		revalidate: 60,
-	}
+	};
 }
 
 export async function getStaticPaths(): Promise<GetStaticPathsResult> {
-	const paths: TeamPathParams[] = await getTeamPathParams()
+	const paths: TeamPathParams[] = await getTeamPathParams();
 	return {
 		paths: paths,
-		fallback: 'blocking',
-	}
+		fallback: "blocking",
+	};
 }

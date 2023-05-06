@@ -1,8 +1,8 @@
-import Head from 'next/head';
+import Head from "next/head";
 
 type MetaProps = {
 	desc: string;
-}
+};
 export default function Meta({ desc }: MetaProps) {
 	return (
 		<Head>

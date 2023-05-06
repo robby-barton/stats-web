@@ -1,17 +1,18 @@
-import sql from './db';
-import { DIVISIONS } from './constants';
-import { AvailRanks, Rank, RankingPathParams, Team, TeamGames, TeamPathParams, TeamRank } from './types';
+import { DIVISIONS } from "@lib/constants";
+import sql from "@lib/db";
 
-let rankings: AvailRanks = {}
-let rankingsExpire: number = -1
+import { AvailRanks, Rank, RankingPathParams, Team, TeamGames, TeamPathParams, TeamRank } from "./types";
+
+let rankings: AvailRanks = {};
+let rankingsExpire = -1;
 
 type SQLYearRanks = {
 	year: string;
 	week: number;
 	postseason: number;
-}
+};
 export async function availableRankings(): Promise<AvailRanks> {
-	let now: number = Math.floor(new Date().getTime() / 1000)
+	const now: number = Math.floor(new Date().getTime() / 1000);
 	if (!rankings || rankingsExpire < now) {
 		const rankingObjects: SQLYearRanks[] = await sql<SQLYearRanks[]>`
 			select 
@@ -23,37 +24,37 @@ export async function availableRankings(): Promise<AvailRanks> {
 				year 
 			order by 
 				year desc
-		`
+		`;
 		if (!rankingObjects.length) {
-			throw new Error("Not found")
+			throw new Error("Not found");
 		}
 
-		rankings = {}
-		for (let i: number = 0; i < rankingObjects.length; i++) {
-			const obj: SQLYearRanks = rankingObjects[i]
+		rankings = {};
+		for (let i = 0; i < rankingObjects.length; i++) {
+			const obj: SQLYearRanks = rankingObjects[i];
 			rankings[obj.year] = {
 				weeks: obj.week,
 				postseason: obj.postseason === 1 ? true : false,
-			}
+			};
 		}
-		rankingsExpire = now + 300 // refresh every 5 minutes
+		rankingsExpire = now + 300; // refresh every 5 minutes
 	}
 
-	return rankings
+	return rankings;
 }
 
 export async function checkRanking(division: string, year: number, week: string): Promise<boolean> {
-	const avail: AvailRanks = await availableRankings()
+	const avail: AvailRanks = await availableRankings();
 	if (DIVISIONS.includes(division.toLowerCase()) && year in avail) {
-		if (week.toLowerCase() === 'final' && avail[year].postseason) {
-			return true
+		if (week.toLowerCase() === "final" && avail[year].postseason) {
+			return true;
 		}
 		if (Number(week) > 0 && Number(week) <= avail[year].weeks) {
-			return true
+			return true;
 		}
 	}
 
-	return false
+	return false;
 }
 
 export async function getRanking(fbs: boolean, year: number, week: string): Promise<Rank[]> {
@@ -64,31 +65,29 @@ export async function getRanking(fbs: boolean, year: number, week: string): Prom
 		where
 			fbs = ${fbs} and
 			year = ${year} and
-			${week.toLowerCase() === "final"
-			? sql`postseason = 1`
-			: sql`week = ${week} and postseason = 0`
-		}
+			${week.toLowerCase() === "final" ? sql`postseason = 1` : sql`week = ${week} and postseason = 0`}
 		order by
 			final_rank
-	`
+	`;
 
-	const data: Rank[] = []
-	for (let i: number = 0; i < results.length; i++) {
+	const data: Rank[] = [];
+	for (let i = 0; i < results.length; i++) {
 		data.push({
 			team_id: results[i].team_id,
 			final_rank: results[i].final_rank,
 			name: results[i].name,
 			conf: results[i].conf,
-			record: results[i].ties === 0 ?
-				results[i].wins + "-" + results[i].losses :
-				results[i].wins + "-" + results[i].losses + "-" + results[i].ties,
+			record:
+				results[i].ties === 0
+					? results[i].wins + "-" + results[i].losses
+					: results[i].wins + "-" + results[i].losses + "-" + results[i].ties,
 			srs_rank: results[i].srs_rank,
 			sos_rank: results[i].sos_rank,
 			final_raw: results[i].final_raw,
-		})
+		});
 	}
 
-	return data
+	return data;
 }
 
 export async function getTeamRankings(team: number): Promise<TeamRank[]> {
@@ -107,9 +106,9 @@ export async function getTeamRankings(team: number): Promise<TeamRank[]> {
 			year,
 			postseason,
 			week
-	`
+	`;
 
-	return results
+	return results;
 }
 
 export async function getUniqueTeams(): Promise<Team[]> {
@@ -126,12 +125,12 @@ export async function getUniqueTeams(): Promise<Team[]> {
 			)
 		order by 
 			name
-	`
+	`;
 	if (!results.length) {
-		throw new Error("Not found")
+		throw new Error("Not found");
 	}
 
-	return results
+	return results;
 }
 
 export async function allGames(): Promise<TeamGames[]> {
@@ -173,33 +172,43 @@ export async function allGames(): Promise<TeamGames[]> {
 		join gamesDOW g on (n.team_id = g.team_id)
 		order by
 			total desc
-	`
+	`;
 
-	return results
+	return results;
 }
 
 export async function getRankingPathParams(): Promise<RankingPathParams[]> {
-	const avail: AvailRanks = await availableRankings()
-	const paths: RankingPathParams[] = []
-	DIVISIONS.map(division => (
-		Object.entries(avail).forEach(entry => {
-			const [year, value] = entry
-			const { weeks, postseason } = value
+	const avail: AvailRanks = await availableRankings();
+	const paths: RankingPathParams[] = [];
+	DIVISIONS.map((division) =>
+		Object.entries(avail).forEach((entry) => {
+			const [year, value] = entry;
+			const { weeks, postseason } = value;
 			for (let i = 1; i <= weeks; i++) {
-				paths.push({ params: { division: division, year: year, week: i.toString() } })
+				paths.push({
+					params: {
+						division: division,
+						year: year,
+						week: i.toString(),
+					},
+				});
 			}
 			if (postseason) {
-				paths.push({ params: { division: division, year: year, week: 'final' } })
+				paths.push({
+					params: { division: division, year: year, week: "final" },
+				});
 			}
 		})
-	))
+	);
 
-	return paths
+	return paths;
 }
 
 export async function getTeamPathParams(): Promise<TeamPathParams[]> {
-	const results: Team[] = await getUniqueTeams()
-	const paths = results.map(team => ({ params: { team: team.team_id.toString() } }))
+	const results: Team[] = await getUniqueTeams();
+	const paths = results.map((team) => ({
+		params: { team: team.team_id.toString() },
+	}));
 
-	return paths
+	return paths;
 }
