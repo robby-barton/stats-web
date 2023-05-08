@@ -1,7 +1,8 @@
+import { useEffect, useRef } from "react";
+
 import * as am5 from "@amcharts/amcharts5";
 import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
 import * as am5xy from "@amcharts/amcharts5/xy";
-import { useLayoutEffect, useRef } from "react";
 
 import { CHART_MAX_Y } from "@lib/constants";
 import { ChartPoint } from "@lib/types";
@@ -77,7 +78,7 @@ export default function TeamChart({ rankList, years }: TeamChartProps) {
 	const rootRef = useRef<am5.Root | null>(null);
 	const seriesRef = useRef<am5xy.LineSeries | null>(null);
 
-	useLayoutEffect(() => {
+	useEffect(() => {
 		const root = am5.Root.new("chartDiv");
 
 		root.setThemes([am5themes_Animated.new(root)]);
@@ -291,5 +292,5 @@ export default function TeamChart({ rankList, years }: TeamChartProps) {
 		}
 	});
 
-	return <div id="chartDiv" style={{ width: "100%", height: "400px" }}></div>;
+	return <div title="teamChart" id="chartDiv" style={{ width: "100%", height: "400px" }}></div>;
 }

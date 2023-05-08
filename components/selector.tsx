@@ -1,5 +1,6 @@
-import { useRouter } from "next/router";
 import { ChangeEvent, useState } from "react";
+
+import { useRouter } from "next/router";
 
 import styles from "@components/selector.module.css";
 import { DIVISIONS } from "@lib/constants";
@@ -23,7 +24,7 @@ function DivisionDropdown({ options, initialValue }: DivisionProps) {
 	};
 
 	return (
-		<select className={styles.divisionDropdown} value={selected} onChange={handleChange}>
+		<select title="division" className={styles.divisionDropdown} value={selected} onChange={handleChange}>
 			{options.map((option) => (
 				<option key={option} value={option.toLowerCase()}>
 					{option.toUpperCase()}
@@ -47,7 +48,7 @@ function YearDropdown({ options, initialValue }: YearProps) {
 	};
 
 	return (
-		<select className={styles.yearDropdown} value={selected} onChange={handleChange}>
+		<select title="year" className={styles.yearDropdown} value={selected} onChange={handleChange}>
 			{options.map((option) => (
 				<option key={option} value={option}>
 					{option}
@@ -79,7 +80,7 @@ function WeekDropdown({ options, initialValue }: WeekProps) {
 	};
 
 	return (
-		<select className={styles.weekDropdown} value={selected} onChange={handleChange}>
+		<select title="week" className={styles.weekDropdown} value={selected} onChange={handleChange}>
 			{optionList.map((option) => (
 				<option key={option.value} value={option.value}>
 					{option.text}

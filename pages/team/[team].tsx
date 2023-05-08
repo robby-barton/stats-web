@@ -6,9 +6,9 @@ import dynamic from "next/dynamic";
 import Layout from "@components/layout";
 import Meta from "@components/meta";
 import Title from "@components/title";
-import { CHART_MAX_Y } from "@lib/constants";
-import { getTeamPathParams, getTeamRankings } from "@lib/dbFuncs";
+import { CHART_MAX_Y, REVALIDATE } from "@lib/constants";
 import { ChartPoint, TeamPathParams, TeamRank } from "@lib/types";
+import { getTeamPathParams, getTeamRankings } from "@lib/utils";
 
 const TeamChart = dynamic(() => import("@components/teamChart"), {
 	ssr: false,
@@ -59,7 +59,7 @@ export async function getStaticProps({ params }: GetStaticPropsContext): Promise
 				permanent: false,
 				destination: "/teams",
 			},
-			revalidate: 60,
+			revalidate: REVALIDATE,
 		};
 	}
 
@@ -70,7 +70,7 @@ export async function getStaticProps({ params }: GetStaticPropsContext): Promise
 				permanent: false,
 				destination: "/teams",
 			},
-			revalidate: 60,
+			revalidate: REVALIDATE,
 		};
 	}
 
@@ -93,7 +93,7 @@ export async function getStaticProps({ params }: GetStaticPropsContext): Promise
 			rankList: data,
 			years: years,
 		},
-		revalidate: 60,
+		revalidate: REVALIDATE,
 	};
 }
 

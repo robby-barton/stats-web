@@ -4,8 +4,9 @@ import Layout from "@components/layout";
 import Meta from "@components/meta";
 import TeamSearch from "@components/teamSearch";
 import Title from "@components/title";
-import { getUniqueTeams } from "@lib/dbFuncs";
+import { REVALIDATE } from "@lib/constants";
 import { Team } from "@lib/types";
+import { getUniqueTeams } from "@lib/utils";
 
 export type TeamsProps = {
 	teams: Team[];
@@ -28,6 +29,6 @@ export async function getStaticProps(): Promise<GetStaticPropsResult<TeamsProps>
 		props: {
 			teams: results,
 		},
-		revalidate: 60,
+		revalidate: REVALIDATE,
 	};
 }

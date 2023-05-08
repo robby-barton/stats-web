@@ -1,13 +1,13 @@
+import { useMemo, useState } from "react";
+
 import {
 	ColumnDef,
-	Row,
 	SortingState,
 	flexRender,
 	getCoreRowModel,
 	getSortedRowModel,
 	useReactTable,
 } from "@tanstack/react-table";
-import { useMemo, useState } from "react";
 
 import { TeamGames } from "@lib/types";
 
@@ -76,8 +76,8 @@ export default function GameTable({ teams }: GameTableProps) {
 		[]
 	);
 
-	const getRowId = (row: TeamGames, index: number, parent: Row<TeamGames> | undefined) => {
-		return parent ? [parent.id, row.team_id].join(".") : row.team_id.toString();
+	const getRowId = (row: TeamGames) => {
+		return row.team_id.toString();
 	};
 
 	const table = useReactTable({
@@ -99,22 +99,17 @@ export default function GameTable({ teams }: GameTableProps) {
 						{headerGroup.headers.map((header) => {
 							return (
 								<th key={header.id} colSpan={header.colSpan}>
-									{header.isPlaceholder ? null : (
-										<div
-											{...{
-												className: header.column.getCanSort()
-													? "cursor-pointer select-none"
-													: "",
-												onClick: header.column.getToggleSortingHandler(),
-											}}
-										>
-											{flexRender(header.column.columnDef.header, header.getContext())}
-											{{
-												asc: "\u2191",
-												desc: "\u2193",
-											}[header.column.getIsSorted() as string] ?? null}
-										</div>
-									)}
+									<div
+										{...{
+											onClick: header.column.getToggleSortingHandler(),
+										}}
+									>
+										{flexRender(header.column.columnDef.header, header.getContext())}
+										{{
+											asc: "\u2191",
+											desc: "\u2193",
+										}[header.column.getIsSorted() as string] ?? null}
+									</div>
 								</th>
 							);
 						})}
