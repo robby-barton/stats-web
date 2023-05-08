@@ -1,6 +1,7 @@
+import { useMemo, useState } from "react";
+
 import {
 	ColumnDef,
-	Row,
 	SortingState,
 	flexRender,
 	getCoreRowModel,
@@ -8,7 +9,6 @@ import {
 	useReactTable,
 } from "@tanstack/react-table";
 import { useRouter } from "next/router";
-import { useMemo, useState } from "react";
 
 import styles from "@components/rankingTable.module.css";
 import { Rank } from "@lib/types";
@@ -42,6 +42,7 @@ export default function RankingTable({ teams }: RankingTableProps) {
 				accessorKey: "record",
 				header: "Record",
 				cell: (info) => info.getValue(),
+				enableSorting: false,
 			},
 			{
 				accessorKey: "srs_rank",
@@ -64,8 +65,8 @@ export default function RankingTable({ teams }: RankingTableProps) {
 		[]
 	);
 
-	const getRowId = (row: Rank, index: number, parent: Row<Rank> | undefined) => {
-		return parent ? [parent.id, row.team_id].join(".") : row.team_id.toString();
+	const getRowId = (row: Rank) => {
+		return row.team_id.toString();
 	};
 
 	const table = useReactTable({
@@ -91,22 +92,18 @@ export default function RankingTable({ teams }: RankingTableProps) {
 									colSpan={header.colSpan}
 									className={i + 1 === row.length ? styles.lastColumn : ""}
 								>
-									{header.isPlaceholder ? null : (
-										<div
-											{...{
-												className: header.column.getCanSort()
-													? "cursor-pointer select-none"
-													: "",
-												onClick: header.column.getToggleSortingHandler(),
-											}}
-										>
-											{flexRender(header.column.columnDef.header, header.getContext())}
-											{{
-												asc: "\u2191",
-												desc: "\u2193",
-											}[header.column.getIsSorted() as string] ?? null}
-										</div>
-									)}
+									<div
+										{...{
+											className: header.column.getCanSort() ? "cursor-pointer select-none" : "",
+											onClick: header.column.getToggleSortingHandler(),
+										}}
+									>
+										{flexRender(header.column.columnDef.header, header.getContext())}
+										{{
+											asc: "\u2191",
+											desc: "\u2193",
+										}[header.column.getIsSorted() as string] ?? null}
+									</div>
 								</th>
 							);
 						})}

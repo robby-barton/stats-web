@@ -2,8 +2,8 @@
 
 import { GetServerSidePropsContext, GetServerSidePropsResult } from "next";
 
-import { getRankingPathParams, getTeamPathParams } from "@lib/dbFuncs";
 import { RankingPathParams } from "@lib/types";
+import { getRankingPathParams, getTeamPathParams } from "@lib/utils";
 
 const siteUrl = "https://cfb.robbybarton.com";
 

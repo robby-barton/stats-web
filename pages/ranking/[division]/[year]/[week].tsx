@@ -6,9 +6,9 @@ import Layout from "@components/layout";
 import Meta from "@components/meta";
 import Ranking from "@components/ranking";
 import Title from "@components/title";
-import { DIVISIONS } from "@lib/constants";
-import { availableRankings, getRanking, getRankingPathParams } from "@lib/dbFuncs";
+import { DIVISIONS, REVALIDATE } from "@lib/constants";
 import { AvailRanks, Rank, RankingPathParams } from "@lib/types";
+import { availableRankings, getRanking, getRankingPathParams } from "@lib/utils";
 
 type WeekProps = {
 	availRanks: AvailRanks;
@@ -76,7 +76,7 @@ export async function getStaticProps({ params }: GetStaticPropsContext): Promise
 				permanent: false,
 				destination: validated,
 			},
-			revalidate: 60,
+			revalidate: REVALIDATE,
 		};
 	}
 
@@ -91,7 +91,7 @@ export async function getStaticProps({ params }: GetStaticPropsContext): Promise
 			year: Number(year),
 			week: week.toLowerCase() === "final" ? "Final" : week,
 		},
-		revalidate: 60,
+		revalidate: REVALIDATE,
 	};
 }
 

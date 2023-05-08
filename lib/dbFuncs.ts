@@ -1,22 +1,28 @@
-import { DIVISIONS } from "@lib/constants";
-import sql from "@lib/db";
-import { AvailRanks, Rank, RankingPathParams, Team, TeamGames, TeamPathParams, TeamRank } from "@lib/types";
+/* istanbul ignore file */
 
-let rankings: AvailRanks = {};
-let rankingsExpire = -1;
+import postgres from "postgres";
 
-type SQLYearRanks = {
+import { Team, TeamGames, TeamRank } from "@lib/types";
+
+function getDatabaseUrl(): string {
+	return process.env.DATABASE_URL;
+}
+
+const sql = postgres(getDatabaseUrl(), {
+	idle_timeout: 20,
+	max_lifetime: 60 * 30,
+});
+
+type SQLYearWeeks = {
 	year: string;
-	week: number;
+	weeks: number;
 	postseason: number;
 };
-export async function availableRankings(): Promise<AvailRanks> {
-	const now: number = Math.floor(new Date().getTime() / 1000);
-	if (!rankings || rankingsExpire < now) {
-		const rankingObjects: SQLYearRanks[] = await sql<SQLYearRanks[]>`
+export async function availableRankingsDB(): Promise<SQLYearWeeks[]> {
+	const rankingObjects: SQLYearWeeks[] = await sql<SQLYearWeeks[]>`
 			select 
 				year, 
-				max(case when postseason = 0 then week else 0 end) as week,
+				max(case when postseason = 0 then week else 0 end) as weeks,
 				max(postseason) as postseason 
 			from team_week_results
 			group by 
@@ -24,42 +30,35 @@ export async function availableRankings(): Promise<AvailRanks> {
 			order by 
 				year desc
 		`;
-		if (!rankingObjects.length) {
-			throw new Error("Not found");
-		}
 
-		rankings = {};
-		for (let i = 0; i < rankingObjects.length; i++) {
-			const obj: SQLYearRanks = rankingObjects[i];
-			rankings[obj.year] = {
-				weeks: obj.week,
-				postseason: obj.postseason === 1 ? true : false,
-			};
-		}
-		rankingsExpire = now + 300; // refresh every 5 minutes
-	}
-
-	return rankings;
+	return rankingObjects;
 }
 
-export async function checkRanking(division: string, year: number, week: string): Promise<boolean> {
-	const avail: AvailRanks = await availableRankings();
-	if (DIVISIONS.includes(division.toLowerCase()) && year in avail) {
-		if (week.toLowerCase() === "final" && avail[year].postseason) {
-			return true;
-		}
-		if (Number(week) > 0 && Number(week) <= avail[year].weeks) {
-			return true;
-		}
-	}
-
-	return false;
-}
-
-export async function getRanking(fbs: boolean, year: number, week: string): Promise<Rank[]> {
-	const results = await sql`
+type SQLRank = {
+	team_id: number;
+	name: string;
+	conf: string;
+	final_rank: number;
+	final_raw: number;
+	wins: number;
+	losses: number;
+	ties: number;
+	sos_rank: number;
+	srs_rank: number;
+};
+export async function getRankingDB(fbs: boolean, year: number, week: string): Promise<SQLRank[]> {
+	const results = await sql<SQLRank[]>`
 		select 
-			*
+			team_id,
+			name,
+			conf,
+			final_rank,
+			final_raw,
+			wins,
+			losses,
+			ties,
+			sos_rank,
+			srs_rank
 		from team_week_results
 		where
 			fbs = ${fbs} and
@@ -69,27 +68,10 @@ export async function getRanking(fbs: boolean, year: number, week: string): Prom
 			final_rank
 	`;
 
-	const data: Rank[] = [];
-	for (let i = 0; i < results.length; i++) {
-		data.push({
-			team_id: results[i].team_id,
-			final_rank: results[i].final_rank,
-			name: results[i].name,
-			conf: results[i].conf,
-			record:
-				results[i].ties === 0
-					? results[i].wins + "-" + results[i].losses
-					: results[i].wins + "-" + results[i].losses + "-" + results[i].ties,
-			srs_rank: results[i].srs_rank,
-			sos_rank: results[i].sos_rank,
-			final_raw: results[i].final_raw,
-		});
-	}
-
-	return data;
+	return results;
 }
 
-export async function getTeamRankings(team: number): Promise<TeamRank[]> {
+export async function getTeamRankingsDB(team: number): Promise<TeamRank[]> {
 	const results: TeamRank[] = await sql<TeamRank[]>`
 		select
 			team_id,
@@ -110,7 +92,7 @@ export async function getTeamRankings(team: number): Promise<TeamRank[]> {
 	return results;
 }
 
-export async function getUniqueTeams(): Promise<Team[]> {
+export async function getUniqueTeamsDB(): Promise<Team[]> {
 	const results: Team[] = await sql<Team[]>`
 		select 
 			team_id, 
@@ -132,7 +114,7 @@ export async function getUniqueTeams(): Promise<Team[]> {
 	return results;
 }
 
-export async function allGames(): Promise<TeamGames[]> {
+export async function allGamesDB(): Promise<TeamGames[]> {
 	const results: TeamGames[] = await sql<TeamGames[]>`
 		with gamesDOW as (
 			with gamesList as (
@@ -174,40 +156,4 @@ export async function allGames(): Promise<TeamGames[]> {
 	`;
 
 	return results;
-}
-
-export async function getRankingPathParams(): Promise<RankingPathParams[]> {
-	const avail: AvailRanks = await availableRankings();
-	const paths: RankingPathParams[] = [];
-	DIVISIONS.map((division) =>
-		Object.entries(avail).forEach((entry) => {
-			const [year, value] = entry;
-			const { weeks, postseason } = value;
-			for (let i = 1; i <= weeks; i++) {
-				paths.push({
-					params: {
-						division: division,
-						year: year,
-						week: i.toString(),
-					},
-				});
-			}
-			if (postseason) {
-				paths.push({
-					params: { division: division, year: year, week: "final" },
-				});
-			}
-		})
-	);
-
-	return paths;
-}
-
-export async function getTeamPathParams(): Promise<TeamPathParams[]> {
-	const results: Team[] = await getUniqueTeams();
-	const paths = results.map((team) => ({
-		params: { team: team.team_id.toString() },
-	}));
-
-	return paths;
 }

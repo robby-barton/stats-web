@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Home page renders correctly 1`] = `
+exports[`Week page renders correctly 1`] = `
 <body
   data-theme="undefined"
 >
@@ -92,6 +92,7 @@ exports[`Home page renders correctly 1`] = `
             >
               <select
                 class="divisionDropdown"
+                title="division"
               >
                 <option
                   value="fbs"
@@ -106,6 +107,7 @@ exports[`Home page renders correctly 1`] = `
               </select>
               <select
                 class="yearDropdown"
+                title="year"
               >
                 <option
                   value="2023"
@@ -115,6 +117,7 @@ exports[`Home page renders correctly 1`] = `
               </select>
               <select
                 class="weekDropdown"
+                title="week"
               >
                 <option
                   value="1"
@@ -251,7 +254,7 @@ exports[`Home page renders correctly 1`] = `
                   colspan="1"
                 >
                   <div
-                    class="cursor-pointer select-none"
+                    class=""
                   >
                     Record
                   </div>

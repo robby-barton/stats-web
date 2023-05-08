@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Game Count page renders correctly 1`] = `
+exports[`Home page renders correctly 1`] = `
 <body
   data-theme="undefined"
 >
@@ -88,6 +88,125 @@ exports[`Game Count page renders correctly 1`] = `
             class="inputArea"
           >
             <div
+              class="selectorStyling"
+            >
+              <select
+                class="divisionDropdown"
+                title="division"
+              >
+                <option
+                  value="fbs"
+                >
+                  FBS
+                </option>
+                <option
+                  value="fcs"
+                >
+                  FCS
+                </option>
+              </select>
+              <select
+                class="yearDropdown"
+                title="year"
+              >
+                <option
+                  value="2023"
+                >
+                  2023
+                </option>
+              </select>
+              <select
+                class="weekDropdown"
+                title="week"
+              >
+                <option
+                  value="1"
+                >
+                  Week 1
+                </option>
+                <option
+                  value="2"
+                >
+                  Week 2
+                </option>
+                <option
+                  value="3"
+                >
+                  Week 3
+                </option>
+                <option
+                  value="4"
+                >
+                  Week 4
+                </option>
+                <option
+                  value="5"
+                >
+                  Week 5
+                </option>
+                <option
+                  value="6"
+                >
+                  Week 6
+                </option>
+                <option
+                  value="7"
+                >
+                  Week 7
+                </option>
+                <option
+                  value="8"
+                >
+                  Week 8
+                </option>
+                <option
+                  value="9"
+                >
+                  Week 9
+                </option>
+                <option
+                  value="10"
+                >
+                  Week 10
+                </option>
+                <option
+                  value="11"
+                >
+                  Week 11
+                </option>
+                <option
+                  value="12"
+                >
+                  Week 12
+                </option>
+                <option
+                  value="13"
+                >
+                  Week 13
+                </option>
+                <option
+                  value="14"
+                >
+                  Week 14
+                </option>
+                <option
+                  value="15"
+                >
+                  Week 15
+                </option>
+                <option
+                  value="16"
+                >
+                  Week 16
+                </option>
+                <option
+                  value="final"
+                >
+                  Final
+                </option>
+              </select>
+            </div>
+            <div
               class="searchDiv"
             >
               <input
@@ -101,6 +220,17 @@ exports[`Game Count page renders correctly 1`] = `
             <thead>
               <tr>
                 <th
+                  class=""
+                  colspan="1"
+                >
+                  <div
+                    class="cursor-pointer select-none"
+                  >
+                    Rank
+                  </div>
+                </th>
+                <th
+                  class=""
                   colspan="1"
                 >
                   <div
@@ -110,107 +240,93 @@ exports[`Game Count page renders correctly 1`] = `
                   </div>
                 </th>
                 <th
+                  class=""
                   colspan="1"
                 >
                   <div
                     class="cursor-pointer select-none"
                   >
-                    Sun
+                    Conf
                   </div>
                 </th>
                 <th
+                  class=""
                   colspan="1"
                 >
                   <div
-                    class="cursor-pointer select-none"
+                    class=""
                   >
-                    Mon
+                    Record
                   </div>
                 </th>
                 <th
+                  class=""
                   colspan="1"
                 >
                   <div
                     class="cursor-pointer select-none"
                   >
-                    Tue
+                    SRS
                   </div>
                 </th>
                 <th
+                  class=""
                   colspan="1"
                 >
                   <div
                     class="cursor-pointer select-none"
                   >
-                    Wed
+                    SOS
                   </div>
                 </th>
                 <th
+                  class="lastColumn"
                   colspan="1"
                 >
                   <div
                     class="cursor-pointer select-none"
                   >
-                    Thu
-                  </div>
-                </th>
-                <th
-                  colspan="1"
-                >
-                  <div
-                    class="cursor-pointer select-none"
-                  >
-                    Fri
-                  </div>
-                </th>
-                <th
-                  colspan="1"
-                >
-                  <div
-                    class="cursor-pointer select-none"
-                  >
-                    Sat
-                  </div>
-                </th>
-                <th
-                  colspan="1"
-                >
-                  <div
-                    class="cursor-pointer select-none"
-                  >
-                    Total
+                    Final
                   </div>
                 </th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>
+                <td
+                  class=""
+                >
+                  26
+                </td>
+                <td
+                  class=""
+                >
                   South Carolina
                 </td>
-                <td>
-                  1
+                <td
+                  class=""
+                >
+                  SEC
                 </td>
-                <td>
-                  2
+                <td
+                  class=""
+                >
+                  8-5
                 </td>
-                <td>
-                  3
+                <td
+                  class=""
+                >
+                  15
                 </td>
-                <td>
-                  4
+                <td
+                  class=""
+                >
+                  13
                 </td>
-                <td>
-                  5
-                </td>
-                <td>
-                  6
-                </td>
-                <td>
-                  7
-                </td>
-                <td>
-                  8
+                <td
+                  class="lastColumn"
+                >
+                  0.12346
                 </td>
               </tr>
             </tbody>

@@ -1,5 +1,6 @@
-import Head from "next/head";
 import { PropsWithChildren } from "react";
+
+import Head from "next/head";
 
 import Footer from "@components/footer";
 import Header from "@components/header";
