@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render } from "@testing-library/react";
 
 import "@testing-library/jest-dom";
 import { REVALIDATE } from "@lib/constants";
@@ -32,7 +32,6 @@ describe("Teams page", () => {
 			},
 		];
 		const { baseElement } = render(<Teams teams={teams} />);
-		await screen.findByTitle(/light mode/i);
 
 		expect(baseElement).toMatchSnapshot();
 	});

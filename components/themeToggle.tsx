@@ -36,7 +36,7 @@ const ToggleButton = styled("button")`
 type ThumbProps = {
 	colorMode: string;
 };
-const ToggleThumb = styled("span") <ThumbProps>`
+const ToggleThumb = styled("span")<ThumbProps>`
 	position: absolute;
 	top: var(--toggle-padding);
 	left: var(--toggle-padding);
