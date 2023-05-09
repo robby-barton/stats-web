@@ -9,9 +9,8 @@ const config = {
 	collectCoverage: true,
 	collectCoverageFrom: ["**/*.{ts,tsx}"],
 	transform: {
-		"^.+\\.(t|j)sx?$": "@swc/jest",
+		"^.*\\.(t|j)sx?$": "@swc/jest",
 	},
-	transformIgnorePatterns: ["node_modules"],
 	moduleNameMapper: {
 		"@components/(.*)": ["<rootDir>/components/$1"],
 		"@styles/(.*)": ["<rootDir>/styles/$1"],

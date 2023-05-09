@@ -1,14 +1,14 @@
-import { useEffect, useRef } from "react";
+import { useContext, useEffect, useRef } from "react";
 
 import * as am5 from "@amcharts/amcharts5";
 import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
 import * as am5xy from "@amcharts/amcharts5/xy";
 
+import { ThemeContext } from "@components/themeProvider";
 import { CHART_MAX_Y } from "@lib/constants";
 import { ChartPoint } from "@lib/types";
 
-function colorByTheme(): am5.Color {
-	const theme = document.body.dataset.theme;
+function colorByTheme(theme: string): am5.Color {
 	if (theme === "dark") {
 		return am5.color(0xffffff);
 	} else {
@@ -75,15 +75,16 @@ type TeamChartProps = {
 	years: number[];
 };
 export default function TeamChart({ rankList, years }: TeamChartProps) {
+	const { colorMode } = useContext(ThemeContext);
 	const rootRef = useRef<am5.Root | null>(null);
 	const seriesRef = useRef<am5xy.LineSeries | null>(null);
 
 	useEffect(() => {
+		const color = colorByTheme(colorMode);
 		const root = am5.Root.new("chartDiv");
 
 		root.setThemes([am5themes_Animated.new(root)]);
 
-		const color = colorByTheme();
 		root.interfaceColors.setAll({
 			grid: color,
 			text: color,
@@ -272,10 +273,10 @@ export default function TeamChart({ rankList, years }: TeamChartProps) {
 		return () => {
 			root.dispose();
 		};
-	});
+	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-	window.addEventListener("theme", () => {
-		const color = colorByTheme();
+	useEffect(() => {
+		const color = colorByTheme(colorMode);
 		if (rootRef.current) {
 			rootRef.current.interfaceColors.setAll({
 				grid: color,
@@ -290,7 +291,7 @@ export default function TeamChart({ rankList, years }: TeamChartProps) {
 				});
 			}
 		}
-	});
+	}, [colorMode]);
 
-	return <div title="teamChart" id="chartDiv" style={{ width: "100%", height: "400px" }}></div>;
+	return <div title="chartDiv" id="chartDiv" style={{ width: "100%", height: "400px" }}></div>;
 }
