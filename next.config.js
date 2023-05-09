@@ -11,4 +11,7 @@ module.exports = withBundleAnalyzer({
 		defaultLocale: "en",
 	},
 	output: "standalone",
+	experimental: {
+		largePageDataBytes: 180 * 1000,
+	},
 });

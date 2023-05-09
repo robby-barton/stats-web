@@ -1,12 +1,8 @@
-import dynamic from "next/dynamic";
 import Link from "next/link";
 
 import styles from "@components/header.module.css";
+import ThemeToggle from "@components/themeToggle";
 import commonStyles from "@styles/common.module.css";
-
-const ThemeToggle = dynamic(() => import("@components/themeToggle"), {
-	ssr: false,
-});
 
 export default function Header() {
 	return (
