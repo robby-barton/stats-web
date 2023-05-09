@@ -10,15 +10,18 @@ class MyDocument extends Document {
 
 	render() {
 		const setInitialTheme = `
-		function getUserPreference() {
-			if(window.localStorage.getItem('theme')) {
-				return window.localStorage.getItem('theme')
-			}
-			return window.matchMedia('(prefers-color-scheme: dark)').matches 
-				? 'dark' 
-				: 'light'
-		}
-		document.body.dataset.theme = getUserPreference();
+			(function () {
+				function getUserPreference() {
+					if(window.localStorage.getItem('theme')) {
+						return window.localStorage.getItem('theme')
+					}
+					return window.matchMedia('(prefers-color-scheme: dark)').matches 
+						? 'dark' 
+						: 'light'
+				}
+				const colorMode = getUserPreference();
+				document.body.dataset.theme = colorMode
+			})()
 		`;
 		return (
 			<Html>

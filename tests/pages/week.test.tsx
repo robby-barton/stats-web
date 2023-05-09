@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import "@testing-library/jest-dom";
 
 import { REVALIDATE } from "@lib/constants";
@@ -49,7 +49,6 @@ describe("Week page", () => {
 		const { baseElement } = render(
 			<Week availRanks={avail} ranking={ranks} division="fbs" week="Final" year={2023} />
 		);
-		await screen.findByTitle(/light mode/i);
 
 		expect(baseElement).toMatchSnapshot();
 	});

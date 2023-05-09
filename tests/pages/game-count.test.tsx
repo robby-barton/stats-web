@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render } from "@testing-library/react";
 
 import "@testing-library/jest-dom";
 import { REVALIDATE } from "@lib/constants";
@@ -36,7 +36,6 @@ describe("Game Count page", () => {
 			},
 		];
 		const { baseElement } = render(<GameCount games={games} />);
-		await screen.findByTitle(/light mode/i);
 
 		expect(baseElement).toMatchSnapshot();
 	});

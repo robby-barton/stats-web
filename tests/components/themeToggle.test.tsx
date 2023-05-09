@@ -1,6 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 
 import "@testing-library/jest-dom";
+import { ThemeProvider } from "@components/themeProvider";
 import ThemeToggle from "@components/themeToggle";
 
 beforeEach(() => {
@@ -9,7 +10,11 @@ beforeEach(() => {
 
 describe("ThemeToggle", () => {
 	it("changes theme", () => {
-		render(<ThemeToggle />);
+		render(
+			<ThemeProvider>
+				<ThemeToggle />
+			</ThemeProvider>
+		);
 		const themeToggle = screen.getByRole("button");
 
 		fireEvent.click(themeToggle);

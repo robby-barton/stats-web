@@ -1,9 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Teams page renders correctly 1`] = `
-<body
-  data-theme="undefined"
->
+<body>
   <div>
     <div
       class="container"
