@@ -5,7 +5,6 @@
 		"build": "next build",
 		"start": "next start",
 		"lint": "eslint .",
-		"lint:fix": "yarn lint --fix",
 		"test": "jest"
 	},
 	"dependencies": {
