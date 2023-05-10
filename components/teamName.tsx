@@ -1,8 +1,10 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import Image from "next/image";
 
-import { ThemeContext } from "./themeProvider";
+import styles from "@components/teamName.module.css";
+import { ThemeContext } from "@components/themeProvider";
+import { ERROR_IMAGES } from "@lib/constants";
 
 type TeamName = {
 	team_id: number;
@@ -10,13 +12,28 @@ type TeamName = {
 };
 export default function TeamName({ team_id, name }: TeamName) {
 	const { colorMode } = useContext(ThemeContext);
+	const [img, setImg] = useState(`/logos/${colorMode}/${team_id}.png`);
+
+	useEffect(() => {
+		setImg(`/logos/${colorMode}/${team_id}.png`);
+	}, [colorMode]); // eslint-disable-line react-hooks/exhaustive-deps
 
 	return (
-		<div style={{ display: "flex", gap: "0 0.5rem", alignItems: "center" }}>
-			<div style={{ position: "relative", width: "2.5rem", height: "2.5rem" }}>
-				<Image src={`/logos/${colorMode}/${team_id}.png`} alt={name} fill placeholder="empty" />
+		<div className={styles.container}>
+			<div className={styles.logo}>
+				<Image
+					src={img}
+					onError={() => {
+						setImg(`/${ERROR_IMAGES[team_id % ERROR_IMAGES.length]}`);
+					}}
+					alt={name}
+					fill
+					placeholder="empty"
+				/>
 			</div>
-			<div style={{ display: "flex", alignItems: "center" }}>{name}</div>
+			<div className={styles.name}>
+				<span>{name}</span>
+			</div>
 		</div>
 	);
 }

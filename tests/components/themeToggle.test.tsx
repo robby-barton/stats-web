@@ -8,7 +8,7 @@ beforeEach(() => {
 	document.body.dataset.theme = "light";
 });
 
-describe("ThemeToggle", () => {
+describe("TeamName", () => {
 	it("changes theme", () => {
 		render(
 			<ThemeProvider>

@@ -2,6 +2,7 @@ import { fireEvent, render, screen } from "@testing-library/react";
 
 import "@testing-library/jest-dom";
 import Ranking from "@components/ranking";
+import { ThemeProvider } from "@components/themeProvider";
 import { AvailRanks, Rank } from "@lib/types";
 
 jest.mock("next/router", () => ({
@@ -9,7 +10,7 @@ jest.mock("next/router", () => ({
 }));
 
 describe("Ranking", () => {
-	it("team search works", () => {
+	it("team search works", async () => {
 		const avail: AvailRanks = {
 			"2022": {
 				weeks: 16,
@@ -38,7 +39,11 @@ describe("Ranking", () => {
 				record: "record",
 			},
 		];
-		render(<Ranking availRanks={avail} ranking={ranks} division="fbs" year={2022} week="Final" />);
+		render(
+			<ThemeProvider>
+				<Ranking availRanks={avail} ranking={ranks} division="fbs" year={2022} week="Final" />
+			</ThemeProvider>
+		);
 
 		const team = screen.getByText("South Carolina");
 		expect(team).toBeInTheDocument();

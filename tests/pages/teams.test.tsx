@@ -19,6 +19,10 @@ afterEach(() => {
 	jest.clearAllMocks();
 });
 
+beforeEach(() => {
+	document.body.dataset.theme = "light";
+});
+
 describe("Teams page", () => {
 	it("renders correctly", async () => {
 		const teams: Team[] = [

@@ -26,6 +26,10 @@ afterEach(() => {
 	jest.clearAllMocks();
 });
 
+beforeEach(() => {
+	document.body.dataset.theme = "light";
+});
+
 describe("Home page", () => {
 	it("renders correctly", async () => {
 		const avail: AvailRanks = {

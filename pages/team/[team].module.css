@@ -1,9 +1,7 @@
 .teamName {
 	display: flex;
 	padding: 0 1rem;
-	padding-top: 1rem;
-	font-size: 1.75rem;
+	padding-top: 0.5rem;
+	zoom: 2;
 	font-weight: 600;
-	height: 3rem;
-	/* letter-spacing: -0.05rem; */
 }

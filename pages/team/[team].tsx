@@ -94,7 +94,7 @@ export async function getStaticProps({ params }: GetStaticPropsContext): Promise
 
 	return {
 		props: {
-			team_id: results[0].team_id,
+			team_id: team,
 			team: results[0].name,
 			rankList: data,
 			years: years,

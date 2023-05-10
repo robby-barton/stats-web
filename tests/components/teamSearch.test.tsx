@@ -2,6 +2,7 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 
 import TeamSearch from "@components/teamSearch";
+import { ThemeProvider } from "@components/themeProvider";
 import { Team } from "@lib/types";
 
 describe("TeamSearch", () => {
@@ -16,7 +17,11 @@ describe("TeamSearch", () => {
 				name: "FSU",
 			},
 		];
-		render(<TeamSearch teams={teams} />);
+		render(
+			<ThemeProvider>
+				<TeamSearch teams={teams} />
+			</ThemeProvider>
+		);
 
 		const team = screen.getByText("South Carolina");
 		expect(team).toBeInTheDocument();
