@@ -9,6 +9,7 @@ import {
 	useReactTable,
 } from "@tanstack/react-table";
 
+import TeamName from "@components/teamName";
 import { TeamGames } from "@lib/types";
 
 type GameTableProps = {
@@ -22,7 +23,7 @@ export default function GameTable({ teams }: GameTableProps) {
 			{
 				accessorKey: "name",
 				header: "Team",
-				cell: (info) => info.getValue(),
+				cell: (info) => <TeamName team_id={Number(info.row.id)} name={info.getValue() as string} />,
 			},
 			{
 				accessorKey: "sun",

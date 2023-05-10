@@ -16,7 +16,8 @@
 		"next": "^13.1.5",
 		"postgres": "^3.3.4",
 		"react": "18.2.0",
-		"react-dom": "18.2.0"
+		"react-dom": "18.2.0",
+		"sharp": "^0.32.1"
 	},
 	"devDependencies": {
 		"@jest/globals": "^29.5.0",

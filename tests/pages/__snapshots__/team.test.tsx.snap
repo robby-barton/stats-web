@@ -1,7 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Team page renders correctly 1`] = `
-<body>
+<body
+  data-theme="light"
+>
   <div>
     <div
       class="container"
@@ -61,9 +63,9 @@ exports[`Team page renders correctly 1`] = `
           class="headerToggle"
         >
           <button
-            aria-label="Change to light mode"
+            aria-label="Change to dark mode"
             class="css-1f6jnp0"
-            title="Change to light mode"
+            title="Change to dark mode"
             type="button"
           >
             <span
@@ -81,9 +83,35 @@ exports[`Team page renders correctly 1`] = `
       <div
         class="contentWrap"
       >
-        <h2>
-          South Carolina
-        </h2>
+        <div
+          class="teamName"
+        >
+          <div
+            class="container"
+          >
+            <div
+              class="logo"
+            >
+              <img
+                alt="South Carolina"
+                data-nimg="fill"
+                decoding="async"
+                loading="lazy"
+                sizes="100vw"
+                src="http://localhost/_next/image?url=%2Flogos%2Flight%2F2579.png&w=3840&q=75"
+                srcset="/_next/image?url=%2Flogos%2Flight%2F2579.png&w=640&q=75 640w, /_next/image?url=%2Flogos%2Flight%2F2579.png&w=750&q=75 750w, /_next/image?url=%2Flogos%2Flight%2F2579.png&w=828&q=75 828w, /_next/image?url=%2Flogos%2Flight%2F2579.png&w=1080&q=75 1080w, /_next/image?url=%2Flogos%2Flight%2F2579.png&w=1200&q=75 1200w, /_next/image?url=%2Flogos%2Flight%2F2579.png&w=1920&q=75 1920w, /_next/image?url=%2Flogos%2Flight%2F2579.png&w=2048&q=75 2048w, /_next/image?url=%2Flogos%2Flight%2F2579.png&w=3840&q=75 3840w"
+                style="position: absolute; height: 100%; width: 100%; left: 0px; top: 0px; right: 0px; bottom: 0px; color: transparent;"
+              />
+            </div>
+            <div
+              class="name"
+            >
+              <span>
+                South Carolina
+              </span>
+            </div>
+          </div>
+        </div>
       </div>
       <div
         class="footer"

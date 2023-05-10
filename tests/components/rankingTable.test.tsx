@@ -3,6 +3,7 @@ import "@testing-library/jest-dom";
 import { useRouter } from "next/router";
 
 import RankingTable from "@components/rankingTable";
+import { ThemeProvider } from "@components/themeProvider";
 import { Rank } from "@lib/types";
 
 jest.mock("next/router", () => ({
@@ -29,7 +30,11 @@ describe("Ranking Table", () => {
 		];
 		(useRouter as jest.Mock).mockReturnValue(mockRouter);
 
-		render(<RankingTable teams={ranks} />);
+		render(
+			<ThemeProvider>
+				<RankingTable teams={ranks} />
+			</ThemeProvider>
+		);
 
 		fireEvent.click(screen.getByText("South Carolina"));
 		expect(mockRouter.push).toHaveBeenCalledWith(`/team/${ranks[0].team_id}`);
@@ -59,7 +64,11 @@ describe("Ranking Table", () => {
 			},
 		];
 
-		render(<RankingTable teams={ranks} />);
+		render(
+			<ThemeProvider>
+				<RankingTable teams={ranks} />
+			</ThemeProvider>
+		);
 		const sc = screen.getByText("South Carolina");
 		const fsu = screen.getByText("FSU");
 

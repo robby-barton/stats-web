@@ -2,6 +2,7 @@ import { fireEvent, render, screen } from "@testing-library/react";
 
 import "@testing-library/jest-dom";
 import Games from "@components/games";
+import { ThemeProvider } from "@components/themeProvider";
 import { TeamGames } from "@lib/types";
 
 describe("Games", () => {
@@ -32,7 +33,11 @@ describe("Games", () => {
 				total: 10,
 			},
 		];
-		render(<Games games={games} />);
+		render(
+			<ThemeProvider>
+				<Games games={games} />
+			</ThemeProvider>
+		);
 
 		const team = screen.getByText("South Carolina");
 		expect(team).toBeInTheDocument();

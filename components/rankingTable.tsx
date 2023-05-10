@@ -11,6 +11,7 @@ import {
 import { useRouter } from "next/router";
 
 import styles from "@components/rankingTable.module.css";
+import TeamName from "@components/teamName";
 import { Rank } from "@lib/types";
 
 type RankingTableProps = {
@@ -31,7 +32,7 @@ export default function RankingTable({ teams }: RankingTableProps) {
 			{
 				accessorKey: "name",
 				header: "Team",
-				cell: (info) => info.getValue(),
+				cell: (info) => <TeamName team_id={Number(info.row.id)} name={info.getValue() as string} />,
 			},
 			{
 				accessorKey: "conf",

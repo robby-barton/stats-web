@@ -2,7 +2,7 @@ import { useContext } from "react";
 
 import styled from "@emotion/styled";
 
-import { ThemeContext } from "./themeProvider";
+import { ThemeContext } from "@components/themeProvider";
 
 const ToggleButton = styled("button")`
   --toggle-width: 2.5rem;

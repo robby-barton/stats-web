@@ -20,6 +20,10 @@ afterEach(() => {
 	jest.clearAllMocks();
 });
 
+beforeEach(() => {
+	document.body.dataset.theme = "light";
+});
+
 describe("Team page", () => {
 	it("renders correctly", async () => {
 		const rankList: ChartPoint[] = [];
@@ -34,8 +38,8 @@ describe("Team page", () => {
 			}
 		});
 
-		const { baseElement } = render(<Team team="South Carolina" rankList={rankList} years={years} />);
-		await screen.findByTitle(/light mode/i);
+		const { baseElement } = render(<Team team="South Carolina" team_id={2579} rankList={rankList} years={years} />);
+		await screen.findByTitle(/dark mode/i);
 
 		expect(baseElement).toMatchSnapshot();
 	});
@@ -81,6 +85,7 @@ describe("Team page", () => {
 			const expected = {
 				props: {
 					team: "South Carolina",
+					team_id: 2579,
 					rankList: [
 						{
 							week: "2022 Week 1",
