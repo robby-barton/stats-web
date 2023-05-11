@@ -12,10 +12,12 @@ type TeamName = {
 };
 export default function TeamName({ team_id, name }: TeamName) {
 	const { colorMode } = useContext(ThemeContext);
-	const [img, setImg] = useState(`/logos/${colorMode}/${team_id}.png`);
+	const [img, setImg] = useState(
+		`https://a.espncdn.com/i/teamlogos/ncaa/500${colorMode === "dark" ? "-dark" : ""}/${team_id}.png`
+	);
 
 	useEffect(() => {
-		setImg(`/logos/${colorMode}/${team_id}.png`);
+		setImg(`https://a.espncdn.com/i/teamlogos/ncaa/500${colorMode === "dark" ? "-dark" : ""}/${team_id}.png`);
 	}, [colorMode]); // eslint-disable-line react-hooks/exhaustive-deps
 
 	return (
