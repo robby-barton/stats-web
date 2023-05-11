@@ -5,6 +5,16 @@ import TeamSearch from "@components/teamSearch";
 import { ThemeProvider } from "@components/themeProvider";
 import { Team } from "@lib/types";
 
+beforeEach(() => {
+	const mockIntersectionObserver = jest.fn();
+	mockIntersectionObserver.mockReturnValue({
+		observe: () => null,
+		unobserve: () => null,
+		disconnect: () => null,
+	});
+	window.IntersectionObserver = mockIntersectionObserver;
+});
+
 describe("TeamSearch", () => {
 	it("works", () => {
 		const teams: Team[] = [

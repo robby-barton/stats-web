@@ -9,6 +9,14 @@ import { ERROR_IMAGES } from "@lib/constants";
 
 beforeEach(() => {
 	document.body.dataset.theme = "light";
+
+	const mockIntersectionObserver = jest.fn();
+	mockIntersectionObserver.mockReturnValue({
+		observe: () => null,
+		unobserve: () => null,
+		disconnect: () => null,
+	});
+	window.IntersectionObserver = mockIntersectionObserver;
 });
 
 function TestTeamName({ team_id, name }: { team_id: number; name: string }) {

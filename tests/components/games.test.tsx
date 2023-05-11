@@ -5,6 +5,18 @@ import Games from "@components/games";
 import { ThemeProvider } from "@components/themeProvider";
 import { TeamGames } from "@lib/types";
 
+beforeEach(() => {
+	document.body.dataset.theme = "light";
+
+	const mockIntersectionObserver = jest.fn();
+	mockIntersectionObserver.mockReturnValue({
+		observe: () => null,
+		unobserve: () => null,
+		disconnect: () => null,
+	});
+	window.IntersectionObserver = mockIntersectionObserver;
+});
+
 describe("Games", () => {
 	it("team search works", () => {
 		const games: TeamGames[] = [

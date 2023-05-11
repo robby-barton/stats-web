@@ -22,6 +22,14 @@ afterEach(() => {
 
 beforeEach(() => {
 	document.body.dataset.theme = "light";
+
+	const mockIntersectionObserver = jest.fn();
+	mockIntersectionObserver.mockReturnValue({
+		observe: () => null,
+		unobserve: () => null,
+		disconnect: () => null,
+	});
+	window.IntersectionObserver = mockIntersectionObserver;
 });
 
 describe("Team page", () => {
@@ -39,7 +47,7 @@ describe("Team page", () => {
 		});
 
 		const { baseElement } = render(<Team team="South Carolina" team_id={2579} rankList={rankList} years={years} />);
-		await screen.findByTitle(/dark mode/i);
+		await screen.findByText(/South Carolina/i);
 
 		expect(baseElement).toMatchSnapshot();
 	});
