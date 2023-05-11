@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 
 import styles from "@components/teamName.module.css";
 import { ThemeContext } from "@components/themeProvider";
@@ -12,7 +12,7 @@ type TeamName = {
 };
 export default function TeamName({ team_id, name }: TeamName) {
 	const { colorMode } = useContext(ThemeContext);
-	const [img, setImg] = useState(
+	const [img, setImg] = useState<string | StaticImageData>(
 		`https://a.espncdn.com/i/teamlogos/ncaa/500${colorMode === "dark" ? "-dark" : ""}/${team_id}.png`
 	);
 
@@ -26,7 +26,7 @@ export default function TeamName({ team_id, name }: TeamName) {
 				<Image
 					src={img}
 					onError={() => {
-						setImg(`/${ERROR_IMAGES[team_id % ERROR_IMAGES.length]}`);
+						setImg(ERROR_IMAGES[team_id % ERROR_IMAGES.length]);
 					}}
 					alt={name}
 					fill
