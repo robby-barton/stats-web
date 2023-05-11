@@ -24,7 +24,7 @@ function useOnScreen(ref: RefObject<HTMLDivElement>) {
 				observerRef.current.disconnect();
 			}
 		};
-	});
+	}, [ref]);
 
 	return isOnScreen;
 }
