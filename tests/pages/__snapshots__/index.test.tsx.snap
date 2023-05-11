@@ -63,9 +63,9 @@ exports[`Home page renders correctly 1`] = `
           class="headerToggle"
         >
           <button
-            aria-label="Change to dark mode"
+            aria-label="Change to light mode"
             class="css-1f6jnp0"
-            title="Change to dark mode"
+            title="Change to light mode"
             type="button"
           >
             <span

@@ -9,6 +9,18 @@ jest.mock("next/router", () => ({
 	useRouter: jest.fn(),
 }));
 
+beforeEach(() => {
+	document.body.dataset.theme = "light";
+
+	const mockIntersectionObserver = jest.fn();
+	mockIntersectionObserver.mockReturnValue({
+		observe: () => null,
+		unobserve: () => null,
+		disconnect: () => null,
+	});
+	window.IntersectionObserver = mockIntersectionObserver;
+});
+
 describe("Ranking", () => {
 	it("team search works", async () => {
 		const avail: AvailRanks = {
