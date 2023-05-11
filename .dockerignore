@@ -1,7 +1,15 @@
 Dockerfile
 .dockerignore
 node_modules
+.swc
 README.md
 .next
 .git
 .gitignore
+jext.config.mjs
+.prettierrc
+.eslintrc.js
+yarn-error.log
+.next
+coverage
+tests

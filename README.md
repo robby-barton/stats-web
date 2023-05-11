@@ -12,9 +12,9 @@ Data is updated by a [scheduler](https://github.com/robby-barton/stats-go).
 `yarn dev`
 
 ### Local Production (Docker)
-Ensure you have a `.env` file with the `DATABASE_URL` set. Change the `yarn build` line in `Dockerfile` to be just `RUN yarn build`.
+Ensure you have a `.env` file with the `DATABASE_URL` set or else the build will fail.
 ```
-DOCKER_BUILDKIT=1 docker build -t stats-web:local .
+DOCKER_BUILDKIT=1 docker build --target stats-web -tag stats-web:local .
 
 docker run -dp 3000:3000 stats-web:local
 ```
