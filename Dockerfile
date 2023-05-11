@@ -21,10 +21,7 @@ COPY . .
 # Uncomment the following line in case you want to disable telemetry during the build.
 ENV NEXT_TELEMETRY_DISABLED 1
 
-RUN if [ -f ".env" ]; \
-		then yarn build; \
-		else --mount=type=secret,id=database_url DATABASE_URL=`cat /run/secrets/database_url` yarn build; \
-	fi
+RUN --mount=type=secret,id=database_url DATABASE_URL=`cat /run/secrets/database_url` yarn build
 
 # Production image, copy all the files and run next
 FROM node:18-alpine AS stats-web
