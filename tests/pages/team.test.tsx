@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 
 import { CHART_MAX_Y, REVALIDATE } from "@lib/constants";
-import { ChartPoint, TeamRank } from "@lib/types";
+import { ChartPoint, TeamRank, Team as TeamType } from "@lib/types";
 import { getTeamPathParams, getTeamRankings } from "@lib/utils";
 import Team, { getStaticPaths, getStaticProps } from "@pages/team/[team]";
 
@@ -32,6 +32,13 @@ beforeEach(() => {
 	window.IntersectionObserver = mockIntersectionObserver;
 });
 
+const scInfo: TeamType = {
+	team_id: 2579,
+	name: "South Carolina",
+	logo: "/logo/south-carolina.png",
+	logo_dark: "/logo-dark/south-carolina.png",
+};
+
 describe("Team page", () => {
 	it("renders correctly", async () => {
 		const rankList: ChartPoint[] = [];
@@ -46,7 +53,7 @@ describe("Team page", () => {
 			}
 		});
 
-		const { baseElement } = render(<Team team="South Carolina" team_id={2579} rankList={rankList} years={years} />);
+		const { baseElement } = render(<Team team={scInfo} rankList={rankList} years={years} />);
 		await screen.findByText(/South Carolina/i);
 
 		expect(baseElement).toMatchSnapshot();
@@ -56,32 +63,28 @@ describe("Team page", () => {
 		it("returns correctly", async () => {
 			const mockReturn: TeamRank[] = [
 				{
-					team_id: 2579,
-					name: "South Carolina",
+					team: scInfo,
 					final_rank: 1,
 					year: 2022,
 					week: "1",
 					postseason: 0,
 				},
 				{
-					team_id: 2579,
-					name: "South Carolina",
+					team: scInfo,
 					final_rank: 2,
 					year: 2022,
 					week: "2",
 					postseason: 0,
 				},
 				{
-					team_id: 2579,
-					name: "South Carolina",
+					team: scInfo,
 					final_rank: 3,
 					year: 2022,
 					week: "1",
 					postseason: 1,
 				},
 				{
-					team_id: 2579,
-					name: "South Carolina",
+					team: scInfo,
 					final_rank: 4,
 					year: 2023,
 					week: "1",
@@ -92,8 +95,7 @@ describe("Team page", () => {
 
 			const expected = {
 				props: {
-					team: "South Carolina",
-					team_id: 2579,
+					team: scInfo,
 					rankList: [
 						{
 							week: "2022 Week 1",

@@ -9,7 +9,7 @@ export default function TeamList({ teams }: TeamListProps) {
 	return (
 		<div className={styles.teamList}>
 			{teams.map((team) => (
-				<TeamCard key={team.team_id} name={team.name} id={team.team_id} />
+				<TeamCard key={team.team_id} team={team} />
 			))}
 		</div>
 	);

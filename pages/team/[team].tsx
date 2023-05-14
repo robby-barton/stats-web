@@ -8,7 +8,7 @@ import Meta from "@components/meta";
 import TeamName from "@components/teamName";
 import Title from "@components/title";
 import { CHART_MAX_Y, REVALIDATE } from "@lib/constants";
-import { ChartPoint, TeamPathParams, TeamRank } from "@lib/types";
+import { ChartPoint, Team, TeamPathParams, TeamRank } from "@lib/types";
 import { getTeamPathParams, getTeamRankings } from "@lib/utils";
 import styles from "@pages/team/[team].module.css";
 
@@ -17,21 +17,20 @@ const TeamChart = dynamic(() => import("@components/teamChart"), {
 });
 
 type TeamProps = {
-	team_id: number;
-	team: string;
+	team: Team;
 	rankList: ChartPoint[];
 	years: number[];
 };
 
-export default function Team({ team_id, team, rankList, years }: TeamProps) {
-	const meta = `${team} historical rankings.`;
+export default function Team({ team, rankList, years }: TeamProps) {
+	const meta = `${team.name} historical rankings.`;
 
 	return (
 		<Layout>
-			<Title title={team} />
+			<Title title={team.name} />
 			<Meta desc={meta} />
 			<div className={styles.teamName}>
-				<TeamName team_id={team_id} name={team} />
+				<TeamName team={team} />
 			</div>
 			<TeamChart rankList={rankList} years={years} />
 		</Layout>
@@ -94,8 +93,7 @@ export async function getStaticProps({ params }: GetStaticPropsContext): Promise
 
 	return {
 		props: {
-			team_id: team,
-			team: results[0].name,
+			team: results[0].team,
 			rankList: data,
 			years: years,
 		},

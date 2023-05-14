@@ -12,7 +12,7 @@ export default function Games({ games }: GamesProps) {
 	const [searchField, setSearchField] = useState("");
 
 	const filteredTeams = games.filter((team) => {
-		return team.name.toLowerCase().includes(searchField.toLowerCase());
+		return team.team.name.toLowerCase().includes(searchField.toLowerCase());
 	});
 
 	const handleChange = (e: ChangeEvent<HTMLInputElement>) => {

@@ -35,8 +35,12 @@ describe("Game Count page", () => {
 	it("renders correctly", async () => {
 		const games: TeamGames[] = [
 			{
-				name: "South Carolina",
-				team_id: 2579,
+				team: {
+					team_id: 2579,
+					name: "South Carolina",
+					logo: "/logo/south-carolina.png",
+					logo_dark: "/logo-dark/south-carolina.png",
+				},
 				sun: 1,
 				mon: 2,
 				tue: 3,
@@ -55,8 +59,12 @@ describe("Game Count page", () => {
 	it("getStaticProps returns correctly", async () => {
 		const mockReturn = [
 			{
-				name: "South Carolina",
-				team_id: 2579,
+				team: {
+					team_id: 2579,
+					name: "South Carolina",
+					logo: "/logo/south-carolina.png",
+					logo_dark: "/logo-dark/south-carolina.png",
+				},
 				sun: 1,
 				mon: 2,
 				tue: 3,

@@ -5,7 +5,9 @@
 		"build": "next build",
 		"start": "next start",
 		"lint": "eslint .",
-		"test": "jest"
+		"test": "jest",
+		"docker:build": "DOCKER_BUILDKIT=1 docker build --target stats-web --tag stats-web:local --build-arg local=true .",
+		"docker:run": "docker run -p 3000:3000 stats-web:local"
 	},
 	"dependencies": {
 		"@amcharts/amcharts5": "^5.3.11",

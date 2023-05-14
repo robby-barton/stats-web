@@ -1,15 +1,9 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import { useRouter } from "next/router";
 
-import RankingTable from "@components/rankingTable";
+import GameTable from "@components/gameTable";
 import { ThemeProvider } from "@components/themeProvider";
-import { Rank, Team } from "@lib/types";
-
-jest.mock("next/router", () => ({
-	__esModule: true,
-	useRouter: jest.fn(),
-}));
+import { Team, TeamGames } from "@lib/types";
 
 beforeEach(() => {
 	document.body.dataset.theme = "light";
@@ -37,53 +31,27 @@ const fsuInfo: Team = {
 	logo_dark: "/logo-dark/florida-state.png",
 };
 
-const stats = {
-	final_raw: 0.1234567,
-	final_rank: 1,
-	sos_rank: 1,
-	srs_rank: 1,
-	record: "record",
+const gameCounts = {
+	sun: 1,
+	mon: 1,
+	tue: 1,
+	wed: 1,
+	thu: 1,
+	fri: 1,
+	sat: 1,
+	total: 1,
 };
 
-describe("Ranking Table", () => {
-	it("link to team works", () => {
-		const mockRouter = {
-			push: jest.fn(),
-		};
-		const ranks: Rank[] = [
-			{
-				team: scInfo,
-				conf: "SEC",
-				final_raw: 0.1234567,
-				final_rank: 1,
-				sos_rank: 1,
-				srs_rank: 1,
-				record: "record",
-			},
-		];
-		(useRouter as jest.Mock).mockReturnValue(mockRouter);
-
-		render(
-			<ThemeProvider>
-				<RankingTable teams={ranks} />
-			</ThemeProvider>
-		);
-
-		fireEvent.click(screen.getByText("South Carolina"));
-		expect(mockRouter.push).toHaveBeenCalledWith(`/team/${ranks[0].team.team_id}`);
-	});
-
+describe("Game Table", () => {
 	it("sorts", () => {
-		const ranks: Rank[] = [
+		const ranks: TeamGames[] = [
 			{
 				team: scInfo,
-				conf: "SEC",
-				...stats,
+				...gameCounts,
 			},
 			{
 				team: fsuInfo,
-				conf: "ACC",
-				...stats,
+				...gameCounts,
 			},
 			{
 				team: {
@@ -92,14 +60,13 @@ describe("Ranking Table", () => {
 					logo: "",
 					logo_dark: "",
 				},
-				conf: "SEC",
-				...stats,
+				...gameCounts,
 			},
 		];
 
 		render(
 			<ThemeProvider>
-				<RankingTable teams={ranks} />
+				<GameTable teams={ranks} />
 			</ThemeProvider>
 		);
 		const [first, second] = screen.getAllByText(/south carolina/i);

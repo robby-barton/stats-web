@@ -10,7 +10,7 @@ import {
 } from "@tanstack/react-table";
 
 import TeamName from "@components/teamName";
-import { TeamGames } from "@lib/types";
+import { Team, TeamGames } from "@lib/types";
 
 type GameTableProps = {
 	teams: TeamGames[];
@@ -21,9 +21,16 @@ export default function GameTable({ teams }: GameTableProps) {
 	const columns = useMemo<ColumnDef<TeamGames>[]>(
 		() => [
 			{
-				accessorKey: "name",
+				accessorKey: "team",
 				header: "Team",
-				cell: (info) => <TeamName team_id={Number(info.row.id)} name={info.getValue() as string} />,
+				cell: (info) => <TeamName team={info.getValue() as Team} />,
+				sortingFn: (rowA, rowB, columnId) => {
+					const nameA = (rowA.getValue(columnId) as Team).name;
+					const nameB = (rowB.getValue(columnId) as Team).name;
+
+					return nameA > nameB ? 1 : nameA < nameB ? -1 : 0;
+				},
+				sortDescFirst: false,
 			},
 			{
 				accessorKey: "sun",
@@ -78,7 +85,7 @@ export default function GameTable({ teams }: GameTableProps) {
 	);
 
 	const getRowId = (row: TeamGames) => {
-		return row.team_id.toString();
+		return row.team.team_id.toString();
 	};
 
 	const table = useReactTable({

@@ -20,8 +20,8 @@ COPY . .
 # Learn more here: https://nextjs.org/telemetry
 # Uncomment the following line in case you want to disable telemetry during the build.
 ENV NEXT_TELEMETRY_DISABLED 1
-
-RUN --mount=type=secret,id=database_url DATABASE_URL=`cat /run/secrets/database_url` yarn build
+ARG local
+RUN if [[ -z "$local"]]; then --mount=type=secret,id=database_url DATABASE_URL=`cat /run/secrets/database_url` yarn build; else yarn build; fi
 
 # Production image, copy all the files and run next
 FROM node:18-alpine AS stats-web

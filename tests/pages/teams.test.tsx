@@ -3,12 +3,12 @@ import { render } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { REVALIDATE } from "@lib/constants";
 import { Team } from "@lib/types";
-import { getUniqueTeams } from "@lib/utils";
+import { getRankedTeams } from "@lib/utils";
 import Teams, { getStaticProps } from "@pages/teams";
 
 jest.mock("@lib/utils", () => ({
 	__esModule: true,
-	getUniqueTeams: jest.fn(),
+	getRankedTeams: jest.fn(),
 }));
 
 afterAll(() => {
@@ -31,39 +31,35 @@ beforeEach(() => {
 	window.IntersectionObserver = mockIntersectionObserver;
 });
 
+const scInfo: Team = {
+	team_id: 2579,
+	name: "South Carolina",
+	logo: "/logo/south-carolina.png",
+	logo_dark: "/logo-dark/south-carolina.png",
+};
+
+const fsuInfo: Team = {
+	team_id: 52,
+	name: "Florida State",
+	logo: "/logo/florida-state.png",
+	logo_dark: "/logo-dark/florida-state.png",
+};
+
 describe("Teams page", () => {
 	it("renders correctly", async () => {
-		const teams: Team[] = [
-			{
-				team_id: 2579,
-				name: "South Carolina",
-			},
-			{
-				team_id: 228,
-				name: "Clemson",
-			},
-		];
+		const teams: Team[] = [scInfo, fsuInfo];
 		const { baseElement } = render(<Teams teams={teams} />);
 
 		expect(baseElement).toMatchSnapshot();
 	});
 
 	it("getStaticProps returns correctly", async () => {
-		const teams: Team[] = [
-			{
-				team_id: 2579,
-				name: "South Carolina",
-			},
-			{
-				team_id: 228,
-				name: "Clemson",
-			},
-		];
-		(getUniqueTeams as jest.Mock).mockReturnValue(teams);
+		const teams: Team[] = [scInfo, fsuInfo, scInfo];
+		(getRankedTeams as jest.Mock).mockReturnValue(teams);
 
 		const expected = {
 			props: {
-				teams: teams,
+				teams: [fsuInfo, scInfo, scInfo],
 			},
 			revalidate: REVALIDATE,
 		};
@@ -72,6 +68,6 @@ describe("Teams page", () => {
 
 		expect(result).toEqual(expected);
 
-		expect(getUniqueTeams).toBeCalledTimes(1);
+		expect(getRankedTeams).toBeCalledTimes(1);
 	});
 });

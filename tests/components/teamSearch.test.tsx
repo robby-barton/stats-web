@@ -15,18 +15,23 @@ beforeEach(() => {
 	window.IntersectionObserver = mockIntersectionObserver;
 });
 
+const scInfo: Team = {
+	team_id: 2579,
+	name: "South Carolina",
+	logo: "/logo/south-carolina.png",
+	logo_dark: "/logo-dark/south-carolina.png",
+};
+
+const fsuInfo: Team = {
+	team_id: 52,
+	name: "Florida State",
+	logo: "/logo/florida-state.png",
+	logo_dark: "/logo-dark/florida-state.png",
+};
+
 describe("TeamSearch", () => {
 	it("works", () => {
-		const teams: Team[] = [
-			{
-				team_id: 2579,
-				name: "South Carolina",
-			},
-			{
-				team_id: 6,
-				name: "FSU",
-			},
-		];
+		const teams: Team[] = [scInfo, fsuInfo];
 		render(
 			<ThemeProvider>
 				<TeamSearch teams={teams} />

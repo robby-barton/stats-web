@@ -3,7 +3,7 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import Games from "@components/games";
 import { ThemeProvider } from "@components/themeProvider";
-import { TeamGames } from "@lib/types";
+import { Team, TeamGames } from "@lib/types";
 
 beforeEach(() => {
 	document.body.dataset.theme = "light";
@@ -17,12 +17,25 @@ beforeEach(() => {
 	window.IntersectionObserver = mockIntersectionObserver;
 });
 
+const scInfo: Team = {
+	team_id: 2579,
+	name: "South Carolina",
+	logo: "/logo/south-carolina.png",
+	logo_dark: "/logo-dark/south-carolina.png",
+};
+
+const fsuInfo: Team = {
+	team_id: 52,
+	name: "Florida State",
+	logo: "/logo/florida-state.png",
+	logo_dark: "/logo-dark/florida-state.png",
+};
+
 describe("Games", () => {
 	it("team search works", () => {
 		const games: TeamGames[] = [
 			{
-				team_id: 2579,
-				name: "South Carolina",
+				team: scInfo,
 				sun: 1,
 				mon: 2,
 				tue: 3,
@@ -33,8 +46,7 @@ describe("Games", () => {
 				total: 10,
 			},
 			{
-				team_id: 6,
-				name: "FSU",
+				team: fsuInfo,
 				sun: 7,
 				mon: 6,
 				tue: 5,

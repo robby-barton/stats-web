@@ -12,11 +12,11 @@ Data is updated by a [scheduler](https://github.com/robby-barton/stats-go).
 `yarn dev`
 
 ### Local Production (Docker)
-Modify the `yarn build` command of the Dockerfile to remove setting the `DATABASE_URL` by secret.
-
 Ensure you have a `.env` file with the `DATABASE_URL` set or else the build will fail.
-```
-DOCKER_BUILDKIT=1 docker build --target stats-web -tag stats-web:local .
+```sh
+# build the image locally
+yarn docker:build
 
-docker run -dp 3000:3000 stats-web:local
+# run the local image
+yarn docker:run
 ```
