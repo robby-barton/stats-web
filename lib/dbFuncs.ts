@@ -5,7 +5,7 @@ import postgres from "postgres";
 import { Team } from "@lib/types";
 
 function getDatabaseUrl(): string {
-	return process.env.DATABASE_URL;
+	return process.env.DATABASE_URL || process.env.DEV_DATABASE_URL;
 }
 
 const sql = postgres(getDatabaseUrl(), {
