@@ -12,7 +12,7 @@ import { useRouter } from "next/router";
 
 import styles from "@components/rankingTable.module.css";
 import TeamName from "@components/teamName";
-import { Rank } from "@lib/types";
+import { Rank, Team } from "@lib/types";
 
 type RankingTableProps = {
 	teams: Rank[];
@@ -30,9 +30,16 @@ export default function RankingTable({ teams }: RankingTableProps) {
 				sortDescFirst: false,
 			},
 			{
-				accessorKey: "name",
+				accessorKey: "team",
 				header: "Team",
-				cell: (info) => <TeamName team_id={Number(info.row.id)} name={info.getValue() as string} />,
+				cell: (info) => <TeamName team={info.getValue() as Team} />,
+				sortingFn: (rowA, rowB, columnId) => {
+					const nameA = (rowA.getValue(columnId) as Team).name;
+					const nameB = (rowB.getValue(columnId) as Team).name;
+
+					return nameA > nameB ? 1 : nameA < nameB ? -1 : 0;
+				},
+				sortDescFirst: false,
 			},
 			{
 				accessorKey: "conf",
@@ -67,7 +74,7 @@ export default function RankingTable({ teams }: RankingTableProps) {
 	);
 
 	const getRowId = (row: Rank) => {
-		return row.team_id.toString();
+		return row.team.team_id.toString();
 	};
 
 	const table = useReactTable({

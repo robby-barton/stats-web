@@ -2,7 +2,7 @@ import { render } from "@testing-library/react";
 import "@testing-library/jest-dom";
 
 import { REVALIDATE } from "@lib/constants";
-import { AvailRanks, Rank } from "@lib/types";
+import { AvailRanks, Rank, Team } from "@lib/types";
 import { availableRankings, getRanking, getRankingPathParams } from "@lib/utils";
 import Week, { getStaticPaths, getStaticProps } from "@pages/ranking/[division]/[year]/[week]";
 
@@ -38,6 +38,13 @@ beforeEach(() => {
 	window.IntersectionObserver = mockIntersectionObserver;
 });
 
+const scInfo: Team = {
+	team_id: 2579,
+	name: "South Carolina",
+	logo: "/logo/south-carolina.png",
+	logo_dark: "/logo-dark/south-carolina.png",
+};
+
 describe("Week page", () => {
 	it("renders correctly", async () => {
 		const avail: AvailRanks = {
@@ -48,8 +55,7 @@ describe("Week page", () => {
 		};
 		const ranks: Rank[] = [
 			{
-				team_id: 2579,
-				name: "South Carolina",
+				team: scInfo,
 				conf: "SEC",
 				record: "8-5",
 				sos_rank: 13,
@@ -78,8 +84,7 @@ describe("Week page", () => {
 
 				const rankingMock: Rank[] = [
 					{
-						team_id: 2579,
-						name: "South Carolina",
+						team: scInfo,
 						conf: "SEC",
 						final_rank: 1,
 						final_raw: 0.123456789,
@@ -121,8 +126,7 @@ describe("Week page", () => {
 
 				const rankingMock: Rank[] = [
 					{
-						team_id: 2579,
-						name: "South Carolina",
+						team: scInfo,
 						conf: "SEC",
 						final_rank: 1,
 						final_raw: 0.123456789,
@@ -164,8 +168,7 @@ describe("Week page", () => {
 
 				const rankingMock: Rank[] = [
 					{
-						team_id: 2579,
-						name: "South Carolina",
+						team: scInfo,
 						conf: "SEC",
 						final_rank: 1,
 						final_raw: 0.123456789,

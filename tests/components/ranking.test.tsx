@@ -3,7 +3,7 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import Ranking from "@components/ranking";
 import { ThemeProvider } from "@components/themeProvider";
-import { AvailRanks, Rank } from "@lib/types";
+import { AvailRanks, Rank, Team } from "@lib/types";
 
 jest.mock("next/router", () => ({
 	useRouter: jest.fn(),
@@ -21,6 +21,20 @@ beforeEach(() => {
 	window.IntersectionObserver = mockIntersectionObserver;
 });
 
+const scInfo: Team = {
+	team_id: 2579,
+	name: "South Carolina",
+	logo: "/logo/south-carolina.png",
+	logo_dark: "/logo-dark/south-carolina.png",
+};
+
+const fsuInfo: Team = {
+	team_id: 52,
+	name: "Florida State",
+	logo: "/logo/florida-state.png",
+	logo_dark: "/logo-dark/florida-state.png",
+};
+
 describe("Ranking", () => {
 	it("team search works", async () => {
 		const avail: AvailRanks = {
@@ -31,8 +45,7 @@ describe("Ranking", () => {
 		};
 		const ranks: Rank[] = [
 			{
-				team_id: 2579,
-				name: "South Carolina",
+				team: scInfo,
 				conf: "SEC",
 				final_raw: 0.1234567,
 				final_rank: 1,
@@ -41,8 +54,7 @@ describe("Ranking", () => {
 				record: "record",
 			},
 			{
-				team_id: 1234,
-				name: "FSU",
+				team: fsuInfo,
 				conf: "ACC",
 				final_rank: 2,
 				final_raw: 0.01234566,

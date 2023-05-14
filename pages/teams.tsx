@@ -6,7 +6,7 @@ import TeamSearch from "@components/teamSearch";
 import Title from "@components/title";
 import { REVALIDATE } from "@lib/constants";
 import { Team } from "@lib/types";
-import { getUniqueTeams } from "@lib/utils";
+import { getRankedTeams } from "@lib/utils";
 
 export type TeamsProps = {
 	teams: Team[];
@@ -23,7 +23,10 @@ export default function Teams({ teams }: TeamsProps) {
 }
 
 export async function getStaticProps(): Promise<GetStaticPropsResult<TeamsProps>> {
-	const results: Team[] = await getUniqueTeams();
+	const results: Team[] = await getRankedTeams();
+	results.sort((a, b) => {
+		return a.name > b.name ? 1 : a.name < b.name ? -1 : 0;
+	});
 
 	return {
 		props: {

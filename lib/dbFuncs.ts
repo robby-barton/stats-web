@@ -2,7 +2,7 @@
 
 import postgres from "postgres";
 
-import { Team, TeamGames, TeamRank } from "@lib/types";
+import { Team } from "@lib/types";
 
 function getDatabaseUrl(): string {
 	return process.env.DATABASE_URL;
@@ -20,23 +20,37 @@ type SQLYearWeeks = {
 };
 export async function availableRankingsDB(): Promise<SQLYearWeeks[]> {
 	const rankingObjects: SQLYearWeeks[] = await sql<SQLYearWeeks[]>`
-			select 
-				year, 
-				max(case when postseason = 0 then week else 0 end) as weeks,
-				max(postseason) as postseason 
-			from team_week_results
-			group by 
-				year 
-			order by 
-				year desc
-		`;
+		select
+			year,
+			max(case when postseason = 0 then week else 0 end) as weeks,
+			max(postseason) as postseason
+		from team_week_results
+		group by
+			year
+		order by
+			year desc
+	`;
 
 	return rankingObjects;
 }
 
+export async function availableTeamsDB(): Promise<Team[]> {
+	const results: Team[] = await sql<Team[]>`
+		select
+			team_id,
+			name,
+			logo,
+			logo_dark
+		from team_names
+		order by
+			name
+	`;
+
+	return results;
+}
+
 type SQLRank = {
 	team_id: number;
-	name: string;
 	conf: string;
 	final_rank: number;
 	final_raw: number;
@@ -48,9 +62,8 @@ type SQLRank = {
 };
 export async function getRankingDB(fbs: boolean, year: number, week: string): Promise<SQLRank[]> {
 	const results = await sql<SQLRank[]>`
-		select 
+		select
 			team_id,
-			name,
 			conf,
 			final_rank,
 			final_raw,
@@ -71,11 +84,17 @@ export async function getRankingDB(fbs: boolean, year: number, week: string): Pr
 	return results;
 }
 
-export async function getTeamRankingsDB(team: number): Promise<TeamRank[]> {
-	const results: TeamRank[] = await sql<TeamRank[]>`
+type SQLTeamRank = {
+	team_id: number;
+	final_rank: number;
+	year: number;
+	week: string;
+	postseason: number;
+};
+export async function getTeamRankingsDB(team: number): Promise<SQLTeamRank[]> {
+	const results: SQLTeamRank[] = await sql<SQLTeamRank[]>`
 		select
 			team_id,
-			name,
 			final_rank,
 			year,
 			week,
@@ -92,65 +111,60 @@ export async function getTeamRankingsDB(team: number): Promise<TeamRank[]> {
 	return results;
 }
 
-export async function getUniqueTeamsDB(): Promise<Team[]> {
-	const results: Team[] = await sql<Team[]>`
-		select 
-			team_id, 
-			name 
-		from team_names 
-		where 
-			team_id in (
-				select 
-				distinct team_id 
-				from team_week_results
-			)
-		order by 
-			name
+type SQLRankedTeam = {
+	team_id: number;
+};
+export async function getRankedTeamsDB(): Promise<SQLRankedTeam[]> {
+	const results: SQLRankedTeam[] = await sql<SQLRankedTeam[]>`
+		select
+			distinct team_id
+		from team_week_results
 	`;
-	if (!results.length) {
-		throw new Error("Not found");
-	}
 
 	return results;
 }
 
-export async function allGamesDB(): Promise<TeamGames[]> {
-	const results: TeamGames[] = await sql<TeamGames[]>`
-		with gamesDOW as (
-			with gamesList as (
-				(
-					select
-						home_id as team_id,
-						extract(dow from start_time) as dow,
-						game_id
-					from games
-				) union all (
-					select
-						away_id as team_id,
-						extract(dow from start_time) as dow,
-						game_id
-					from games
-				)
+type SQLTeamGames = {
+	team_id: number;
+	sun: number;
+	mon: number;
+	tue: number;
+	wed: number;
+	thu: number;
+	fri: number;
+	sat: number;
+	total: number;
+};
+export async function allGamesDB(): Promise<SQLTeamGames[]> {
+	const results: SQLTeamGames[] = await sql<SQLTeamGames[]>`
+		with gamesList as (
+			(
+				select
+					home_id as team_id,
+					extract(dow from start_time) as dow,
+					game_id
+				from games
+			) union all (
+				select
+					away_id as team_id,
+					extract(dow from start_time) as dow,
+					game_id
+				from games
 			)
-			select
-				team_id,
-				sum(case when dow = 0 then 1 else 0 end) as sun,
-				sum(case when dow = 1 then 1 else 0 end) as mon,
-				sum(case when dow = 2 then 1 else 0 end) as tue,
-				sum(case when dow = 3 then 1 else 0 end) as wed,
-				sum(case when dow = 4 then 1 else 0 end) as thu,
-				sum(case when dow = 5 then 1 else 0 end) as fri,
-				sum(case when dow = 6 then 1 else 0 end) as sat,
-				count(1) as total
-			from gamesList
-			group by
-				team_id
 		)
 		select
-			n.name,
-			g.*
-		from team_names n
-		join gamesDOW g on (n.team_id = g.team_id)
+			team_id,
+			sum(case when dow = 0 then 1 else 0 end) as sun,
+			sum(case when dow = 1 then 1 else 0 end) as mon,
+			sum(case when dow = 2 then 1 else 0 end) as tue,
+			sum(case when dow = 3 then 1 else 0 end) as wed,
+			sum(case when dow = 4 then 1 else 0 end) as thu,
+			sum(case when dow = 5 then 1 else 0 end) as fri,
+			sum(case when dow = 6 then 1 else 0 end) as sat,
+			count(1) as total
+		from gamesList
+		group by
+			team_id
 		order by
 			total desc
 	`;

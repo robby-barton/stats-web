@@ -3,7 +3,7 @@ import { render } from "@testing-library/react";
 import "@testing-library/jest-dom";
 
 import { REVALIDATE } from "@lib/constants";
-import { AvailRanks, Rank } from "@lib/types";
+import { AvailRanks, Rank, Team } from "@lib/types";
 import { availableRankings, getRanking } from "@lib/utils";
 import Home, { getStaticProps } from "@pages/index";
 
@@ -25,6 +25,13 @@ afterAll(() => {
 afterEach(() => {
 	jest.clearAllMocks();
 });
+
+const scInfo: Team = {
+	team_id: 2579,
+	name: "South Carolina",
+	logo: "/logo/south-carolina.png",
+	logo_dark: "/logo-dark/south-carolina.png",
+};
 
 beforeEach(() => {
 	document.body.dataset.theme = "light";
@@ -48,8 +55,7 @@ describe("Home page", () => {
 		};
 		const ranks: Rank[] = [
 			{
-				team_id: 2579,
-				name: "South Carolina",
+				team: scInfo,
 				conf: "SEC",
 				record: "8-5",
 				sos_rank: 13,
@@ -75,8 +81,7 @@ describe("Home page", () => {
 
 			const rankingMock: Rank[] = [
 				{
-					team_id: 2579,
-					name: "South Carolina",
+					team: scInfo,
 					conf: "SEC",
 					final_rank: 1,
 					final_raw: 0.123456789,
@@ -117,8 +122,7 @@ describe("Home page", () => {
 
 			const rankingMock: Rank[] = [
 				{
-					team_id: 2579,
-					name: "South Carolina",
+					team: scInfo,
 					conf: "SEC",
 					final_rank: 1,
 					final_raw: 0.123456789,

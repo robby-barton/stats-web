@@ -12,11 +12,16 @@ export type AvailRanks = {
 export type Team = {
 	team_id: number;
 	name: string;
+	logo: string;
+	logo_dark: string;
+};
+
+export type AvailTeams = {
+	[index: string]: Team;
 };
 
 export type Rank = {
-	team_id: number;
-	name: string;
+	team: Team;
 	conf: string;
 	record: string;
 	srs_rank: number;
@@ -26,8 +31,7 @@ export type Rank = {
 };
 
 export type TeamRank = {
-	team_id: number;
-	name: string;
+	team: Team;
 	final_rank: number;
 	year: number;
 	week: string;
@@ -35,8 +39,7 @@ export type TeamRank = {
 };
 
 export type TeamGames = {
-	name: string;
-	team_id: number;
+	team: Team;
 	sun: number;
 	mon: number;
 	tue: number;

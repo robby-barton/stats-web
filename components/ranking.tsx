@@ -15,10 +15,10 @@ type RankingProps = {
 export default function Ranking({ availRanks, ranking, division, year, week }: RankingProps) {
 	const [searchField, setSearchField] = useState("");
 
-	const filteredTeams = ranking.filter((team) => {
+	const filteredTeams = ranking.filter((rank) => {
 		return (
-			team.name.toLowerCase().includes(searchField.toLowerCase()) ||
-			team.conf.toLowerCase().includes(searchField.toLowerCase())
+			rank.team.name.toLowerCase().includes(searchField.toLowerCase()) ||
+			rank.conf.toLowerCase().includes(searchField.toLowerCase())
 		);
 	});
 

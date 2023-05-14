@@ -2,16 +2,16 @@ import Link from "next/link";
 
 import styles from "@components/teamCard.module.css";
 import TeamName from "@components/teamName";
+import { Team } from "@lib/types";
 
 type TeamCardProps = {
-	name: string;
-	id: number;
+	team: Team;
 };
-export default function TeamCard({ name, id }: TeamCardProps) {
+export default function TeamCard({ team }: TeamCardProps) {
 	return (
-		<Link href={`/team/${id}`}>
+		<Link href={`/team/${team.team_id}`}>
 			<div className={styles.card}>
-				<TeamName team_id={id} name={name} />
+				<TeamName team={team} />
 			</div>
 		</Link>
 	);
