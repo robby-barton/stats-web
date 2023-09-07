@@ -50,8 +50,8 @@ const ToggleThumb = styled('span')<ThumbProps>`
 `;
 
 export default function ThemeToggle() {
-	const { theme, setTheme } = useTheme();
-	const altTheme = theme === 'light' ? 'dark' : 'light';
+	const { resolvedTheme, setTheme } = useTheme();
+	const altTheme = resolvedTheme === 'light' ? 'dark' : 'light';
 
 	return (
 		<ToggleButton
@@ -60,11 +60,11 @@ export default function ThemeToggle() {
 			type="button"
 			onClick={() => setTheme(altTheme)}
 		>
-			{theme === '' || theme === undefined ? (
+			{resolvedTheme === '' || resolvedTheme === undefined ? (
 				<></>
 			) : (
 				<>
-					<ToggleThumb colorMode={theme} />
+					<ToggleThumb colorMode={resolvedTheme} />
 					<span>🌙</span>
 					<span>☀️</span>
 				</>

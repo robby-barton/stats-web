@@ -76,12 +76,12 @@ type TeamChartProps = {
 	years: number[];
 };
 export default function TeamChart({ rankList, years }: TeamChartProps) {
-	const { theme } = useTheme();
+	const { resolvedTheme } = useTheme();
 	const rootRef = useRef<am5.Root | null>(null);
 	const seriesRef = useRef<am5xy.LineSeries | null>(null);
 
 	useEffect(() => {
-		const color = colorByTheme(theme);
+		const color = colorByTheme(resolvedTheme);
 		const root = am5.Root.new('chartDiv');
 
 		root.setThemes([am5themes_Animated.new(root)]);
@@ -277,7 +277,7 @@ export default function TeamChart({ rankList, years }: TeamChartProps) {
 	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 	useEffect(() => {
-		const color = colorByTheme(theme);
+		const color = colorByTheme(resolvedTheme);
 		if (rootRef.current) {
 			rootRef.current.interfaceColors.setAll({
 				grid: color,
@@ -292,7 +292,7 @@ export default function TeamChart({ rankList, years }: TeamChartProps) {
 				});
 			}
 		}
-	}, [theme]);
+	}, [resolvedTheme]);
 
 	return <div title="chartDiv" id="chartDiv" style={{ width: '100%', height: '400px' }}></div>;
 }
