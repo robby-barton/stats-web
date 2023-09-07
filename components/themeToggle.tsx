@@ -1,10 +1,10 @@
-import { useContext } from "react";
+'use client';
 
-import styled from "@emotion/styled";
+import { useTheme } from 'next-themes';
 
-import { ThemeContext } from "@components/themeProvider";
+import styled from '@emotion/styled';
 
-const ToggleButton = styled("button")`
+const ToggleButton = styled('button')`
   --toggle-width: 2.5rem;
   --toggle-height: 1.25rem;
   --toggle-padding: 0.125rem;
@@ -36,7 +36,7 @@ const ToggleButton = styled("button")`
 type ThumbProps = {
 	colorMode: string;
 };
-const ToggleThumb = styled("span")<ThumbProps>`
+const ToggleThumb = styled('span')<ThumbProps>`
 	position: absolute;
 	top: var(--toggle-padding);
 	left: var(--toggle-padding);
@@ -46,25 +46,25 @@ const ToggleThumb = styled("span")<ThumbProps>`
 	background: white;
 	transition: transform 0.25s ease-in-out;
 	transform: ${(p: ThumbProps) =>
-		p.colorMode === "dark" ? "translate3d(calc(var(--toggle-width) - var(--toggle-height)), 0, 0)" : "none"};
+		p.colorMode === 'dark' ? 'translate3d(calc(var(--toggle-width) - var(--toggle-height)), 0, 0)' : 'none'};
 `;
 
 export default function ThemeToggle() {
-	const { colorMode, setColorMode } = useContext(ThemeContext);
-	const altColorMode = colorMode === "light" ? "dark" : "light";
+	const { theme, setTheme } = useTheme();
+	const altTheme = theme === 'light' ? 'dark' : 'light';
 
 	return (
 		<ToggleButton
-			aria-label={`Change to ${altColorMode} mode`}
-			title={`Change to ${altColorMode} mode`}
+			aria-label={`Change to ${altTheme} mode`}
+			title={`Change to ${altTheme} mode`}
 			type="button"
-			onClick={() => setColorMode(altColorMode)}
+			onClick={() => setTheme(altTheme)}
 		>
-			{colorMode === "" ? (
+			{theme === '' || theme === undefined ? (
 				<></>
 			) : (
 				<>
-					<ToggleThumb colorMode={colorMode} />
+					<ToggleThumb colorMode={theme} />
 					<span>🌙</span>
 					<span>☀️</span>
 				</>

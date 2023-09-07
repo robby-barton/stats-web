@@ -1,8 +1,9 @@
-import Link from "next/link";
+import Link from 'next/link';
 
-import styles from "@components/header.module.css";
-import ThemeToggle from "@components/themeToggle";
-import commonStyles from "@styles/common.module.css";
+import ThemeToggle from '@components/themeToggle';
+
+import styles from '@components/header.module.css';
+import commonStyles from '@styles/common.module.css';
 
 export default function Header() {
 	return (

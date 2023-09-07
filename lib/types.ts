@@ -56,16 +56,8 @@ export type RankingPath = {
 	week: string;
 };
 
-export type RankingPathParams = {
-	params: RankingPath;
-};
-
 export type TeamPath = {
 	team: string;
-};
-
-export type TeamPathParams = {
-	params: TeamPath;
 };
 
 export type ChartPoint = {

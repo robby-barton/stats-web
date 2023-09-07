@@ -1,8 +1,9 @@
-import Link from "next/link";
+import Link from 'next/link';
 
-import styles from "@components/teamCard.module.css";
-import TeamName from "@components/teamName";
-import { Team } from "@lib/types";
+import TeamName from '@components/teamName';
+import { Team } from '@lib/types';
+
+import styles from '@components/teamCard.module.css';
 
 type TeamCardProps = {
 	team: Team;
