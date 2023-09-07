@@ -1,9 +1,12 @@
-import { ChangeEvent, useState } from "react";
+'use client';
 
-import styles from "@components/ranking.module.css";
-import RankingTable from "@components/rankingTable";
-import Selector from "@components/selector";
-import { AvailRanks, Rank } from "@lib/types";
+import { ChangeEvent, useState } from 'react';
+
+import RankingTable from '@components/rankingTable';
+import Selector from '@components/selector';
+import { AvailRanks, Rank } from '@lib/types';
+
+import styles from '@components/ranking.module.css';
 
 type RankingProps = {
 	availRanks: AvailRanks;
@@ -13,7 +16,7 @@ type RankingProps = {
 	week: string;
 };
 export default function Ranking({ availRanks, ranking, division, year, week }: RankingProps) {
-	const [searchField, setSearchField] = useState("");
+	const [searchField, setSearchField] = useState('');
 
 	const filteredTeams = ranking.filter((rank) => {
 		return (

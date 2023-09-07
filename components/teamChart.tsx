@@ -1,15 +1,16 @@
-import { useContext, useEffect, useRef } from "react";
+'use client';
 
-import * as am5 from "@amcharts/amcharts5";
-import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
-import * as am5xy from "@amcharts/amcharts5/xy";
+import { useEffect, useRef } from 'react';
+import { useTheme } from 'next-themes';
 
-import { ThemeContext } from "@components/themeProvider";
-import { CHART_MAX_Y } from "@lib/constants";
-import { ChartPoint } from "@lib/types";
+import * as am5 from '@amcharts/amcharts5';
+import am5themes_Animated from '@amcharts/amcharts5/themes/Animated';
+import * as am5xy from '@amcharts/amcharts5/xy';
+import { CHART_MAX_Y } from '@lib/constants';
+import { ChartPoint } from '@lib/types';
 
-function colorByTheme(theme: string): am5.Color {
-	if (theme === "dark") {
+function colorByTheme(theme: string | undefined): am5.Color {
+	if (theme === 'dark') {
 		return am5.color(0xffffff);
 	} else {
 		return am5.color(0x000000);
@@ -20,7 +21,7 @@ function createCategoryRange(
 	start: string,
 	end: string,
 	axis: am5xy.CategoryAxis<am5xy.AxisRenderer>,
-	setLabel: string
+	setLabel: string,
 ) {
 	const rangeDataItem = axis.makeDataItem({
 		category: start,
@@ -29,7 +30,7 @@ function createCategoryRange(
 
 	const range = axis.createAxisRange(rangeDataItem);
 
-	const label = range.get("label");
+	const label = range.get('label');
 	if (label) {
 		label.setAll({
 			forceHidden: false,
@@ -37,7 +38,7 @@ function createCategoryRange(
 		});
 	}
 
-	const grid = range.get("grid");
+	const grid = range.get('grid');
 	if (grid) {
 		grid.setAll({
 			forceHidden: false,
@@ -53,7 +54,7 @@ function createValueRange(start: number, axis: am5xy.ValueAxis<am5xy.AxisRendere
 
 	const range = axis.createAxisRange(rangeDataItem);
 
-	const label = range.get("label");
+	const label = range.get('label');
 	if (label) {
 		label.setAll({
 			forceHidden: false,
@@ -61,7 +62,7 @@ function createValueRange(start: number, axis: am5xy.ValueAxis<am5xy.AxisRendere
 		});
 	}
 
-	const grid = range.get("grid");
+	const grid = range.get('grid');
 	if (grid) {
 		grid.setAll({
 			forceHidden: false,
@@ -75,13 +76,13 @@ type TeamChartProps = {
 	years: number[];
 };
 export default function TeamChart({ rankList, years }: TeamChartProps) {
-	const { colorMode } = useContext(ThemeContext);
+	const { theme } = useTheme();
 	const rootRef = useRef<am5.Root | null>(null);
 	const seriesRef = useRef<am5xy.LineSeries | null>(null);
 
 	useEffect(() => {
-		const color = colorByTheme(colorMode);
-		const root = am5.Root.new("chartDiv");
+		const color = colorByTheme(theme);
+		const root = am5.Root.new('chartDiv');
 
 		root.setThemes([am5themes_Animated.new(root)]);
 
@@ -93,30 +94,30 @@ export default function TeamChart({ rankList, years }: TeamChartProps) {
 		const chart = root.container.children.push(
 			am5xy.XYChart.new(root, {
 				panX: true,
-				wheelX: "panX",
-				wheelY: "zoomX",
+				wheelX: 'panX',
+				wheelY: 'zoomX',
 				pinchZoomX: true,
-			})
+			}),
 		);
 
 		const cursor = chart.set(
-			"cursor",
+			'cursor',
 			am5xy.XYCursor.new(root, {
-				behavior: "none",
-			})
+				behavior: 'none',
+			}),
 		);
-		cursor.lineY.set("visible", false);
+		cursor.lineY.set('visible', false);
 
 		const xAxis = chart.xAxes.push(
 			am5xy.CategoryAxis.new(root, {
-				categoryField: "week",
+				categoryField: 'week',
 				renderer: am5xy.AxisRendererX.new(root, {}),
-			})
+			}),
 		);
 
 		xAxis.data.setAll(rankList);
 
-		xAxis.events.once("datavalidated", (ev) => {
+		xAxis.events.once('datavalidated', (ev) => {
 			ev.target.zoomToIndexes(rankList.length - 50, rankList.length);
 		});
 
@@ -128,19 +129,19 @@ export default function TeamChart({ rankList, years }: TeamChartProps) {
 				renderer: am5xy.AxisRendererY.new(root, {
 					inversed: true,
 				}),
-			})
+			}),
 		);
 
 		const series = chart.series.push(
 			am5xy.LineSeries.new(root, {
-				name: "Ranking",
+				name: 'Ranking',
 				xAxis: xAxis,
 				yAxis: yAxis,
-				categoryXField: "week",
-				valueYField: "rank",
+				categoryXField: 'week',
+				valueYField: 'rank',
 				maskBullets: false,
 				tooltip: am5.Tooltip.new(root, {
-					labelText: "{categoryX}: {valueY}",
+					labelText: '{categoryX}: {valueY}',
 					autoTextColor: true,
 				}),
 				background: am5.Rectangle.new(root, {
@@ -148,9 +149,9 @@ export default function TeamChart({ rankList, years }: TeamChartProps) {
 					stroke: color,
 					strokeOpacity: 0.4,
 				}),
-			})
+			}),
 		);
-		const defaultColor = series.get("stroke");
+		const defaultColor = series.get('stroke');
 		series.strokes.template.setAll({
 			strokeWidth: 1,
 		});
@@ -160,11 +161,11 @@ export default function TeamChart({ rankList, years }: TeamChartProps) {
 				fill: defaultColor,
 			});
 
-			circle.on("x", (x, circle) => {
+			circle.on('x', (x, circle) => {
 				if (circle === undefined) {
 					return;
 				}
-				if (typeof x === "number" && (x < 0 || x > chart.plotContainer.width())) {
+				if (typeof x === 'number' && (x < 0 || x > chart.plotContainer.width())) {
 					circle.hide(0);
 				} else {
 					circle.show(0);
@@ -177,9 +178,9 @@ export default function TeamChart({ rankList, years }: TeamChartProps) {
 			});
 		});
 
-		const rendererX = xAxis.get("renderer");
-		rendererX.grid.template.set("forceHidden", true);
-		rendererX.labels.template.set("forceHidden", true);
+		const rendererX = xAxis.get('renderer');
+		rendererX.grid.template.set('forceHidden', true);
+		rendererX.labels.template.set('forceHidden', true);
 
 		for (let i = 0; i < years.length - 1; i++) {
 			createCategoryRange(`${years[i]} Week 1`, `${years[i + 1]} Week 1`, xAxis, years[i].toString());
@@ -188,30 +189,30 @@ export default function TeamChart({ rankList, years }: TeamChartProps) {
 			`${years[years.length - 1]} Week 1`,
 			rankList[rankList.length - 1].week,
 			xAxis,
-			years[years.length - 1].toString()
+			years[years.length - 1].toString(),
 		);
 
-		const rendererY = yAxis.get("renderer");
-		rendererY.grid.template.set("forceHidden", true);
-		rendererY.labels.template.set("forceHidden", true);
+		const rendererY = yAxis.get('renderer');
+		rendererY.grid.template.set('forceHidden', true);
+		rendererY.labels.template.set('forceHidden', true);
 
-		createValueRange(1, yAxis, "1");
-		createValueRange(25, yAxis, "25");
-		createValueRange(50, yAxis, "50");
-		createValueRange(75, yAxis, "75");
-		createValueRange(100, yAxis, "100");
-		createValueRange(125, yAxis, "125");
-		createValueRange(150, yAxis, "150");
+		createValueRange(1, yAxis, '1');
+		createValueRange(25, yAxis, '25');
+		createValueRange(50, yAxis, '50');
+		createValueRange(75, yAxis, '75');
+		createValueRange(100, yAxis, '100');
+		createValueRange(125, yAxis, '125');
+		createValueRange(150, yAxis, '150');
 
 		const scrollbar = chart.set(
-			"scrollbarX",
+			'scrollbarX',
 			am5xy.XYChartScrollbar.new(root, {
-				orientation: "horizontal",
+				orientation: 'horizontal',
 				height: 50,
 				background: am5.Rectangle.new(root, {
 					fillOpacity: 0,
 				}),
-			})
+			}),
 		);
 		const gripProps = {
 			height: 20,
@@ -225,9 +226,9 @@ export default function TeamChart({ rankList, years }: TeamChartProps) {
 
 		const sbxAxis = scrollbar.chart.xAxes.push(
 			am5xy.CategoryAxis.new(root, {
-				categoryField: "week",
+				categoryField: 'week',
 				renderer: am5xy.AxisRendererX.new(root, {}),
-			})
+			}),
 		);
 
 		sbxAxis.data.setAll(rankList);
@@ -240,22 +241,22 @@ export default function TeamChart({ rankList, years }: TeamChartProps) {
 				renderer: am5xy.AxisRendererY.new(root, {
 					inversed: true,
 				}),
-			})
+			}),
 		);
 
 		const sbSeries = scrollbar.chart.series.push(
 			am5xy.LineSeries.new(root, {
 				xAxis: sbxAxis,
 				yAxis: sbyAxis,
-				categoryXField: "week",
-				valueYField: "rank",
+				categoryXField: 'week',
+				valueYField: 'rank',
 				stroke: defaultColor,
-			})
+			}),
 		);
 
-		const sbRendererX = sbxAxis.get("renderer");
-		sbRendererX.grid.template.set("forceHidden", true);
-		sbRendererX.labels.template.set("forceHidden", true);
+		const sbRendererX = sbxAxis.get('renderer');
+		sbRendererX.grid.template.set('forceHidden', true);
+		sbRendererX.labels.template.set('forceHidden', true);
 
 		const startYear = 1930;
 		const endYear = new Date().getFullYear();
@@ -276,7 +277,7 @@ export default function TeamChart({ rankList, years }: TeamChartProps) {
 	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 	useEffect(() => {
-		const color = colorByTheme(colorMode);
+		const color = colorByTheme(theme);
 		if (rootRef.current) {
 			rootRef.current.interfaceColors.setAll({
 				grid: color,
@@ -284,14 +285,14 @@ export default function TeamChart({ rankList, years }: TeamChartProps) {
 			});
 		}
 		if (seriesRef.current) {
-			const background = seriesRef.current.get("background");
+			const background = seriesRef.current.get('background');
 			if (background !== undefined) {
 				background.setAll({
 					stroke: color,
 				});
 			}
 		}
-	}, [colorMode]);
+	}, [theme]);
 
-	return <div title="chartDiv" id="chartDiv" style={{ width: "100%", height: "400px" }}></div>;
+	return <div title="chartDiv" id="chartDiv" style={{ width: '100%', height: '400px' }}></div>;
 }

@@ -1,18 +1,20 @@
-import { useContext, useEffect, useState } from "react";
+'use client';
 
-import Image, { ImageLoaderProps } from "next/image";
+import { useEffect, useState } from 'react';
+import Image, { ImageLoaderProps } from 'next/image';
+import { useTheme } from 'next-themes';
 
-import styles from "@components/teamName.module.css";
-import { ThemeContext } from "@components/themeProvider";
-import { ERROR_IMAGES } from "@lib/constants";
-import { Team } from "@lib/types";
+import { ERROR_IMAGES } from '@lib/constants';
+import { Team } from '@lib/types';
 
-function getImgSrc(mode: string, team: Team): string {
+import styles from '@components/teamName.module.css';
+
+function getImgSrc(mode: string | undefined, team: Team): string {
 	const errImg = ERROR_IMAGES[team.team_id % 3];
 	switch (mode) {
-		case "light":
+		case 'light':
 			return team.logo || errImg;
-		case "dark":
+		case 'dark':
 			return team.logo_dark || errImg;
 	}
 
@@ -29,28 +31,28 @@ type TeamName = {
 	team: Team;
 };
 export default function TeamName({ team }: TeamName) {
-	const { colorMode } = useContext(ThemeContext);
-	const [img, setImg] = useState<string>("");
+	const { resolvedTheme } = useTheme();
+	const [img, setImg] = useState<string>('');
 
 	useEffect(() => {
-		if (colorMode !== "") {
-			setImg(getImgSrc(colorMode, team));
+		if (resolvedTheme !== '') {
+			setImg(getImgSrc(resolvedTheme, team));
 		}
-	}, [colorMode]); // eslint-disable-line react-hooks/exhaustive-deps
+	}, [resolvedTheme]); // eslint-disable-line react-hooks/exhaustive-deps
 
 	function teamLogo() {
-		if (img === "") {
+		if (img === '') {
 			return null;
 		}
 
-		const sliceIndex = img.indexOf("/i/teamlogos/ncaa");
+		const sliceIndex = img.indexOf('/i/teamlogos/ncaa');
 
 		if (sliceIndex < 0) {
 			return (
 				<Image
 					src={img}
 					onError={() => {
-						setImg("/pups.png");
+						setImg('/pups.png');
 					}}
 					alt={team.name}
 					fill
@@ -65,7 +67,7 @@ export default function TeamName({ team }: TeamName) {
 				loader={espnLoader}
 				src={img.slice(sliceIndex)}
 				onError={() => {
-					setImg("/pups.png");
+					setImg('/pups.png');
 				}}
 				alt={team.name}
 				fill
