@@ -1,8 +1,9 @@
+import { ServerThemeProvider } from 'next-themes';
+
 import Layout from '@components/layout';
+import '@styles/globals.css';
 
 import { Providers } from './provider';
-
-import '@styles/globals.css';
 
 export default function RootLayout({
 	// Layouts must accept a children prop.
@@ -12,16 +13,18 @@ export default function RootLayout({
 	children: React.ReactNode;
 }) {
 	return (
-		<html lang="en" suppressHydrationWarning>
-			<head>
-				<link rel="icon" href="/favicon.ico" />
-				<meta name="viewport" content="width=device-width, height=device-height" />
-			</head>
-			<body>
-				<Providers>
-					<Layout>{children}</Layout>
-				</Providers>
-			</body>
-		</html>
+		<ServerThemeProvider>
+			<html lang="en" suppressHydrationWarning>
+				<head>
+					<link rel="icon" href="/favicon.ico" />
+					<meta name="viewport" content="width=device-width, height=device-height" />
+				</head>
+				<body>
+					<Providers>
+						<Layout>{children}</Layout>
+					</Providers>
+				</body>
+			</html>
+		</ServerThemeProvider>
 	);
 }

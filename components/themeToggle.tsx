@@ -3,6 +3,7 @@
 import { useTheme } from 'next-themes';
 
 import styled from '@emotion/styled';
+import { useEffect, useState } from 'react';
 
 const ToggleButton = styled('button')`
   --toggle-width: 2.5rem;
@@ -34,7 +35,7 @@ const ToggleButton = styled('button')`
 `;
 
 type ThumbProps = {
-	colorMode: string;
+	colorMode: string | undefined;
 };
 const ToggleThumb = styled('span')<ThumbProps>`
 	position: absolute;
@@ -50,8 +51,14 @@ const ToggleThumb = styled('span')<ThumbProps>`
 `;
 
 export default function ThemeToggle() {
+	const [mounted, setMounted] = useState(false);
+
 	const { resolvedTheme, setTheme } = useTheme();
 	const altTheme = resolvedTheme === 'light' ? 'dark' : 'light';
+
+	useEffect(() => {
+		setMounted(true);
+	}, []);
 
 	return (
 		<ToggleButton
@@ -60,7 +67,7 @@ export default function ThemeToggle() {
 			type="button"
 			onClick={() => setTheme(altTheme)}
 		>
-			{resolvedTheme === '' || resolvedTheme === undefined ? (
+			{!mounted ? (
 				<></>
 			) : (
 				<>

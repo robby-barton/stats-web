@@ -15,7 +15,7 @@
 		"@emotion/styled": "^11.10.5",
 		"@tanstack/react-table": "^8.8.5",
 		"next": "^13.4.1",
-		"next-themes": "^0.2.1",
+		"next-themes": "npm:@wits/next-themes",
 		"postgres": "^3.3.4",
 		"react": "18.2.0",
 		"react-dom": "18.2.0",
