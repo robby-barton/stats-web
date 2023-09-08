@@ -4,7 +4,6 @@ import Games from "@components/games";
 import Layout from "@components/layout";
 import Meta from "@components/meta";
 import Title from "@components/title";
-import { REVALIDATE } from "@lib/constants";
 import { TeamGames } from "@lib/types";
 import { allGames } from "@lib/utils";
 
@@ -29,6 +28,5 @@ export async function getStaticProps(): Promise<GetStaticPropsResult<GameCountPr
 		props: {
 			games: results,
 		},
-		revalidate: REVALIDATE,
 	};
 }

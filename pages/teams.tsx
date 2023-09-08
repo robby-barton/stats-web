@@ -4,7 +4,6 @@ import Layout from "@components/layout";
 import Meta from "@components/meta";
 import TeamSearch from "@components/teamSearch";
 import Title from "@components/title";
-import { REVALIDATE } from "@lib/constants";
 import { Team } from "@lib/types";
 import { getRankedTeams } from "@lib/utils";
 
@@ -32,6 +31,5 @@ export async function getStaticProps(): Promise<GetStaticPropsResult<TeamsProps>
 		props: {
 			teams: results,
 		},
-		revalidate: REVALIDATE,
 	};
 }

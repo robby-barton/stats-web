@@ -6,7 +6,7 @@ import Layout from "@components/layout";
 import Meta from "@components/meta";
 import Ranking from "@components/ranking";
 import Title from "@components/title";
-import { DIVISIONS, REVALIDATE } from "@lib/constants";
+import { DIVISIONS } from "@lib/constants";
 import { AvailRanks, Rank, RankingPathParams } from "@lib/types";
 import { availableRankings, getRanking, getRankingPathParams } from "@lib/utils";
 
@@ -76,7 +76,6 @@ export async function getStaticProps({ params }: GetStaticPropsContext): Promise
 				permanent: false,
 				destination: validated,
 			},
-			revalidate: REVALIDATE,
 		};
 	}
 
@@ -91,7 +90,6 @@ export async function getStaticProps({ params }: GetStaticPropsContext): Promise
 			year: Number(year),
 			week: week.toLowerCase() === "final" ? "Final" : week,
 		},
-		revalidate: REVALIDATE,
 	};
 }
 

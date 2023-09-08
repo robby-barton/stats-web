@@ -2,8 +2,7 @@
 
 import { GetServerSidePropsContext, GetServerSidePropsResult } from "next";
 
-import { RankingPathParams } from "@lib/types";
-import { getRankingPathParams, getTeamPathParams } from "@lib/utils";
+import { getDynamicPaths } from "@lib/utils";
 
 const siteUrl = "https://cfb.robbybarton.com";
 
@@ -40,13 +39,7 @@ export default function SiteMap() {
 }
 
 export async function getServerSideProps({ res }: GetServerSidePropsContext): Promise<GetServerSidePropsResult<{}>> {
-	const paths: string[] = [];
-
-	const rankingPaths: RankingPathParams[] = await getRankingPathParams();
-	rankingPaths.map(({ params }) => paths.push(`/ranking/${params.division}/${params.year}/${params.week}`));
-
-	const teamPaths = await getTeamPathParams();
-	teamPaths.map(({ params }) => paths.push(`/team/${params.team}`));
+	const paths = await getDynamicPaths();
 
 	const sitemap = generateSiteMap(paths);
 

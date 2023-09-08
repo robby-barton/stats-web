@@ -166,3 +166,14 @@ export async function getTeamPathParams(): Promise<TeamPathParams[]> {
 
 	return paths;
 }
+
+export async function getDynamicPaths(): Promise<string[]> {
+	const paths: string[] = [];
+	const rankingPaths: RankingPathParams[] = await getRankingPathParams();
+	rankingPaths.map(({ params }) => paths.push(`/ranking/${params.division}/${params.year}/${params.week}`));
+
+	const teamPaths = await getTeamPathParams();
+	teamPaths.map(({ params }) => paths.push(`/team/${params.team}`));
+
+	return paths;
+}

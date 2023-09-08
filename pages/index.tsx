@@ -4,7 +4,6 @@ import Layout from "@components/layout";
 import Meta from "@components/meta";
 import Ranking from "@components/ranking";
 import Title from "@components/title";
-import { REVALIDATE } from "@lib/constants";
 import { AvailRanks, Rank } from "@lib/types";
 import { availableRankings, getRanking } from "@lib/utils";
 
@@ -46,6 +45,5 @@ export async function getStaticProps(): Promise<GetStaticPropsResult<HomeProps>>
 			year: year,
 			week: currYear.postseason ? "final" : currYear.weeks.toString(),
 		},
-		revalidate: REVALIDATE,
 	};
 }
