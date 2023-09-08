@@ -33,6 +33,7 @@ module.exports = {
 			],
 		},
 	],
+	ignorePatterns: ['out', 'node_modules', '.next', '.swc', 'coverage'],
 	rules: {
 		'prettier/prettier': 'error',
 		'@typescript-eslint/ban-types': [
