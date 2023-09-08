@@ -25,6 +25,10 @@ function espnLoader({ src, width, quality }: ImageLoaderProps) {
 	}&location=origin`;
 }
 
+function pupLoader({ src }: ImageLoaderProps) {
+	return src;
+}
+
 export default function TeamLogo({ team }: { team: Team }) {
 	const { resolvedTheme } = useTheme();
 	const [img, setImg] = useState<string>('');
@@ -45,6 +49,7 @@ export default function TeamLogo({ team }: { team: Team }) {
 		if (sliceIndex < 0) {
 			return (
 				<Image
+					loader={pupLoader}
 					src={img}
 					onError={() => {
 						setImg('/pups.png');
