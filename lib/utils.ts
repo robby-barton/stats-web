@@ -1,14 +1,13 @@
-import { DIVISIONS } from '@lib/constants';
+import { DIVISIONS } from "@lib/constants";
 import {
 	allGamesDB,
 	availableRankingsDB,
 	availableTeamsDB,
 	getRankedTeamsDB,
 	getRankingDB,
-	getTeamDB,
 	getTeamRankingsDB,
-} from '@lib/dbFuncs';
-import { AvailRanks, AvailTeams, Rank, RankingPath, Team, TeamGames, TeamPath, TeamRank } from '@lib/types';
+} from "@lib/dbFuncs";
+import { AvailRanks, AvailTeams, Rank, RankingPathParams, Team, TeamGames, TeamPathParams, TeamRank } from "@lib/types";
 
 let rankings: AvailRanks = {};
 let rankingsExpire = -1;
@@ -17,7 +16,7 @@ export async function availableRankings(): Promise<AvailRanks> {
 	if (!rankings || rankingsExpire < now) {
 		const rankingObjects = await availableRankingsDB();
 		if (!rankingObjects.length) {
-			throw new Error('Not found');
+			throw new Error("Not found");
 		}
 
 		rankings = {};
@@ -41,7 +40,7 @@ export async function availableTeams(): Promise<AvailTeams> {
 	if (!teamInfo || teamInfoExpire < now) {
 		const teamInfoObjects = await availableTeamsDB();
 		if (!teamInfoObjects.length) {
-			throw new Error('Not found');
+			throw new Error("Not found");
 		}
 
 		teamInfo = {};
@@ -50,8 +49,8 @@ export async function availableTeams(): Promise<AvailTeams> {
 			teamInfo[obj.team_id.toString()] = {
 				team_id: obj.team_id,
 				name: obj.name,
-				logo: obj.logo || '',
-				logo_dark: obj.logo_dark || '',
+				logo: obj.logo || "",
+				logo_dark: obj.logo_dark || "",
 			};
 		}
 		teamInfoExpire = now + 300; // refresh every 5 minutes
@@ -72,8 +71,8 @@ export async function getRanking(fbs: boolean, year: number, week: string): Prom
 			conf: results[i].conf,
 			record:
 				results[i].ties === 0
-					? results[i].wins + '-' + results[i].losses
-					: results[i].wins + '-' + results[i].losses + '-' + results[i].ties,
+					? results[i].wins + "-" + results[i].losses
+					: results[i].wins + "-" + results[i].losses + "-" + results[i].ties,
 			srs_rank: results[i].srs_rank,
 			sos_rank: results[i].sos_rank,
 			final_raw: results[i].final_raw,
@@ -130,44 +129,40 @@ export async function allGames(): Promise<TeamGames[]> {
 	return allGames;
 }
 
-export async function getRankingPaths(): Promise<RankingPath[]> {
+export async function getRankingPathParams(): Promise<RankingPathParams[]> {
 	const avail: AvailRanks = await availableRankings();
-	const paths: RankingPath[] = [];
+	const paths: RankingPathParams[] = [];
 	DIVISIONS.map((division) =>
 		Object.entries(avail).forEach((entry) => {
 			const [year, value] = entry;
 			const { weeks, postseason } = value;
 			for (let i = 1; i <= weeks; i++) {
 				paths.push({
-					division: division,
-					year: year,
-					week: i.toString(),
+					params: {
+						division: division,
+						year: year,
+						week: i.toString(),
+					},
 				});
 			}
 			if (postseason) {
 				paths.push({
-					division: division,
-					year: year,
-					week: 'final',
+					params: { division: division, year: year, week: "final" },
 				});
 			}
-		}),
+		})
 	);
 
 	return paths;
 }
 
-export async function getTeamPaths(): Promise<TeamPath[]> {
+export async function getTeamPathParams(): Promise<TeamPathParams[]> {
 	const rankedTeams = await getRankedTeamsDB();
 	const paths = rankedTeams.map((team) => ({
-		team: team.team_id.toString(),
+		params: {
+			team: team.team_id.toString(),
+		},
 	}));
 
 	return paths;
-}
-
-export async function getTeam(id: number): Promise<Team | null> {
-	const team = await getTeamDB(id);
-
-	return team.length ? team[0] : null;
 }

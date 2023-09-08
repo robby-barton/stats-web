@@ -1,11 +1,12 @@
-import GameTable from '@components/gameTable';
-import { Team, TeamGames } from '@lib/types';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from "@testing-library/react";
+import "@testing-library/jest-dom";
 
-import '@testing-library/jest-dom';
+import GameTable from "@components/gameTable";
+import { ThemeProvider } from "@components/themeProvider";
+import { Team, TeamGames } from "@lib/types";
 
 beforeEach(() => {
-	document.body.dataset.theme = 'light';
+	document.body.dataset.theme = "light";
 
 	const mockIntersectionObserver = jest.fn();
 	mockIntersectionObserver.mockReturnValue({
@@ -18,16 +19,16 @@ beforeEach(() => {
 
 const scInfo: Team = {
 	team_id: 2579,
-	name: 'South Carolina',
-	logo: '/logo/south-carolina.png',
-	logo_dark: '/logo-dark/south-carolina.png',
+	name: "South Carolina",
+	logo: "/logo/south-carolina.png",
+	logo_dark: "/logo-dark/south-carolina.png",
 };
 
 const fsuInfo: Team = {
 	team_id: 52,
-	name: 'Florida State',
-	logo: '/logo/florida-state.png',
-	logo_dark: '/logo-dark/florida-state.png',
+	name: "Florida State",
+	logo: "/logo/florida-state.png",
+	logo_dark: "/logo-dark/florida-state.png",
 };
 
 const gameCounts = {
@@ -41,8 +42,8 @@ const gameCounts = {
 	total: 1,
 };
 
-describe('Game Table', () => {
-	it('sorts', () => {
+describe("Game Table", () => {
+	it("sorts", () => {
 		const ranks: TeamGames[] = [
 			{
 				team: scInfo,
@@ -55,15 +56,19 @@ describe('Game Table', () => {
 			{
 				team: {
 					team_id: 1234,
-					name: 'South Carolina',
-					logo: '',
-					logo_dark: '',
+					name: "South Carolina",
+					logo: "",
+					logo_dark: "",
 				},
 				...gameCounts,
 			},
 		];
 
-		render(<GameTable teams={ranks} />);
+		render(
+			<ThemeProvider>
+				<GameTable teams={ranks} />
+			</ThemeProvider>
+		);
 		const [first, second] = screen.getAllByText(/south carolina/i);
 		const fsu = screen.getByText(/florida state/i);
 

@@ -1,18 +1,18 @@
-import { useRouter } from 'next/router';
+import { fireEvent, render, screen } from "@testing-library/react";
+import "@testing-library/jest-dom";
+import { useRouter } from "next/router";
 
-import RankingTable from '@components/rankingTable';
-import { Rank, Team } from '@lib/types';
-import { fireEvent, render, screen } from '@testing-library/react';
+import RankingTable from "@components/rankingTable";
+import { ThemeProvider } from "@components/themeProvider";
+import { Rank, Team } from "@lib/types";
 
-import '@testing-library/jest-dom';
-
-jest.mock('next/router', () => ({
+jest.mock("next/router", () => ({
 	__esModule: true,
 	useRouter: jest.fn(),
 }));
 
 beforeEach(() => {
-	document.body.dataset.theme = 'light';
+	document.body.dataset.theme = "light";
 
 	const mockIntersectionObserver = jest.fn();
 	mockIntersectionObserver.mockReturnValue({
@@ -25,16 +25,16 @@ beforeEach(() => {
 
 const scInfo: Team = {
 	team_id: 2579,
-	name: 'South Carolina',
-	logo: '/logo/south-carolina.png',
-	logo_dark: '/logo-dark/south-carolina.png',
+	name: "South Carolina",
+	logo: "/logo/south-carolina.png",
+	logo_dark: "/logo-dark/south-carolina.png",
 };
 
 const fsuInfo: Team = {
 	team_id: 52,
-	name: 'Florida State',
-	logo: '/logo/florida-state.png',
-	logo_dark: '/logo-dark/florida-state.png',
+	name: "Florida State",
+	logo: "/logo/florida-state.png",
+	logo_dark: "/logo-dark/florida-state.png",
 };
 
 const stats = {
@@ -42,58 +42,66 @@ const stats = {
 	final_rank: 1,
 	sos_rank: 1,
 	srs_rank: 1,
-	record: 'record',
+	record: "record",
 };
 
-describe('Ranking Table', () => {
-	it('link to team works', () => {
+describe("Ranking Table", () => {
+	it("link to team works", () => {
 		const mockRouter = {
 			push: jest.fn(),
 		};
 		const ranks: Rank[] = [
 			{
 				team: scInfo,
-				conf: 'SEC',
+				conf: "SEC",
 				final_raw: 0.1234567,
 				final_rank: 1,
 				sos_rank: 1,
 				srs_rank: 1,
-				record: 'record',
+				record: "record",
 			},
 		];
 		(useRouter as jest.Mock).mockReturnValue(mockRouter);
 
-		render(<RankingTable teams={ranks} />);
+		render(
+			<ThemeProvider>
+				<RankingTable teams={ranks} />
+			</ThemeProvider>
+		);
 
-		fireEvent.click(screen.getByText('South Carolina'));
+		fireEvent.click(screen.getByText("South Carolina"));
 		expect(mockRouter.push).toHaveBeenCalledWith(`/team/${ranks[0].team.team_id}`);
 	});
 
-	it('sorts', () => {
+	it("sorts", () => {
 		const ranks: Rank[] = [
 			{
 				team: scInfo,
-				conf: 'SEC',
+				conf: "SEC",
 				...stats,
 			},
 			{
 				team: fsuInfo,
-				conf: 'ACC',
+				conf: "ACC",
 				...stats,
 			},
 			{
 				team: {
 					team_id: 1234,
-					name: 'South Carolina',
-					logo: '',
-					logo_dark: '',
+					name: "South Carolina",
+					logo: "",
+					logo_dark: "",
 				},
-				conf: 'SEC',
+				conf: "SEC",
 				...stats,
 			},
 		];
 
-		render(<RankingTable teams={ranks} />);
+		render(
+			<ThemeProvider>
+				<RankingTable teams={ranks} />
+			</ThemeProvider>
+		);
 		const [first, second] = screen.getAllByText(/south carolina/i);
 		const fsu = screen.getByText(/florida state/i);
 

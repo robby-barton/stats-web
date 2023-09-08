@@ -1,0 +1,184 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Teams page renders correctly 1`] = `
+<body
+  data-theme="light"
+>
+  <div>
+    <div
+      class="container"
+    >
+      <div
+        class="header"
+      >
+        <div
+          class="headerTitle"
+        >
+          <a
+            href="/"
+          >
+            Robby's Ranking
+          </a>
+        </div>
+        <div
+          class="headerLink"
+        >
+          <a
+            href="/game-count"
+          >
+            <span
+              class="headingMd"
+            >
+              Game Count
+            </span>
+          </a>
+        </div>
+        <div
+          class="headerLink"
+        >
+          <a
+            href="/teams"
+          >
+            <span
+              class="headingMd"
+            >
+              Teams
+            </span>
+          </a>
+        </div>
+        <div
+          class="headerLink"
+        >
+          <a
+            href="/about"
+          >
+            <span
+              class="headingMd"
+            >
+              About
+            </span>
+          </a>
+        </div>
+        <div
+          class="headerToggle"
+        >
+          <button
+            aria-label="Change to light mode"
+            class="css-1f6jnp0"
+            title="Change to light mode"
+            type="button"
+          >
+            <span
+              class="css-194expn"
+            />
+            <span>
+              🌙
+            </span>
+            <span>
+              ☀️
+            </span>
+          </button>
+        </div>
+      </div>
+      <div
+        class="contentWrap"
+      >
+        <div>
+          <div>
+            <input
+              class="teamSearch"
+              placeholder="Search Teams"
+              type="search"
+            />
+          </div>
+          <div
+            class="teamList"
+          >
+            <a
+              href="/team/2579"
+            >
+              <div
+                class="card"
+              >
+                <div
+                  class="container"
+                >
+                  <div
+                    class="logo"
+                  >
+                    <img
+                      alt="South Carolina"
+                      data-nimg="fill"
+                      decoding="async"
+                      loading="lazy"
+                      sizes="2rem"
+                      src="http://localhost/_next/image?url=%2Fmona.png&w=3840&q=75"
+                      srcset="/_next/image?url=%2Fmona.png&w=16&q=75 16w, /_next/image?url=%2Fmona.png&w=32&q=75 32w, /_next/image?url=%2Fmona.png&w=48&q=75 48w, /_next/image?url=%2Fmona.png&w=64&q=75 64w, /_next/image?url=%2Fmona.png&w=96&q=75 96w, /_next/image?url=%2Fmona.png&w=128&q=75 128w, /_next/image?url=%2Fmona.png&w=256&q=75 256w, /_next/image?url=%2Fmona.png&w=384&q=75 384w, /_next/image?url=%2Fmona.png&w=640&q=75 640w, /_next/image?url=%2Fmona.png&w=750&q=75 750w, /_next/image?url=%2Fmona.png&w=828&q=75 828w, /_next/image?url=%2Fmona.png&w=1080&q=75 1080w, /_next/image?url=%2Fmona.png&w=1200&q=75 1200w, /_next/image?url=%2Fmona.png&w=1920&q=75 1920w, /_next/image?url=%2Fmona.png&w=2048&q=75 2048w, /_next/image?url=%2Fmona.png&w=3840&q=75 3840w"
+                      style="position: absolute; height: 100%; width: 100%; left: 0px; top: 0px; right: 0px; bottom: 0px; color: transparent;"
+                    />
+                  </div>
+                  <div
+                    class="name"
+                  >
+                    <span>
+                      South Carolina
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <a
+              href="/team/52"
+            >
+              <div
+                class="card"
+              >
+                <div
+                  class="container"
+                >
+                  <div
+                    class="logo"
+                  >
+                    <img
+                      alt="Florida State"
+                      data-nimg="fill"
+                      decoding="async"
+                      loading="lazy"
+                      sizes="2rem"
+                      src="http://localhost/_next/image?url=%2Fmajor.png&w=3840&q=75"
+                      srcset="/_next/image?url=%2Fmajor.png&w=16&q=75 16w, /_next/image?url=%2Fmajor.png&w=32&q=75 32w, /_next/image?url=%2Fmajor.png&w=48&q=75 48w, /_next/image?url=%2Fmajor.png&w=64&q=75 64w, /_next/image?url=%2Fmajor.png&w=96&q=75 96w, /_next/image?url=%2Fmajor.png&w=128&q=75 128w, /_next/image?url=%2Fmajor.png&w=256&q=75 256w, /_next/image?url=%2Fmajor.png&w=384&q=75 384w, /_next/image?url=%2Fmajor.png&w=640&q=75 640w, /_next/image?url=%2Fmajor.png&w=750&q=75 750w, /_next/image?url=%2Fmajor.png&w=828&q=75 828w, /_next/image?url=%2Fmajor.png&w=1080&q=75 1080w, /_next/image?url=%2Fmajor.png&w=1200&q=75 1200w, /_next/image?url=%2Fmajor.png&w=1920&q=75 1920w, /_next/image?url=%2Fmajor.png&w=2048&q=75 2048w, /_next/image?url=%2Fmajor.png&w=3840&q=75 3840w"
+                      style="position: absolute; height: 100%; width: 100%; left: 0px; top: 0px; right: 0px; bottom: 0px; color: transparent;"
+                    />
+                  </div>
+                  <div
+                    class="name"
+                  >
+                    <span>
+                      Florida State
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div
+        class="footer"
+      >
+        <a
+          href="https://github.com/robby-barton/stats-web"
+        >
+          &lt;/&gt; - Site source
+        </a>
+        <br />
+        <a
+          href="https://github.com/robby-barton/stats-go"
+        >
+          &lt;/&gt; - Ranking source
+        </a>
+      </div>
+    </div>
+  </div>
+</body>
+`;

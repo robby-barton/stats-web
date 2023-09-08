@@ -1,8 +1,8 @@
 /* istanbul ignore file */
 
-import postgres from 'postgres';
+import postgres from "postgres";
 
-import { Team } from '@lib/types';
+import { Team } from "@lib/types";
 
 function getDatabaseUrl(): string {
 	return process.env.DATABASE_URL || process.env.DEV_DATABASE_URL;
@@ -49,21 +49,6 @@ export async function availableTeamsDB(): Promise<Team[]> {
 	return results;
 }
 
-export async function getTeamDB(id: number): Promise<Team[]> {
-	const results: Team[] = await sql<Team[]>`
-		select
-			team_id,
-			name,
-			logo,
-			logo_dark
-		from team_names
-		where
-			team_id = ${id}
-	`;
-
-	return results;
-}
-
 type SQLRank = {
 	team_id: number;
 	conf: string;
@@ -91,7 +76,7 @@ export async function getRankingDB(fbs: boolean, year: number, week: string): Pr
 		where
 			fbs = ${fbs} and
 			year = ${year} and
-			${week.toLowerCase() === 'final' ? sql`postseason = 1` : sql`week = ${week} and postseason = 0`}
+			${week.toLowerCase() === "final" ? sql`postseason = 1` : sql`week = ${week} and postseason = 0`}
 		order by
 			final_rank
 	`;

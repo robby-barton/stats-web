@@ -1,7 +1,5 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useState } from "react";
 
-import TeamName from '@components/teamName';
-import { Team, TeamGames } from '@lib/types';
 import {
 	ColumnDef,
 	SortingState,
@@ -9,7 +7,10 @@ import {
 	getCoreRowModel,
 	getSortedRowModel,
 	useReactTable,
-} from '@tanstack/react-table';
+} from "@tanstack/react-table";
+
+import TeamName from "@components/teamName";
+import { Team, TeamGames } from "@lib/types";
 
 type GameTableProps = {
 	teams: TeamGames[];
@@ -20,8 +21,8 @@ export default function GameTable({ teams }: GameTableProps) {
 	const columns = useMemo<ColumnDef<TeamGames>[]>(
 		() => [
 			{
-				accessorKey: 'team',
-				header: 'Team',
+				accessorKey: "team",
+				header: "Team",
 				cell: (info) => <TeamName team={info.getValue() as Team} />,
 				sortingFn: (rowA, rowB, columnId) => {
 					const nameA = (rowA.getValue(columnId) as Team).name;
@@ -32,55 +33,55 @@ export default function GameTable({ teams }: GameTableProps) {
 				sortDescFirst: false,
 			},
 			{
-				accessorKey: 'sun',
-				header: 'Sun',
+				accessorKey: "sun",
+				header: "Sun",
 				cell: (info) => info.getValue(),
 				sortDescFirst: true,
 			},
 			{
-				accessorKey: 'mon',
-				header: 'Mon',
+				accessorKey: "mon",
+				header: "Mon",
 				cell: (info) => info.getValue(),
 				sortDescFirst: true,
 			},
 			{
-				accessorKey: 'tue',
-				header: 'Tue',
+				accessorKey: "tue",
+				header: "Tue",
 				cell: (info) => info.getValue(),
 				sortDescFirst: true,
 			},
 			{
-				accessorKey: 'wed',
-				header: 'Wed',
+				accessorKey: "wed",
+				header: "Wed",
 				cell: (info) => info.getValue(),
 				sortDescFirst: true,
 			},
 			{
-				accessorKey: 'thu',
-				header: 'Thu',
+				accessorKey: "thu",
+				header: "Thu",
 				cell: (info) => info.getValue(),
 				sortDescFirst: true,
 			},
 			{
-				accessorKey: 'fri',
-				header: 'Fri',
+				accessorKey: "fri",
+				header: "Fri",
 				cell: (info) => info.getValue(),
 				sortDescFirst: true,
 			},
 			{
-				accessorKey: 'sat',
-				header: 'Sat',
+				accessorKey: "sat",
+				header: "Sat",
 				cell: (info) => info.getValue(),
 				sortDescFirst: true,
 			},
 			{
-				accessorKey: 'total',
-				header: 'Total',
+				accessorKey: "total",
+				header: "Total",
 				cell: (info) => info.getValue(),
 				sortDescFirst: true,
 			},
 		],
-		[],
+		[]
 	);
 
 	const getRowId = (row: TeamGames) => {
@@ -113,8 +114,8 @@ export default function GameTable({ teams }: GameTableProps) {
 									>
 										{flexRender(header.column.columnDef.header, header.getContext())}
 										{{
-											asc: '\u2191',
-											desc: '\u2193',
+											asc: "\u2191",
+											desc: "\u2193",
 										}[header.column.getIsSorted() as string] ?? null}
 									</div>
 								</th>

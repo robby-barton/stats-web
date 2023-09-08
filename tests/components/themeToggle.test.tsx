@@ -1,18 +1,23 @@
-import ThemeToggle from '@components/themeToggle';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from "@testing-library/react";
 
-import '@testing-library/jest-dom';
+import "@testing-library/jest-dom";
+import { ThemeProvider } from "@components/themeProvider";
+import ThemeToggle from "@components/themeToggle";
 
 beforeEach(() => {
-	document.body.dataset.theme = 'light';
+	document.body.dataset.theme = "light";
 });
 
-describe('TeamName', () => {
-	it('changes theme', () => {
-		render(<ThemeToggle />);
-		const themeToggle = screen.getByRole('button');
+describe("TeamName", () => {
+	it("changes theme", () => {
+		render(
+			<ThemeProvider>
+				<ThemeToggle />
+			</ThemeProvider>
+		);
+		const themeToggle = screen.getByRole("button");
 
 		fireEvent.click(themeToggle);
-		expect(document.body.dataset.theme).toEqual('dark');
+		expect(document.body.dataset.theme).toEqual("dark");
 	});
 });

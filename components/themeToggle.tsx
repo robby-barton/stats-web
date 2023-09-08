@@ -1,11 +1,10 @@
-'use client';
+import { useContext } from "react";
 
-import { useTheme } from 'next-themes';
+import styled from "@emotion/styled";
 
-import styled from '@emotion/styled';
-import { useEffect, useState } from 'react';
+import { ThemeContext } from "@components/themeProvider";
 
-const ToggleButton = styled('button')`
+const ToggleButton = styled("button")`
   --toggle-width: 2.5rem;
   --toggle-height: 1.25rem;
   --toggle-padding: 0.125rem;
@@ -35,9 +34,9 @@ const ToggleButton = styled('button')`
 `;
 
 type ThumbProps = {
-	colorMode: string | undefined;
+	colorMode: string;
 };
-const ToggleThumb = styled('span')<ThumbProps>`
+const ToggleThumb = styled("span")<ThumbProps>`
 	position: absolute;
 	top: var(--toggle-padding);
 	left: var(--toggle-padding);
@@ -47,31 +46,25 @@ const ToggleThumb = styled('span')<ThumbProps>`
 	background: white;
 	transition: transform 0.25s ease-in-out;
 	transform: ${(p: ThumbProps) =>
-		p.colorMode === 'dark' ? 'translate3d(calc(var(--toggle-width) - var(--toggle-height)), 0, 0)' : 'none'};
+		p.colorMode === "dark" ? "translate3d(calc(var(--toggle-width) - var(--toggle-height)), 0, 0)" : "none"};
 `;
 
 export default function ThemeToggle() {
-	const [mounted, setMounted] = useState(false);
-
-	const { resolvedTheme, setTheme } = useTheme();
-	const altTheme = resolvedTheme === 'light' ? 'dark' : 'light';
-
-	useEffect(() => {
-		setMounted(true);
-	}, []);
+	const { colorMode, setColorMode } = useContext(ThemeContext);
+	const altColorMode = colorMode === "light" ? "dark" : "light";
 
 	return (
 		<ToggleButton
-			aria-label={`Change to ${altTheme} mode`}
-			title={`Change to ${altTheme} mode`}
+			aria-label={`Change to ${altColorMode} mode`}
+			title={`Change to ${altColorMode} mode`}
 			type="button"
-			onClick={() => setTheme(altTheme)}
+			onClick={() => setColorMode(altColorMode)}
 		>
-			{!mounted ? (
+			{colorMode === "" ? (
 				<></>
 			) : (
 				<>
-					<ToggleThumb colorMode={resolvedTheme} />
+					<ToggleThumb colorMode={colorMode} />
 					<span>🌙</span>
 					<span>☀️</span>
 				</>

@@ -1,14 +1,14 @@
-import { ChangeEvent, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { ChangeEvent, useState } from "react";
 
-import { DIVISIONS } from '@lib/constants';
-import { AvailRanks, YearRanks } from '@lib/types';
+import { useRouter } from "next/router";
 
-import styles from '@components/selector.module.css';
+import styles from "@components/selector.module.css";
+import { DIVISIONS } from "@lib/constants";
+import { AvailRanks, YearRanks } from "@lib/types";
 
-let currDiv = '';
+let currDiv = "";
 let currYear = 0;
-let currWeek = '';
+let currWeek = "";
 
 type DivisionProps = {
 	options: string[];
@@ -65,10 +65,10 @@ type WeekProps = {
 function WeekDropdown({ options, initialValue }: WeekProps) {
 	const optionList = [];
 	for (let i = 1; i <= options.weeks; i++) {
-		optionList.push({ value: i, text: 'Week ' + i });
+		optionList.push({ value: i, text: "Week " + i });
 	}
 	if (options.postseason) {
-		optionList.push({ value: 'final', text: 'Final' });
+		optionList.push({ value: "final", text: "Final" });
 	}
 
 	const [selected, setSelected] = useState(initialValue.toLowerCase());

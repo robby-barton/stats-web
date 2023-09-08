@@ -6,7 +6,7 @@ html[data-theme="light"] {
 	--color-bg-toggle: #1E90FF; 
 }
 
-html[data-theme="dark"] {
+body[data-theme="dark"] {
 	--color-text-primary: #e3e3e3;
 	--color-text-secondary: #ff6b00;
 	--color-bg-primary: #15232d;
