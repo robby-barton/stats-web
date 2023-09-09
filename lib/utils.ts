@@ -5,10 +5,9 @@ import {
 	availableTeamsDB,
 	getRankedTeamsDB,
 	getRankingDB,
-	getTeamDB,
 	getTeamRankingsDB,
 } from '@lib/dbFuncs';
-import { AvailRanks, AvailTeams, Rank, RankingPath, Team, TeamGames, TeamPath, TeamRank } from '@lib/types';
+import { AvailRanks, AvailTeams, Rank, RankingPathParams, Team, TeamGames, TeamPathParams, TeamRank } from '@lib/types';
 
 let rankings: AvailRanks = {};
 let rankingsExpire = -1;
@@ -130,25 +129,25 @@ export async function allGames(): Promise<TeamGames[]> {
 	return allGames;
 }
 
-export async function getRankingPaths(): Promise<RankingPath[]> {
+export async function getRankingPathParams(): Promise<RankingPathParams[]> {
 	const avail: AvailRanks = await availableRankings();
-	const paths: RankingPath[] = [];
+	const paths: RankingPathParams[] = [];
 	DIVISIONS.map((division) =>
 		Object.entries(avail).forEach((entry) => {
 			const [year, value] = entry;
 			const { weeks, postseason } = value;
 			for (let i = 1; i <= weeks; i++) {
 				paths.push({
-					division: division,
-					year: year,
-					week: i.toString(),
+					params: {
+						division: division,
+						year: year,
+						week: i.toString(),
+					},
 				});
 			}
 			if (postseason) {
 				paths.push({
-					division: division,
-					year: year,
-					week: 'final',
+					params: { division: division, year: year, week: 'final' },
 				});
 			}
 		}),
@@ -157,17 +156,43 @@ export async function getRankingPaths(): Promise<RankingPath[]> {
 	return paths;
 }
 
-export async function getTeamPaths(): Promise<TeamPath[]> {
+export async function getTeamPathParams(): Promise<TeamPathParams[]> {
 	const rankedTeams = await getRankedTeamsDB();
 	const paths = rankedTeams.map((team) => ({
-		team: team.team_id.toString(),
+		params: {
+			team: team.team_id.toString(),
+		},
 	}));
 
 	return paths;
 }
 
-export async function getTeam(id: number): Promise<Team | null> {
-	const team = await getTeamDB(id);
+export async function getRevalidatePaths(): Promise<string[]> {
+	const avail: AvailRanks = await availableRankings();
+	let year = -1;
+	for (const key in avail) {
+		const keyNum = Number(key);
+		if (keyNum > year) {
+			year = keyNum;
+		}
+	}
 
-	return team.length ? team[0] : null;
+	const week = avail[year].postseason ? 'final' : avail[year].weeks;
+	const paths: string[] = [];
+	paths.push(`/ranking/fbs/${year}/${week}`);
+	paths.push(`/ranking/fcs/${year}/${week}`);
+
+	const fbsResults: Rank[] = await getRanking(true, year, week.toString());
+	const fcsResults: Rank[] = await getRanking(false, year, week.toString());
+
+	const teams: number[] = [];
+	fbsResults.map((result) => {
+		teams.push(result.team.team_id);
+	});
+	fcsResults.map((result) => {
+		teams.push(result.team.team_id);
+	});
+	teams.map((team) => paths.push(`/team/${team}`));
+
+	return paths;
 }

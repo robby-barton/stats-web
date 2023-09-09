@@ -9,8 +9,9 @@ function getDatabaseUrl(): string {
 }
 
 const sql = postgres(getDatabaseUrl(), {
-	idle_timeout: 20,
-	max_lifetime: 60 * 30,
+	idle_timeout: 5,
+	max_lifetime: 30,
+	prepare: false,
 });
 
 type SQLYearWeeks = {
@@ -44,21 +45,6 @@ export async function availableTeamsDB(): Promise<Team[]> {
 		from team_names
 		order by
 			name
-	`;
-
-	return results;
-}
-
-export async function getTeamDB(id: number): Promise<Team[]> {
-	const results: Team[] = await sql<Team[]>`
-		select
-			team_id,
-			name,
-			logo,
-			logo_dark
-		from team_names
-		where
-			team_id = ${id}
 	`;
 
 	return results;

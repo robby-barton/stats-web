@@ -1,8 +1,9 @@
-import GameTable from '@components/gameTable';
-import { Team, TeamGames } from '@lib/types';
 import { fireEvent, render, screen } from '@testing-library/react';
-
 import '@testing-library/jest-dom';
+
+import GameTable from '@components/gameTable';
+import { ThemeProvider } from '@components/themeProvider';
+import { Team, TeamGames } from '@lib/types';
 
 beforeEach(() => {
 	document.body.dataset.theme = 'light';
@@ -63,7 +64,11 @@ describe('Game Table', () => {
 			},
 		];
 
-		render(<GameTable teams={ranks} />);
+		render(
+			<ThemeProvider>
+				<GameTable teams={ranks} />
+			</ThemeProvider>,
+		);
 		const [first, second] = screen.getAllByText(/south carolina/i);
 		const fsu = screen.getByText(/florida state/i);
 

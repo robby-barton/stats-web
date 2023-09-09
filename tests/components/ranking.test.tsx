@@ -1,8 +1,9 @@
-import Ranking from '@components/ranking';
-import { AvailRanks, Rank, Team } from '@lib/types';
 import { fireEvent, render, screen } from '@testing-library/react';
 
 import '@testing-library/jest-dom';
+import Ranking from '@components/ranking';
+import { ThemeProvider } from '@components/themeProvider';
+import { AvailRanks, Rank, Team } from '@lib/types';
 
 jest.mock('next/router', () => ({
 	useRouter: jest.fn(),
@@ -62,7 +63,11 @@ describe('Ranking', () => {
 				record: 'record',
 			},
 		];
-		render(<Ranking availRanks={avail} ranking={ranks} division="fbs" year={2022} week="Final" />);
+		render(
+			<ThemeProvider>
+				<Ranking availRanks={avail} ranking={ranks} division="fbs" year={2022} week="Final" />
+			</ThemeProvider>,
+		);
 
 		const team = screen.getByText('South Carolina');
 		expect(team).toBeInTheDocument();

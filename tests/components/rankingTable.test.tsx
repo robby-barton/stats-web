@@ -1,10 +1,10 @@
+import { fireEvent, render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
 import { useRouter } from 'next/router';
 
 import RankingTable from '@components/rankingTable';
+import { ThemeProvider } from '@components/themeProvider';
 import { Rank, Team } from '@lib/types';
-import { fireEvent, render, screen } from '@testing-library/react';
-
-import '@testing-library/jest-dom';
 
 jest.mock('next/router', () => ({
 	__esModule: true,
@@ -63,7 +63,11 @@ describe('Ranking Table', () => {
 		];
 		(useRouter as jest.Mock).mockReturnValue(mockRouter);
 
-		render(<RankingTable teams={ranks} />);
+		render(
+			<ThemeProvider>
+				<RankingTable teams={ranks} />
+			</ThemeProvider>,
+		);
 
 		fireEvent.click(screen.getByText('South Carolina'));
 		expect(mockRouter.push).toHaveBeenCalledWith(`/team/${ranks[0].team.team_id}`);
@@ -93,7 +97,11 @@ describe('Ranking Table', () => {
 			},
 		];
 
-		render(<RankingTable teams={ranks} />);
+		render(
+			<ThemeProvider>
+				<RankingTable teams={ranks} />
+			</ThemeProvider>,
+		);
 		const [first, second] = screen.getAllByText(/south carolina/i);
 		const fsu = screen.getByText(/florida state/i);
 

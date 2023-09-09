@@ -1,8 +1,9 @@
-import Games from '@components/games';
-import { Team, TeamGames } from '@lib/types';
 import { fireEvent, render, screen } from '@testing-library/react';
 
 import '@testing-library/jest-dom';
+import Games from '@components/games';
+import { ThemeProvider } from '@components/themeProvider';
+import { Team, TeamGames } from '@lib/types';
 
 beforeEach(() => {
 	document.body.dataset.theme = 'light';
@@ -56,7 +57,11 @@ describe('Games', () => {
 				total: 10,
 			},
 		];
-		render(<Games games={games} />);
+		render(
+			<ThemeProvider>
+				<Games games={games} />
+			</ThemeProvider>,
+		);
 
 		const team = screen.getByText('South Carolina');
 		expect(team).toBeInTheDocument();

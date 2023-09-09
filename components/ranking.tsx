@@ -1,12 +1,9 @@
-'use client';
-
 import { ChangeEvent, useState } from 'react';
 
+import styles from '@components/ranking.module.css';
 import RankingTable from '@components/rankingTable';
 import Selector from '@components/selector';
 import { AvailRanks, Rank } from '@lib/types';
-
-import styles from '@components/ranking.module.css';
 
 type RankingProps = {
 	availRanks: AvailRanks;

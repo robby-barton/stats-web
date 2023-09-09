@@ -1,8 +1,5 @@
 import { useMemo, useState } from 'react';
-import { useRouter } from 'next/navigation';
 
-import TeamName from '@components/teamName';
-import { Rank, Team } from '@lib/types';
 import {
 	ColumnDef,
 	SortingState,
@@ -11,8 +8,11 @@ import {
 	getSortedRowModel,
 	useReactTable,
 } from '@tanstack/react-table';
+import { useRouter } from 'next/router';
 
 import styles from '@components/rankingTable.module.css';
+import TeamName from '@components/teamName';
+import { Rank, Team } from '@lib/types';
 
 type RankingTableProps = {
 	teams: Rank[];

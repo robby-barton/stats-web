@@ -1,10 +1,10 @@
 import { ChangeEvent, useState } from 'react';
-import { useRouter } from 'next/navigation';
 
-import { DIVISIONS } from '@lib/constants';
-import { AvailRanks, YearRanks } from '@lib/types';
+import { useRouter } from 'next/router';
 
 import styles from '@components/selector.module.css';
+import { DIVISIONS } from '@lib/constants';
+import { AvailRanks, YearRanks } from '@lib/types';
 
 let currDiv = '';
 let currYear = 0;

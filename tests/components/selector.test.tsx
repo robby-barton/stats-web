@@ -1,10 +1,9 @@
+import { fireEvent, render, screen } from '@testing-library/react';
 import { useRouter } from 'next/router';
+import '@testing-library/jest-dom';
 
 import Selector from '@components/selector';
 import { AvailRanks } from '@lib/types';
-import { fireEvent, render, screen } from '@testing-library/react';
-
-import '@testing-library/jest-dom';
 
 jest.mock('next/router', () => ({
 	__esModule: true,

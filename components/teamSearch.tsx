@@ -1,11 +1,8 @@
-'use client';
-
 import { ChangeEvent, useState } from 'react';
 
 import TeamList from '@components/teamList';
-import { Team } from '@lib/types';
-
 import styles from '@components/teamSearch.module.css';
+import { Team } from '@lib/types';
 
 type TeamSearchProps = {
 	teams: Team[];

@@ -1,11 +1,8 @@
-'use client';
-
 import { ChangeEvent, useState } from 'react';
 
+import styles from '@components/games.module.css';
 import GameTable from '@components/gameTable';
 import { TeamGames } from '@lib/types';
-
-import styles from '@components/games.module.css';
 import commonStyles from '@styles/common.module.css';
 
 type GamesProps = {

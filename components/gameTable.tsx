@@ -1,7 +1,5 @@
 import { useMemo, useState } from 'react';
 
-import TeamName from '@components/teamName';
-import { Team, TeamGames } from '@lib/types';
 import {
 	ColumnDef,
 	SortingState,
@@ -10,6 +8,9 @@ import {
 	getSortedRowModel,
 	useReactTable,
 } from '@tanstack/react-table';
+
+import TeamName from '@components/teamName';
+import { Team, TeamGames } from '@lib/types';
 
 type GameTableProps = {
 	teams: TeamGames[];

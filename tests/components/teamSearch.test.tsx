@@ -1,8 +1,9 @@
-import TeamSearch from '@components/teamSearch';
-import { Team } from '@lib/types';
 import { fireEvent, render, screen } from '@testing-library/react';
-
 import '@testing-library/jest-dom';
+
+import TeamSearch from '@components/teamSearch';
+import { ThemeProvider } from '@components/themeProvider';
+import { Team } from '@lib/types';
 
 beforeEach(() => {
 	const mockIntersectionObserver = jest.fn();
@@ -31,7 +32,11 @@ const fsuInfo: Team = {
 describe('TeamSearch', () => {
 	it('works', () => {
 		const teams: Team[] = [scInfo, fsuInfo];
-		render(<TeamSearch teams={teams} />);
+		render(
+			<ThemeProvider>
+				<TeamSearch teams={teams} />
+			</ThemeProvider>,
+		);
 
 		const team = screen.getByText('South Carolina');
 		expect(team).toBeInTheDocument();

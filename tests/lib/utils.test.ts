@@ -1,3 +1,5 @@
+import '@testing-library/jest-dom';
+
 import {
 	allGamesDB,
 	availableRankingsDB,
@@ -7,8 +9,6 @@ import {
 	getTeamRankingsDB,
 } from '@lib/dbFuncs';
 import { AvailRanks, AvailTeams, Rank, RankingPathParams, Team, TeamGames, TeamPathParams, TeamRank } from '@lib/types';
-
-import '@testing-library/jest-dom';
 
 jest.mock('@lib/dbFuncs', () => ({
 	__esModule: true,

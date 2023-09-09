@@ -1,9 +1,12 @@
-import TeamName from '@components/teamName';
-import { ERROR_IMAGES } from '@lib/constants';
-import { Team } from '@lib/types';
+import { useContext } from 'react';
+
 import { fireEvent, render, screen } from '@testing-library/react';
 
 import '@testing-library/jest-dom';
+import TeamName from '@components/teamName';
+import { ThemeContext, ThemeProvider } from '@components/themeProvider';
+import { ERROR_IMAGES } from '@lib/constants';
+import { Team } from '@lib/types';
 
 beforeEach(() => {
 	document.body.dataset.theme = 'light';
@@ -25,9 +28,13 @@ const scInfo: Team = {
 };
 
 function TestTeamName({ team }: { team: Team }) {
+	const { setColorMode } = useContext(ThemeContext);
+
 	return (
 		<div>
-			<button aria-label="dark">Dark Mode</button>
+			<button onClick={() => setColorMode('dark')} aria-label="dark">
+				Dark Mode
+			</button>
 			<TeamName team={team} />
 		</div>
 	);
@@ -35,7 +42,11 @@ function TestTeamName({ team }: { team: Team }) {
 
 describe('TeamName', () => {
 	it('errors to correct img', async () => {
-		render(<TeamName team={scInfo} />);
+		render(
+			<ThemeProvider>
+				<TeamName team={scInfo} />
+			</ThemeProvider>,
+		);
 		const img = (await screen.findByAltText('South Carolina')) as HTMLImageElement;
 
 		fireEvent.error(img);
@@ -44,7 +55,11 @@ describe('TeamName', () => {
 	});
 
 	it('changes to dark', async () => {
-		render(<TestTeamName team={scInfo} />);
+		render(
+			<ThemeProvider>
+				<TestTeamName team={scInfo} />
+			</ThemeProvider>,
+		);
 		const img = (await screen.findByAltText('South Carolina')) as HTMLImageElement;
 
 		expect(img.src).not.toContain('dark');
@@ -60,7 +75,11 @@ describe('TeamName', () => {
 
 	it('can start dark', async () => {
 		document.body.dataset.theme = 'dark';
-		render(<TeamName team={scInfo} />);
+		render(
+			<ThemeProvider>
+				<TeamName team={scInfo} />
+			</ThemeProvider>,
+		);
 		const img = (await screen.findByAltText('South Carolina')) as HTMLImageElement;
 
 		expect(img.src).toContain('dark');
@@ -70,14 +89,16 @@ describe('TeamName', () => {
 		document.body.dataset.theme = 'dark';
 		const team_id = 2579;
 		render(
-			<TeamName
-				team={{
-					team_id: team_id,
-					name: 'South Carolina',
-					logo: '',
-					logo_dark: '',
-				}}
-			/>,
+			<ThemeProvider>
+				<TeamName
+					team={{
+						team_id: team_id,
+						name: 'South Carolina',
+						logo: '',
+						logo_dark: '',
+					}}
+				/>
+			</ThemeProvider>,
 		);
 		const img = (await screen.findByAltText('South Carolina')) as HTMLImageElement;
 
