@@ -5,6 +5,9 @@ import '@styles/globals.css';
 
 import { Providers } from './provider';
 
+export const runtime = 'edge';
+export const dynamic = 'error';
+
 export default function RootLayout({
 	// Layouts must accept a children prop.
 	// This will be populated with nested layouts or pages
