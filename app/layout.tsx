@@ -5,7 +5,6 @@ import '@styles/globals.css';
 
 import { Providers } from './provider';
 
-export const runtime = 'edge';
 export const dynamic = 'error';
 
 export default function RootLayout({
