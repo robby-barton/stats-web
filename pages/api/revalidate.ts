@@ -1,6 +1,6 @@
-import { NextApiRequest, NextApiResponse } from "next";
+import { NextApiRequest, NextApiResponse } from 'next';
 
-import { getDynamicPaths } from "@lib/utils";
+import { getRevalidatePaths } from '@lib/utils';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
 	if (req.query.secret !== process.env.REVALIDATE_SECRET) {
@@ -8,14 +8,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 	}
 
 	try {
-		const dynamicPaths = await getDynamicPaths();
-		const paths = ["/", "/game-count", "/teams"].concat(dynamicPaths);
+		const dynamicPaths = await getRevalidatePaths();
+		const paths = ['/', '/game-count', '/teams'].concat(dynamicPaths);
 		paths.forEach(async (path) => {
 			await res.revalidate(path);
+			console.log(`revalidating ${path}`);
 		});
 
-		return res.status(200);
+		console.log('finished');
+		return res.status(200).end('revalidated');
 	} catch {
-		return res.status(500);
+		return res.status(500).end('error');
 	}
 }

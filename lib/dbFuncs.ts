@@ -1,16 +1,17 @@
 /* istanbul ignore file */
 
-import postgres from "postgres";
+import postgres from 'postgres';
 
-import { Team } from "@lib/types";
+import { Team } from '@lib/types';
 
 function getDatabaseUrl(): string {
 	return process.env.DATABASE_URL || process.env.DEV_DATABASE_URL;
 }
 
 const sql = postgres(getDatabaseUrl(), {
-	idle_timeout: 20,
-	max_lifetime: 60 * 30,
+	idle_timeout: 5,
+	max_lifetime: 30,
+	prepare: false,
 });
 
 type SQLYearWeeks = {
@@ -76,7 +77,7 @@ export async function getRankingDB(fbs: boolean, year: number, week: string): Pr
 		where
 			fbs = ${fbs} and
 			year = ${year} and
-			${week.toLowerCase() === "final" ? sql`postseason = 1` : sql`week = ${week} and postseason = 0`}
+			${week.toLowerCase() === 'final' ? sql`postseason = 1` : sql`week = ${week} and postseason = 0`}
 		order by
 			final_rank
 	`;

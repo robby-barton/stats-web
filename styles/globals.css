@@ -1,5 +1,5 @@
-html,
-html[data-theme="light"] {
+body,
+body[data-theme="light"] {
 	--color-text-primary: #27201a;
 	--color-text-secondary: #076963;
 	--color-bg-primary: #f6f0e8;

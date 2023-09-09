@@ -1,11 +1,11 @@
-import { GetStaticPropsResult } from "next";
+import { GetStaticPropsResult } from 'next';
 
-import Games from "@components/games";
-import Layout from "@components/layout";
-import Meta from "@components/meta";
-import Title from "@components/title";
-import { TeamGames } from "@lib/types";
-import { allGames } from "@lib/utils";
+import Games from '@components/games';
+import Layout from '@components/layout';
+import Meta from '@components/meta';
+import Title from '@components/title';
+import { TeamGames } from '@lib/types';
+import { allGames } from '@lib/utils';
 
 type GameCountProps = {
 	games: TeamGames[];

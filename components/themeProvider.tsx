@@ -1,4 +1,4 @@
-import { PropsWithChildren, createContext, useEffect, useMemo, useState } from "react";
+import { PropsWithChildren, createContext, useEffect, useMemo, useState } from 'react';
 
 type ContextProps = {
 	colorMode: string;
@@ -7,7 +7,7 @@ type ContextProps = {
 export const ThemeContext = createContext<ContextProps>({} as ContextProps);
 
 export const ThemeProvider = ({ children }: PropsWithChildren) => {
-	const [colorMode, rawSetColorMode] = useState<string>("");
+	const [colorMode, rawSetColorMode] = useState<string>('');
 
 	useEffect(() => {
 		rawSetColorMode(document.body.dataset.theme as string);
@@ -16,7 +16,7 @@ export const ThemeProvider = ({ children }: PropsWithChildren) => {
 	const contextValue = useMemo(() => {
 		function setColorMode(newValue: string) {
 			document.body.dataset.theme = newValue;
-			window.localStorage.setItem("theme", newValue);
+			window.localStorage.setItem('theme', newValue);
 
 			rawSetColorMode(newValue);
 		}

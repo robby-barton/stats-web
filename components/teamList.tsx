@@ -1,6 +1,6 @@
-import TeamCard from "@components/teamCard";
-import styles from "@components/teamList.module.css";
-import { Team } from "@lib/types";
+import TeamCard from '@components/teamCard';
+import styles from '@components/teamList.module.css';
+import { Team } from '@lib/types';
 
 type TeamListProps = {
 	teams: Team[];

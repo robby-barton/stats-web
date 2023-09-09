@@ -1,18 +1,18 @@
-import { ParsedUrlQuery } from "querystring";
+import { ParsedUrlQuery } from 'querystring';
 
-import { GetStaticPathsResult, GetStaticPropsContext, GetStaticPropsResult } from "next";
-import dynamic from "next/dynamic";
+import { GetStaticPathsResult, GetStaticPropsContext, GetStaticPropsResult } from 'next';
+import dynamic from 'next/dynamic';
 
-import Layout from "@components/layout";
-import Meta from "@components/meta";
-import TeamName from "@components/teamName";
-import Title from "@components/title";
-import { CHART_MAX_Y } from "@lib/constants";
-import { ChartPoint, Team, TeamPathParams, TeamRank } from "@lib/types";
-import { getTeamPathParams, getTeamRankings } from "@lib/utils";
-import styles from "@pages/team/[team].module.css";
+import Layout from '@components/layout';
+import Meta from '@components/meta';
+import TeamName from '@components/teamName';
+import Title from '@components/title';
+import { CHART_MAX_Y } from '@lib/constants';
+import { ChartPoint, Team, TeamPathParams, TeamRank } from '@lib/types';
+import { getTeamPathParams, getTeamRankings } from '@lib/utils';
+import styles from '@pages/team/[team].module.css';
 
-const TeamChart = dynamic(() => import("@components/teamChart"), {
+const TeamChart = dynamic(() => import('@components/teamChart'), {
 	ssr: false,
 });
 
@@ -42,8 +42,8 @@ function validateParams(params: ParsedUrlQuery | undefined): number {
 		return 0;
 	}
 
-	const teamString = params["team"];
-	if (typeof teamString !== "string") {
+	const teamString = params['team'];
+	if (typeof teamString !== 'string') {
 		return 0;
 	}
 
@@ -61,7 +61,7 @@ export async function getStaticProps({ params }: GetStaticPropsContext): Promise
 		return {
 			redirect: {
 				permanent: false,
-				destination: "/teams",
+				destination: '/teams',
 			},
 		};
 	}
@@ -71,7 +71,7 @@ export async function getStaticProps({ params }: GetStaticPropsContext): Promise
 		return {
 			redirect: {
 				permanent: false,
-				destination: "/teams",
+				destination: '/teams',
 			},
 		};
 	}
@@ -80,7 +80,7 @@ export async function getStaticProps({ params }: GetStaticPropsContext): Promise
 	const years: number[] = [];
 	for (let i = 0; i < results.length; i++) {
 		data.push({
-			week: `${results[i].year} Week ${results[i].postseason ? "Final" : results[i].week}`,
+			week: `${results[i].year} Week ${results[i].postseason ? 'Final' : results[i].week}`,
 			rank: results[i].final_rank,
 			fillLevel: CHART_MAX_Y,
 		});
@@ -102,6 +102,6 @@ export async function getStaticPaths(): Promise<GetStaticPathsResult> {
 	const paths: TeamPathParams[] = await getTeamPathParams();
 	return {
 		paths: paths,
-		fallback: "blocking",
+		fallback: 'blocking',
 	};
 }

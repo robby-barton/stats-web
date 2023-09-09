@@ -1,11 +1,11 @@
-import { GetStaticPropsResult } from "next";
+import { GetStaticPropsResult } from 'next';
 
-import Layout from "@components/layout";
-import Meta from "@components/meta";
-import TeamSearch from "@components/teamSearch";
-import Title from "@components/title";
-import { Team } from "@lib/types";
-import { getRankedTeams } from "@lib/utils";
+import Layout from '@components/layout';
+import Meta from '@components/meta';
+import TeamSearch from '@components/teamSearch';
+import Title from '@components/title';
+import { Team } from '@lib/types';
+import { getRankedTeams } from '@lib/utils';
 
 export type TeamsProps = {
 	teams: Team[];

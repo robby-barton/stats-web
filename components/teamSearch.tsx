@@ -1,14 +1,14 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useState } from 'react';
 
-import TeamList from "@components/teamList";
-import styles from "@components/teamSearch.module.css";
-import { Team } from "@lib/types";
+import TeamList from '@components/teamList';
+import styles from '@components/teamSearch.module.css';
+import { Team } from '@lib/types';
 
 type TeamSearchProps = {
 	teams: Team[];
 };
 export default function TeamSearch({ teams }: TeamSearchProps) {
-	const [searchField, setSearchField] = useState("");
+	const [searchField, setSearchField] = useState('');
 
 	const filteredTeams = teams.filter((team) => {
 		return team.name.toLowerCase().includes(searchField.toLowerCase());

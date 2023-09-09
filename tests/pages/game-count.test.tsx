@@ -1,18 +1,18 @@
-import { render } from "@testing-library/react";
+import { render } from '@testing-library/react';
 
-import "@testing-library/jest-dom";
-import { REVALIDATE } from "@lib/constants";
-import { TeamGames } from "@lib/types";
-import { allGames } from "@lib/utils";
-import GameCount, { getStaticProps } from "@pages/game-count";
+import '@testing-library/jest-dom';
+import { REVALIDATE } from '@lib/constants';
+import { TeamGames } from '@lib/types';
+import { allGames } from '@lib/utils';
+import GameCount, { getStaticProps } from '@pages/game-count';
 
-jest.mock("@lib/utils", () => ({
+jest.mock('@lib/utils', () => ({
 	__esModule: true,
 	allGames: jest.fn(),
 }));
 
 afterAll(() => {
-	jest.unmock("@lib/utils");
+	jest.unmock('@lib/utils');
 });
 
 afterEach(() => {
@@ -20,7 +20,7 @@ afterEach(() => {
 });
 
 beforeEach(() => {
-	document.body.dataset.theme = "light";
+	document.body.dataset.theme = 'light';
 
 	const mockIntersectionObserver = jest.fn();
 	mockIntersectionObserver.mockReturnValue({
@@ -31,15 +31,15 @@ beforeEach(() => {
 	window.IntersectionObserver = mockIntersectionObserver;
 });
 
-describe("Game Count page", () => {
-	it("renders correctly", async () => {
+describe('Game Count page', () => {
+	it('renders correctly', async () => {
 		const games: TeamGames[] = [
 			{
 				team: {
 					team_id: 2579,
-					name: "South Carolina",
-					logo: "/logo/south-carolina.png",
-					logo_dark: "/logo-dark/south-carolina.png",
+					name: 'South Carolina',
+					logo: '/logo/south-carolina.png',
+					logo_dark: '/logo-dark/south-carolina.png',
 				},
 				sun: 1,
 				mon: 2,
@@ -56,14 +56,14 @@ describe("Game Count page", () => {
 		expect(baseElement).toMatchSnapshot();
 	});
 
-	it("getStaticProps returns correctly", async () => {
+	it('getStaticProps returns correctly', async () => {
 		const mockReturn = [
 			{
 				team: {
 					team_id: 2579,
-					name: "South Carolina",
-					logo: "/logo/south-carolina.png",
-					logo_dark: "/logo-dark/south-carolina.png",
+					name: 'South Carolina',
+					logo: '/logo/south-carolina.png',
+					logo_dark: '/logo-dark/south-carolina.png',
 				},
 				sun: 1,
 				mon: 2,

@@ -1,4 +1,4 @@
-import "@testing-library/jest-dom";
+import '@testing-library/jest-dom';
 
 import {
 	allGamesDB,
@@ -7,10 +7,10 @@ import {
 	getRankedTeamsDB,
 	getRankingDB,
 	getTeamRankingsDB,
-} from "@lib/dbFuncs";
-import { AvailRanks, AvailTeams, Rank, RankingPathParams, Team, TeamGames, TeamPathParams, TeamRank } from "@lib/types";
+} from '@lib/dbFuncs';
+import { AvailRanks, AvailTeams, Rank, RankingPathParams, Team, TeamGames, TeamPathParams, TeamRank } from '@lib/types';
 
-jest.mock("@lib/dbFuncs", () => ({
+jest.mock('@lib/dbFuncs', () => ({
 	__esModule: true,
 	availableRankingsDB: jest.fn(),
 	availableTeamsDB: jest.fn(),
@@ -22,7 +22,7 @@ jest.mock("@lib/dbFuncs", () => ({
 }));
 
 afterAll(() => {
-	jest.unmock("@lib/dbFuncs");
+	jest.unmock('@lib/dbFuncs');
 });
 
 afterEach(() => {
@@ -31,20 +31,20 @@ afterEach(() => {
 
 const scInfo: Team = {
 	team_id: 2579,
-	name: "South Carolina",
-	logo: "/logo/south-carolina.png",
-	logo_dark: "/logo-dark/south-carolina.png",
+	name: 'South Carolina',
+	logo: '/logo/south-carolina.png',
+	logo_dark: '/logo-dark/south-carolina.png',
 };
 
 const fsuInfo: Team = {
 	team_id: 52,
-	name: "Florida State",
-	logo: "/logo/florida-state.png",
-	logo_dark: "/logo-dark/florida-state.png",
+	name: 'Florida State',
+	logo: '/logo/florida-state.png',
+	logo_dark: '/logo-dark/florida-state.png',
 };
 
-describe("utils", () => {
-	describe("availableRankings", () => {
+describe('utils', () => {
+	describe('availableRankings', () => {
 		// availableRankings uses and internal variable to only update
 		// the available rankings every 5 minutes, so re-import for each
 		// test to ensure it doesn't pollute the testing
@@ -57,17 +57,17 @@ describe("utils", () => {
 			});
 		});
 
-		it("throws error if empty return", async () => {
+		it('throws error if empty return', async () => {
 			(availableRankingsDB as jest.Mock).mockReturnValue(Promise.resolve([]));
 
-			await expect(availableRankings()).rejects.toThrow(Error("Not found"));
+			await expect(availableRankings()).rejects.toThrow(Error('Not found'));
 			expect(availableRankingsDB).toBeCalledTimes(1);
 		});
 
-		it("returns correct values", async () => {
+		it('returns correct values', async () => {
 			const mockReturn = [
 				{
-					year: "2022",
+					year: '2022',
 					weeks: 16,
 					postseason: 0,
 				},
@@ -75,7 +75,7 @@ describe("utils", () => {
 			(availableRankingsDB as jest.Mock).mockReturnValue(Promise.resolve(mockReturn));
 
 			const expected: AvailRanks = {
-				"2022": {
+				'2022': {
 					weeks: 16,
 					postseason: false,
 				},
@@ -87,10 +87,10 @@ describe("utils", () => {
 			expect(avail).toEqual(expected);
 		});
 
-		it("returns consecutive correct values", async () => {
+		it('returns consecutive correct values', async () => {
 			const mockReturn = [
 				{
-					year: "2022",
+					year: '2022',
 					weeks: 16,
 					postseason: 1,
 				},
@@ -98,7 +98,7 @@ describe("utils", () => {
 			(availableRankingsDB as jest.Mock).mockReturnValue(Promise.resolve(mockReturn));
 
 			const expected: AvailRanks = {
-				"2022": {
+				'2022': {
 					weeks: 16,
 					postseason: true,
 				},
@@ -113,7 +113,7 @@ describe("utils", () => {
 		});
 	});
 
-	describe("availableTeams", () => {
+	describe('availableTeams', () => {
 		// availableTeams uses and internal variable to only update
 		// the available rankings every 5 minutes, so re-import for each
 		// test to ensure it doesn't pollute the testing
@@ -126,20 +126,20 @@ describe("utils", () => {
 			});
 		});
 
-		it("throws error if empty return", async () => {
+		it('throws error if empty return', async () => {
 			(availableTeamsDB as jest.Mock).mockReturnValue(Promise.resolve([]));
 
-			await expect(availableTeams()).rejects.toThrow(Error("Not found"));
+			await expect(availableTeams()).rejects.toThrow(Error('Not found'));
 			expect(availableTeamsDB).toBeCalledTimes(1);
 		});
 
-		it("returns correct values", async () => {
+		it('returns correct values', async () => {
 			const mockReturn = [scInfo, fsuInfo];
 			(availableTeamsDB as jest.Mock).mockReturnValue(Promise.resolve(mockReturn));
 
 			const expected: AvailTeams = {
-				"2579": scInfo,
-				"52": fsuInfo,
+				'2579': scInfo,
+				'52': fsuInfo,
 			};
 
 			const avail = await availableTeams();
@@ -148,13 +148,13 @@ describe("utils", () => {
 			expect(avail).toEqual(expected);
 		});
 
-		it("returns consecutive correct values", async () => {
+		it('returns consecutive correct values', async () => {
 			const mockReturn = [scInfo, fsuInfo];
 			(availableTeamsDB as jest.Mock).mockReturnValue(Promise.resolve(mockReturn));
 
 			const expected: AvailTeams = {
-				"2579": scInfo,
-				"52": fsuInfo,
+				'2579': scInfo,
+				'52': fsuInfo,
 			};
 
 			const avail = await availableTeams();
@@ -165,11 +165,11 @@ describe("utils", () => {
 			expect(avail).toEqual(avail2);
 		});
 
-		it("handles null logos", async () => {
+		it('handles null logos', async () => {
 			const mockReturn = [
 				{
 					team_id: 2579,
-					name: "South Carolina",
+					name: 'South Carolina',
 					logo: null,
 					logo_dark: null,
 				},
@@ -177,11 +177,11 @@ describe("utils", () => {
 			(availableTeamsDB as jest.Mock).mockReturnValue(Promise.resolve(mockReturn));
 
 			const expected: AvailTeams = {
-				"2579": {
+				'2579': {
 					team_id: 2579,
-					name: "South Carolina",
-					logo: "",
-					logo_dark: "",
+					name: 'South Carolina',
+					logo: '',
+					logo_dark: '',
 				},
 			};
 
@@ -192,7 +192,7 @@ describe("utils", () => {
 		});
 	});
 
-	describe("getRanking", () => {
+	describe('getRanking', () => {
 		let getRanking: (div: boolean, year: number, week: string) => Promise<Rank[]>;
 		beforeEach(() => {
 			jest.isolateModules(() => {
@@ -202,11 +202,11 @@ describe("utils", () => {
 			});
 		});
 
-		it("converts db return to Rank", async () => {
+		it('converts db return to Rank', async () => {
 			const mockReturn = [
 				{
 					team_id: 2579,
-					conf: "SEC",
+					conf: 'SEC',
 					final_rank: 1,
 					final_raw: 0.123456789,
 					wins: 8,
@@ -223,27 +223,27 @@ describe("utils", () => {
 			const expected: Rank[] = [
 				{
 					team: scInfo,
-					conf: "SEC",
+					conf: 'SEC',
 					final_rank: 1,
 					final_raw: 0.123456789,
-					record: "8-5",
+					record: '8-5',
 					sos_rank: 2,
 					srs_rank: 3,
 				},
 			];
 
-			const ranking = await getRanking(true, 2022, "Final");
+			const ranking = await getRanking(true, 2022, 'Final');
 
 			expect(getRankingDB).toBeCalledTimes(1);
 			expect(availableTeamsDB).toBeCalledTimes(1);
 			expect(ranking).toEqual(expected);
 		});
 
-		it("converts db return to Rank with tie", async () => {
+		it('converts db return to Rank with tie', async () => {
 			const mockReturn = [
 				{
 					team_id: 2579,
-					conf: "SEC",
+					conf: 'SEC',
 					final_rank: 1,
 					final_raw: 0.123456789,
 					wins: 8,
@@ -260,16 +260,16 @@ describe("utils", () => {
 			const expected: Rank[] = [
 				{
 					team: scInfo,
-					conf: "SEC",
+					conf: 'SEC',
 					final_rank: 1,
 					final_raw: 0.123456789,
-					record: "8-5-1",
+					record: '8-5-1',
 					sos_rank: 2,
 					srs_rank: 3,
 				},
 			];
 
-			const ranking = await getRanking(true, 2022, "Final");
+			const ranking = await getRanking(true, 2022, 'Final');
 
 			expect(getRankingDB).toBeCalledTimes(1);
 			expect(availableTeamsDB).toBeCalledTimes(1);
@@ -277,7 +277,7 @@ describe("utils", () => {
 		});
 	});
 
-	describe("getTeamRankings", () => {
+	describe('getTeamRankings', () => {
 		let getTeamRankings: (team: number) => Promise<TeamRank[]>;
 		beforeEach(() => {
 			jest.isolateModules(() => {
@@ -287,34 +287,34 @@ describe("utils", () => {
 			});
 		});
 
-		it("hydrates team info", async () => {
+		it('hydrates team info', async () => {
 			const mockReturn = [
 				{
 					team_id: 2579,
 					final_rank: 1,
 					year: 2022,
-					week: "1",
+					week: '1',
 					postseason: 0,
 				},
 				{
 					team_id: 2579,
 					final_rank: 2,
 					year: 2022,
-					week: "5",
+					week: '5',
 					postseason: 0,
 				},
 				{
 					team_id: 2579,
 					final_rank: 3,
 					year: 2022,
-					week: "10",
+					week: '10',
 					postseason: 0,
 				},
 				{
 					team_id: 2579,
 					final_rank: 4,
 					year: 2022,
-					week: "Final",
+					week: 'Final',
 					postseason: 1,
 				},
 			];
@@ -327,28 +327,28 @@ describe("utils", () => {
 					team: scInfo,
 					final_rank: 1,
 					year: 2022,
-					week: "1",
+					week: '1',
 					postseason: 0,
 				},
 				{
 					team: scInfo,
 					final_rank: 2,
 					year: 2022,
-					week: "5",
+					week: '5',
 					postseason: 0,
 				},
 				{
 					team: scInfo,
 					final_rank: 3,
 					year: 2022,
-					week: "10",
+					week: '10',
 					postseason: 0,
 				},
 				{
 					team: scInfo,
 					final_rank: 4,
 					year: 2022,
-					week: "Final",
+					week: 'Final',
 					postseason: 1,
 				},
 			];
@@ -360,7 +360,7 @@ describe("utils", () => {
 		});
 	});
 
-	describe("allGames", () => {
+	describe('allGames', () => {
 		let allGames: () => Promise<TeamGames[]>;
 		beforeEach(() => {
 			jest.isolateModules(() => {
@@ -370,7 +370,7 @@ describe("utils", () => {
 			});
 		});
 
-		it("hydrates team info", async () => {
+		it('hydrates team info', async () => {
 			const mockReturn = [
 				{
 					team_id: 2579,
@@ -430,7 +430,7 @@ describe("utils", () => {
 			expect(games).toEqual(expected);
 		});
 
-		it("strips non-existent teams", async () => {
+		it('strips non-existent teams', async () => {
 			const mockReturn = [
 				{
 					team_id: 2579,
@@ -502,7 +502,7 @@ describe("utils", () => {
 		});
 	});
 
-	describe("getRankingPathParams", () => {
+	describe('getRankingPathParams', () => {
 		let getRankingPathParams: () => Promise<RankingPathParams[]>;
 		beforeEach(() => {
 			jest.isolateModules(() => {
@@ -512,10 +512,10 @@ describe("utils", () => {
 			});
 		});
 
-		it("returns params", async () => {
+		it('returns params', async () => {
 			const mockReturn = [
 				{
-					year: "2022",
+					year: '2022',
 					weeks: 3,
 					postseason: 1,
 				},
@@ -525,58 +525,58 @@ describe("utils", () => {
 			const expected = [
 				{
 					params: {
-						division: "fbs",
-						year: "2022",
-						week: "1",
+						division: 'fbs',
+						year: '2022',
+						week: '1',
 					},
 				},
 				{
 					params: {
-						division: "fbs",
-						year: "2022",
-						week: "2",
+						division: 'fbs',
+						year: '2022',
+						week: '2',
 					},
 				},
 				{
 					params: {
-						division: "fbs",
-						year: "2022",
-						week: "3",
+						division: 'fbs',
+						year: '2022',
+						week: '3',
 					},
 				},
 				{
 					params: {
-						division: "fbs",
-						year: "2022",
-						week: "final",
+						division: 'fbs',
+						year: '2022',
+						week: 'final',
 					},
 				},
 				{
 					params: {
-						division: "fcs",
-						year: "2022",
-						week: "1",
+						division: 'fcs',
+						year: '2022',
+						week: '1',
 					},
 				},
 				{
 					params: {
-						division: "fcs",
-						year: "2022",
-						week: "2",
+						division: 'fcs',
+						year: '2022',
+						week: '2',
 					},
 				},
 				{
 					params: {
-						division: "fcs",
-						year: "2022",
-						week: "3",
+						division: 'fcs',
+						year: '2022',
+						week: '3',
 					},
 				},
 				{
 					params: {
-						division: "fcs",
-						year: "2022",
-						week: "final",
+						division: 'fcs',
+						year: '2022',
+						week: 'final',
 					},
 				},
 			];
@@ -588,7 +588,7 @@ describe("utils", () => {
 		});
 	});
 
-	describe("getTeamPathParams", () => {
+	describe('getTeamPathParams', () => {
 		let getTeamPathParams: () => Promise<TeamPathParams[]>;
 		beforeEach(() => {
 			jest.isolateModules(() => {
@@ -598,7 +598,7 @@ describe("utils", () => {
 			});
 		});
 
-		it("returns correct params", async () => {
+		it('returns correct params', async () => {
 			const mockReturn = [{ team_id: 2579 }];
 			(getRankedTeamsDB as jest.Mock).mockReturnValue(Promise.resolve(mockReturn));
 
@@ -617,7 +617,7 @@ describe("utils", () => {
 		});
 	});
 
-	describe("getRankedTeams", () => {
+	describe('getRankedTeams', () => {
 		let getRankedTeams: () => Promise<Team[]>;
 		beforeEach(() => {
 			jest.isolateModules(() => {
@@ -627,7 +627,7 @@ describe("utils", () => {
 			});
 		});
 
-		it("returns teams", async () => {
+		it('returns teams', async () => {
 			const mockReturn = [{ team_id: 2579 }];
 			(getRankedTeamsDB as jest.Mock).mockReturnValue(Promise.resolve(mockReturn));
 			const mockTeams: Team[] = [scInfo];

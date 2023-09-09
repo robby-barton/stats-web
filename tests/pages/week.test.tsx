@@ -1,16 +1,16 @@
-import { render } from "@testing-library/react";
-import "@testing-library/jest-dom";
+import { render } from '@testing-library/react';
+import '@testing-library/jest-dom';
 
-import { REVALIDATE } from "@lib/constants";
-import { AvailRanks, Rank, Team } from "@lib/types";
-import { availableRankings, getRanking, getRankingPathParams } from "@lib/utils";
-import Week, { getStaticPaths, getStaticProps } from "@pages/ranking/[division]/[year]/[week]";
+import { REVALIDATE } from '@lib/constants';
+import { AvailRanks, Rank, Team } from '@lib/types';
+import { availableRankings, getRanking, getRankingPathParams } from '@lib/utils';
+import Week, { getStaticPaths, getStaticProps } from '@pages/ranking/[division]/[year]/[week]';
 
-jest.mock("next/router", () => ({
+jest.mock('next/router', () => ({
 	useRouter: jest.fn(),
 }));
 
-jest.mock("@lib/utils", () => ({
+jest.mock('@lib/utils', () => ({
 	__esModule: true,
 	availableRankings: jest.fn(),
 	getRanking: jest.fn(),
@@ -18,8 +18,8 @@ jest.mock("@lib/utils", () => ({
 }));
 
 afterAll(() => {
-	jest.unmock("@lib/utils");
-	jest.unmock("next/router");
+	jest.unmock('@lib/utils');
+	jest.unmock('next/router');
 });
 
 afterEach(() => {
@@ -27,7 +27,7 @@ afterEach(() => {
 });
 
 beforeEach(() => {
-	document.body.dataset.theme = "light";
+	document.body.dataset.theme = 'light';
 
 	const mockIntersectionObserver = jest.fn();
 	mockIntersectionObserver.mockReturnValue({
@@ -40,15 +40,15 @@ beforeEach(() => {
 
 const scInfo: Team = {
 	team_id: 2579,
-	name: "South Carolina",
-	logo: "/logo/south-carolina.png",
-	logo_dark: "/logo-dark/south-carolina.png",
+	name: 'South Carolina',
+	logo: '/logo/south-carolina.png',
+	logo_dark: '/logo-dark/south-carolina.png',
 };
 
-describe("Week page", () => {
-	it("renders correctly", async () => {
+describe('Week page', () => {
+	it('renders correctly', async () => {
 		const avail: AvailRanks = {
-			"2023": {
+			'2023': {
 				weeks: 16,
 				postseason: true,
 			},
@@ -56,8 +56,8 @@ describe("Week page", () => {
 		const ranks: Rank[] = [
 			{
 				team: scInfo,
-				conf: "SEC",
-				record: "8-5",
+				conf: 'SEC',
+				record: '8-5',
 				sos_rank: 13,
 				srs_rank: 15,
 				final_raw: 0.123456789,
@@ -65,17 +65,17 @@ describe("Week page", () => {
 			},
 		];
 		const { baseElement } = render(
-			<Week availRanks={avail} ranking={ranks} division="fbs" week="Final" year={2023} />
+			<Week availRanks={avail} ranking={ranks} division="fbs" week="Final" year={2023} />,
 		);
 
 		expect(baseElement).toMatchSnapshot();
 	});
 
-	describe("getStaticProps", () => {
-		describe("returns correctly", () => {
-			it("midyear", async () => {
+	describe('getStaticProps', () => {
+		describe('returns correctly', () => {
+			it('midyear', async () => {
 				const availMock: AvailRanks = {
-					"2022": {
+					'2022': {
 						weeks: 16,
 						postseason: true,
 					},
@@ -85,10 +85,10 @@ describe("Week page", () => {
 				const rankingMock: Rank[] = [
 					{
 						team: scInfo,
-						conf: "SEC",
+						conf: 'SEC',
 						final_rank: 1,
 						final_raw: 0.123456789,
-						record: "8-5",
+						record: '8-5',
 						sos_rank: 2,
 						srs_rank: 3,
 					},
@@ -99,25 +99,25 @@ describe("Week page", () => {
 					props: {
 						availRanks: availMock,
 						ranking: rankingMock,
-						division: "FBS",
+						division: 'FBS',
 						year: 2022,
-						week: "10",
+						week: '10',
 					},
 					revalidate: REVALIDATE,
 				};
 
-				const result = await getStaticProps({ params: { division: "fbs", year: "2022", week: "10" } });
+				const result = await getStaticProps({ params: { division: 'fbs', year: '2022', week: '10' } });
 
 				expect(result).toEqual(expected);
 
 				expect(availableRankings).toBeCalledTimes(1);
 				expect(getRanking).toBeCalledTimes(1);
-				expect(getRanking).toBeCalledWith(true, 2022, "10");
+				expect(getRanking).toBeCalledWith(true, 2022, '10');
 			});
 
-			it("final", async () => {
+			it('final', async () => {
 				const availMock: AvailRanks = {
-					"2022": {
+					'2022': {
 						weeks: 16,
 						postseason: true,
 					},
@@ -127,10 +127,10 @@ describe("Week page", () => {
 				const rankingMock: Rank[] = [
 					{
 						team: scInfo,
-						conf: "SEC",
+						conf: 'SEC',
 						final_rank: 1,
 						final_raw: 0.123456789,
-						record: "8-5",
+						record: '8-5',
 						sos_rank: 2,
 						srs_rank: 3,
 					},
@@ -141,25 +141,25 @@ describe("Week page", () => {
 					props: {
 						availRanks: availMock,
 						ranking: rankingMock,
-						division: "FBS",
+						division: 'FBS',
 						year: 2022,
-						week: "Final",
+						week: 'Final',
 					},
 					revalidate: REVALIDATE,
 				};
 
-				const result = await getStaticProps({ params: { division: "fbs", year: "2022", week: "final" } });
+				const result = await getStaticProps({ params: { division: 'fbs', year: '2022', week: 'final' } });
 
 				expect(result).toEqual(expected);
 
 				expect(availableRankings).toBeCalledTimes(1);
 				expect(getRanking).toBeCalledTimes(1);
-				expect(getRanking).toBeCalledWith(true, 2022, "final");
+				expect(getRanking).toBeCalledWith(true, 2022, 'final');
 			});
 
-			it("fcs", async () => {
+			it('fcs', async () => {
 				const availMock: AvailRanks = {
-					"2022": {
+					'2022': {
 						weeks: 16,
 						postseason: true,
 					},
@@ -169,10 +169,10 @@ describe("Week page", () => {
 				const rankingMock: Rank[] = [
 					{
 						team: scInfo,
-						conf: "SEC",
+						conf: 'SEC',
 						final_rank: 1,
 						final_raw: 0.123456789,
-						record: "8-5",
+						record: '8-5',
 						sos_rank: 2,
 						srs_rank: 3,
 					},
@@ -183,27 +183,27 @@ describe("Week page", () => {
 					props: {
 						availRanks: availMock,
 						ranking: rankingMock,
-						division: "FCS",
+						division: 'FCS',
 						year: 2022,
-						week: "Final",
+						week: 'Final',
 					},
 					revalidate: REVALIDATE,
 				};
 
-				const result = await getStaticProps({ params: { division: "fcs", year: "2022", week: "final" } });
+				const result = await getStaticProps({ params: { division: 'fcs', year: '2022', week: 'final' } });
 
 				expect(result).toEqual(expected);
 
 				expect(availableRankings).toBeCalledTimes(1);
 				expect(getRanking).toBeCalledTimes(1);
-				expect(getRanking).toBeCalledWith(false, 2022, "final");
+				expect(getRanking).toBeCalledWith(false, 2022, 'final');
 			});
 		});
 
-		describe("redirects", () => {
-			it("params undefined", async () => {
+		describe('redirects', () => {
+			it('params undefined', async () => {
 				const availMock: AvailRanks = {
-					"2022": {
+					'2022': {
 						weeks: 16,
 						postseason: true,
 					},
@@ -213,7 +213,7 @@ describe("Week page", () => {
 				const expected = {
 					redirect: {
 						permanent: false,
-						destination: "/",
+						destination: '/',
 					},
 					revalidate: REVALIDATE,
 				};
@@ -226,9 +226,9 @@ describe("Week page", () => {
 				expect(getRanking).toBeCalledTimes(0);
 			});
 
-			it("params not string", async () => {
+			it('params not string', async () => {
 				const availMock: AvailRanks = {
-					"2022": {
+					'2022': {
 						weeks: 16,
 						postseason: true,
 					},
@@ -238,7 +238,7 @@ describe("Week page", () => {
 				const expected = {
 					redirect: {
 						permanent: false,
-						destination: "/",
+						destination: '/',
 					},
 					revalidate: REVALIDATE,
 				};
@@ -253,9 +253,9 @@ describe("Week page", () => {
 				expect(getRanking).toBeCalledTimes(0);
 			});
 
-			it("invalid division", async () => {
+			it('invalid division', async () => {
 				const availMock: AvailRanks = {
-					"2022": {
+					'2022': {
 						weeks: 16,
 						postseason: true,
 					},
@@ -265,12 +265,12 @@ describe("Week page", () => {
 				const expected = {
 					redirect: {
 						permanent: false,
-						destination: "/",
+						destination: '/',
 					},
 					revalidate: REVALIDATE,
 				};
 
-				const result = await getStaticProps({ params: { division: "invalid", year: "2022", week: "final" } });
+				const result = await getStaticProps({ params: { division: 'invalid', year: '2022', week: 'final' } });
 
 				expect(result).toEqual(expected);
 
@@ -278,9 +278,9 @@ describe("Week page", () => {
 				expect(getRanking).toBeCalledTimes(0);
 			});
 
-			it("invalid year", async () => {
+			it('invalid year', async () => {
 				const availMock: AvailRanks = {
-					"2022": {
+					'2022': {
 						weeks: 16,
 						postseason: true,
 					},
@@ -290,12 +290,12 @@ describe("Week page", () => {
 				const expected = {
 					redirect: {
 						permanent: false,
-						destination: "/",
+						destination: '/',
 					},
 					revalidate: REVALIDATE,
 				};
 
-				const result = await getStaticProps({ params: { division: "fbs", year: "invalid", week: "final" } });
+				const result = await getStaticProps({ params: { division: 'fbs', year: 'invalid', week: 'final' } });
 
 				expect(result).toEqual(expected);
 
@@ -303,10 +303,10 @@ describe("Week page", () => {
 				expect(getRanking).toBeCalledTimes(0);
 			});
 
-			describe("invalid week", () => {
-				it("string postseason", async () => {
+			describe('invalid week', () => {
+				it('string postseason', async () => {
 					const availMock: AvailRanks = {
-						"2022": {
+						'2022': {
 							weeks: 16,
 							postseason: true,
 						},
@@ -316,12 +316,12 @@ describe("Week page", () => {
 					const expected = {
 						redirect: {
 							permanent: false,
-							destination: "/ranking/fbs/2022/final",
+							destination: '/ranking/fbs/2022/final',
 						},
 						revalidate: REVALIDATE,
 					};
 
-					const result = await getStaticProps({ params: { division: "fbs", year: "2022", week: "invalid" } });
+					const result = await getStaticProps({ params: { division: 'fbs', year: '2022', week: 'invalid' } });
 
 					expect(result).toEqual(expected);
 
@@ -329,9 +329,9 @@ describe("Week page", () => {
 					expect(getRanking).toBeCalledTimes(0);
 				});
 
-				it("string midyear", async () => {
+				it('string midyear', async () => {
 					const availMock: AvailRanks = {
-						"2022": {
+						'2022': {
 							weeks: 16,
 							postseason: false,
 						},
@@ -341,12 +341,12 @@ describe("Week page", () => {
 					const expected = {
 						redirect: {
 							permanent: false,
-							destination: "/ranking/fbs/2022/16",
+							destination: '/ranking/fbs/2022/16',
 						},
 						revalidate: REVALIDATE,
 					};
 
-					const result = await getStaticProps({ params: { division: "fbs", year: "2022", week: "invalid" } });
+					const result = await getStaticProps({ params: { division: 'fbs', year: '2022', week: 'invalid' } });
 
 					expect(result).toEqual(expected);
 
@@ -354,9 +354,9 @@ describe("Week page", () => {
 					expect(getRanking).toBeCalledTimes(0);
 				});
 
-				it("not postseason", async () => {
+				it('not postseason', async () => {
 					const availMock: AvailRanks = {
-						"2022": {
+						'2022': {
 							weeks: 16,
 							postseason: false,
 						},
@@ -366,12 +366,12 @@ describe("Week page", () => {
 					const expected = {
 						redirect: {
 							permanent: false,
-							destination: "/ranking/fbs/2022/16",
+							destination: '/ranking/fbs/2022/16',
 						},
 						revalidate: REVALIDATE,
 					};
 
-					const result = await getStaticProps({ params: { division: "fbs", year: "2022", week: "final" } });
+					const result = await getStaticProps({ params: { division: 'fbs', year: '2022', week: 'final' } });
 
 					expect(result).toEqual(expected);
 
@@ -379,9 +379,9 @@ describe("Week page", () => {
 					expect(getRanking).toBeCalledTimes(0);
 				});
 
-				it("number negative", async () => {
+				it('number negative', async () => {
 					const availMock: AvailRanks = {
-						"2022": {
+						'2022': {
 							weeks: 16,
 							postseason: true,
 						},
@@ -391,12 +391,12 @@ describe("Week page", () => {
 					const expected = {
 						redirect: {
 							permanent: false,
-							destination: "/ranking/fbs/2022/1",
+							destination: '/ranking/fbs/2022/1',
 						},
 						revalidate: REVALIDATE,
 					};
 
-					const result = await getStaticProps({ params: { division: "fbs", year: "2022", week: "-1" } });
+					const result = await getStaticProps({ params: { division: 'fbs', year: '2022', week: '-1' } });
 
 					expect(result).toEqual(expected);
 
@@ -404,9 +404,9 @@ describe("Week page", () => {
 					expect(getRanking).toBeCalledTimes(0);
 				});
 
-				it("number high postseason", async () => {
+				it('number high postseason', async () => {
 					const availMock: AvailRanks = {
-						"2022": {
+						'2022': {
 							weeks: 16,
 							postseason: true,
 						},
@@ -416,12 +416,12 @@ describe("Week page", () => {
 					const expected = {
 						redirect: {
 							permanent: false,
-							destination: "/ranking/fbs/2022/final",
+							destination: '/ranking/fbs/2022/final',
 						},
 						revalidate: REVALIDATE,
 					};
 
-					const result = await getStaticProps({ params: { division: "fbs", year: "2022", week: "100" } });
+					const result = await getStaticProps({ params: { division: 'fbs', year: '2022', week: '100' } });
 
 					expect(result).toEqual(expected);
 
@@ -429,9 +429,9 @@ describe("Week page", () => {
 					expect(getRanking).toBeCalledTimes(0);
 				});
 
-				it("number high midyear", async () => {
+				it('number high midyear', async () => {
 					const availMock: AvailRanks = {
-						"2022": {
+						'2022': {
 							weeks: 16,
 							postseason: false,
 						},
@@ -441,12 +441,12 @@ describe("Week page", () => {
 					const expected = {
 						redirect: {
 							permanent: false,
-							destination: "/ranking/fbs/2022/16",
+							destination: '/ranking/fbs/2022/16',
 						},
 						revalidate: REVALIDATE,
 					};
 
-					const result = await getStaticProps({ params: { division: "fbs", year: "2022", week: "100" } });
+					const result = await getStaticProps({ params: { division: 'fbs', year: '2022', week: '100' } });
 
 					expect(result).toEqual(expected);
 
@@ -457,20 +457,20 @@ describe("Week page", () => {
 		});
 	});
 
-	it("getStaticPaths", async () => {
+	it('getStaticPaths', async () => {
 		const expectedPaths = [
 			{
 				params: {
-					division: "fbs",
-					year: "2022",
-					week: "1",
+					division: 'fbs',
+					year: '2022',
+					week: '1',
 				},
 			},
 			{
 				params: {
-					division: "fbs",
-					year: "2022",
-					week: "2",
+					division: 'fbs',
+					year: '2022',
+					week: '2',
 				},
 			},
 		];
@@ -478,7 +478,7 @@ describe("Week page", () => {
 
 		const expected = {
 			paths: expectedPaths,
-			fallback: "blocking",
+			fallback: 'blocking',
 		};
 
 		const paths = await getStaticPaths();

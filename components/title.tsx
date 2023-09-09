@@ -1,6 +1,6 @@
-import Head from "next/head";
+import Head from 'next/head';
 
-import { SITE_TITLE } from "@lib/constants";
+import { SITE_TITLE } from '@lib/constants';
 
 type Props = {
 	title?: string;
@@ -9,7 +9,7 @@ type Props = {
 export default function Title({ title }: Props) {
 	let titleText = SITE_TITLE;
 	if (title) {
-		titleText = SITE_TITLE + " - " + title;
+		titleText = SITE_TITLE + ' - ' + title;
 	}
 	return (
 		<Head>

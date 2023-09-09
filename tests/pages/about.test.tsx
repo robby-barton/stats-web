@@ -1,10 +1,10 @@
-import { render } from "@testing-library/react";
+import { render } from '@testing-library/react';
 
-import "@testing-library/jest-dom";
-import About from "@pages/about";
+import '@testing-library/jest-dom';
+import About from '@pages/about';
 
-describe("About page", () => {
-	it("renders correctly", async () => {
+describe('About page', () => {
+	it('renders correctly', async () => {
 		const { baseElement } = render(<About />);
 
 		expect(baseElement).toMatchSnapshot();

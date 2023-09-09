@@ -1,10 +1,10 @@
-import { PropsWithChildren } from "react";
+import { PropsWithChildren } from 'react';
 
-import Head from "next/head";
+import Head from 'next/head';
 
-import Footer from "@components/footer";
-import Header from "@components/header";
-import styles from "@components/layout.module.css";
+import Footer from '@components/footer';
+import Header from '@components/header';
+import styles from '@components/layout.module.css';
 
 export default function Layout({ children }: PropsWithChildren) {
 	return (

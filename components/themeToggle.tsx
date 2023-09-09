@@ -1,10 +1,10 @@
-import { useContext } from "react";
+import { useContext } from 'react';
 
-import styled from "@emotion/styled";
+import styled from '@emotion/styled';
 
-import { ThemeContext } from "@components/themeProvider";
+import { ThemeContext } from '@components/themeProvider';
 
-const ToggleButton = styled("button")`
+const ToggleButton = styled('button')`
   --toggle-width: 2.5rem;
   --toggle-height: 1.25rem;
   --toggle-padding: 0.125rem;
@@ -36,7 +36,7 @@ const ToggleButton = styled("button")`
 type ThumbProps = {
 	colorMode: string;
 };
-const ToggleThumb = styled("span")<ThumbProps>`
+const ToggleThumb = styled('span')<ThumbProps>`
 	position: absolute;
 	top: var(--toggle-padding);
 	left: var(--toggle-padding);
@@ -46,12 +46,12 @@ const ToggleThumb = styled("span")<ThumbProps>`
 	background: white;
 	transition: transform 0.25s ease-in-out;
 	transform: ${(p: ThumbProps) =>
-		p.colorMode === "dark" ? "translate3d(calc(var(--toggle-width) - var(--toggle-height)), 0, 0)" : "none"};
+		p.colorMode === 'dark' ? 'translate3d(calc(var(--toggle-width) - var(--toggle-height)), 0, 0)' : 'none'};
 `;
 
 export default function ThemeToggle() {
 	const { colorMode, setColorMode } = useContext(ThemeContext);
-	const altColorMode = colorMode === "light" ? "dark" : "light";
+	const altColorMode = colorMode === 'light' ? 'dark' : 'light';
 
 	return (
 		<ToggleButton
@@ -60,7 +60,7 @@ export default function ThemeToggle() {
 			type="button"
 			onClick={() => setColorMode(altColorMode)}
 		>
-			{colorMode === "" ? (
+			{colorMode === '' ? (
 				<></>
 			) : (
 				<>
