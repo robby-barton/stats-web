@@ -9,8 +9,8 @@ function getDatabaseUrl(): string {
 }
 
 const sql = postgres(getDatabaseUrl(), {
-	idle_timeout: 5,
-	max_lifetime: 30,
+	idle_timeout: 20,
+	max_lifetime: 60 * 30,
 	prepare: false,
 });
 
