@@ -179,8 +179,14 @@ export async function getRevalidatePaths(): Promise<string[]> {
 
 	const week = avail[year].postseason ? 'final' : avail[year].weeks;
 	const paths: string[] = [];
-	paths.push(`/ranking/fbs/${year}/${week}`);
-	paths.push(`/ranking/fcs/${year}/${week}`);
+	if (avail[year].postseason) {
+		paths.push(`/ranking/fbs/${year}/final`);
+		paths.push(`/ranking/fcs/${year}/final`);
+	}
+	for (let i = avail[year].weeks; i > 0; i--) {
+		paths.push(`/ranking/fbs/${year}/${i}`);
+		paths.push(`/ranking/fcs/${year}/${i}`);
+	}
 
 	const fbsResults: Rank[] = await getRanking(true, year, week.toString());
 	const fcsResults: Rank[] = await getRanking(false, year, week.toString());

@@ -36,8 +36,8 @@ export default function Ranking({ availRanks, ranking, division, year, week }: R
 				<Selector availRanks={availRanks} division={division} year={year} week={week} />
 				<div className={styles.searchDiv}>
 					<input
-						className={styles.searchInput}
 						type="search"
+						className={styles.searchInput}
 						placeholder="Search Teams"
 						onChange={handleChange}
 					/>

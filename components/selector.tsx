@@ -37,13 +37,17 @@ function DivisionDropdown({ options, initialValue }: DivisionProps) {
 type YearProps = {
 	options: string[];
 	initialValue: number;
+	availRanks: AvailRanks;
 };
-function YearDropdown({ options, initialValue }: YearProps) {
+function YearDropdown({ options, initialValue, availRanks }: YearProps) {
 	const [selected, setSelected] = useState(initialValue);
 	const router = useRouter();
 
 	const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
 		setSelected(Number(e.target.value));
+		if (currWeek == availRanks[currYear].weeks.toString() && !availRanks[currYear].postseason) {
+			router.push(`/ranking/${currDiv}/${e.target.value}/final`);
+		}
 		router.push(`/ranking/${currDiv}/${e.target.value}/${currWeek}`);
 	};
 
@@ -108,7 +112,7 @@ export default function Selector({ availRanks, division, year, week }: SelectorP
 	return (
 		<div className={styles.selectorStyling}>
 			<DivisionDropdown options={DIVISIONS} initialValue={division} />
-			<YearDropdown options={years} initialValue={year} />
+			<YearDropdown options={years} initialValue={year} availRanks={availRanks} />
 			<WeekDropdown options={availRanks[year]} initialValue={week} />
 		</div>
 	);
