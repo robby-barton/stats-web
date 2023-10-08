@@ -5,9 +5,7 @@ exports[`Game Count page renders correctly 1`] = `
   data-theme="light"
 >
   <div>
-    <div
-      class="container"
-    >
+    <div>
       <div
         class="header"
       >
@@ -81,162 +79,166 @@ exports[`Game Count page renders correctly 1`] = `
         </div>
       </div>
       <div
-        class="contentWrap"
+        class="container"
       >
-        <div>
-          <div
-            class="inputArea"
-          >
+        <div
+          class="contentWrap"
+        >
+          <div>
             <div
-              class="searchDiv"
+              class="inputArea"
             >
-              <input
-                class="searchInput"
-                placeholder="Search Teams"
-                type="search"
-              />
+              <div
+                class="searchDiv"
+              >
+                <input
+                  class="searchInput"
+                  placeholder="Search Teams"
+                  type="search"
+                />
+              </div>
             </div>
-          </div>
-          <table>
-            <thead>
-              <tr>
-                <th
-                  colspan="1"
-                >
-                  <div>
-                    Team
-                  </div>
-                </th>
-                <th
-                  colspan="1"
-                >
-                  <div>
-                    Sun
-                  </div>
-                </th>
-                <th
-                  colspan="1"
-                >
-                  <div>
-                    Mon
-                  </div>
-                </th>
-                <th
-                  colspan="1"
-                >
-                  <div>
-                    Tue
-                  </div>
-                </th>
-                <th
-                  colspan="1"
-                >
-                  <div>
-                    Wed
-                  </div>
-                </th>
-                <th
-                  colspan="1"
-                >
-                  <div>
-                    Thu
-                  </div>
-                </th>
-                <th
-                  colspan="1"
-                >
-                  <div>
-                    Fri
-                  </div>
-                </th>
-                <th
-                  colspan="1"
-                >
-                  <div>
-                    Sat
-                  </div>
-                </th>
-                <th
-                  colspan="1"
-                >
-                  <div>
-                    Total
-                  </div>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>
-                  <div
-                    class="container"
+            <table>
+              <thead>
+                <tr>
+                  <th
+                    colspan="1"
                   >
-                    <div
-                      class="logo"
-                    >
-                      <img
-                        alt="South Carolina"
-                        data-nimg="fill"
-                        decoding="async"
-                        loading="lazy"
-                        sizes="2rem"
-                        src="http://localhost/mona.png"
-                        srcset="/mona.png 16w, /mona.png 32w, /mona.png 48w, /mona.png 64w, /mona.png 96w, /mona.png 128w, /mona.png 256w, /mona.png 384w, /mona.png 640w, /mona.png 750w, /mona.png 828w, /mona.png 1080w, /mona.png 1200w, /mona.png 1920w, /mona.png 2048w, /mona.png 3840w"
-                        style="position: absolute; height: 100%; width: 100%; left: 0px; top: 0px; right: 0px; bottom: 0px; color: transparent;"
-                      />
+                    <div>
+                      Team
                     </div>
-                    <div
-                      class="name"
-                    >
-                      <span>
-                        South Carolina
-                      </span>
+                  </th>
+                  <th
+                    colspan="1"
+                  >
+                    <div>
+                      Sun
                     </div>
-                  </div>
-                </td>
-                <td>
-                  1
-                </td>
-                <td>
-                  2
-                </td>
-                <td>
-                  3
-                </td>
-                <td>
-                  4
-                </td>
-                <td>
-                  5
-                </td>
-                <td>
-                  6
-                </td>
-                <td>
-                  7
-                </td>
-                <td>
-                  8
-                </td>
-              </tr>
-            </tbody>
-          </table>
+                  </th>
+                  <th
+                    colspan="1"
+                  >
+                    <div>
+                      Mon
+                    </div>
+                  </th>
+                  <th
+                    colspan="1"
+                  >
+                    <div>
+                      Tue
+                    </div>
+                  </th>
+                  <th
+                    colspan="1"
+                  >
+                    <div>
+                      Wed
+                    </div>
+                  </th>
+                  <th
+                    colspan="1"
+                  >
+                    <div>
+                      Thu
+                    </div>
+                  </th>
+                  <th
+                    colspan="1"
+                  >
+                    <div>
+                      Fri
+                    </div>
+                  </th>
+                  <th
+                    colspan="1"
+                  >
+                    <div>
+                      Sat
+                    </div>
+                  </th>
+                  <th
+                    colspan="1"
+                  >
+                    <div>
+                      Total
+                    </div>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <div
+                      class="container"
+                    >
+                      <div
+                        class="logo"
+                      >
+                        <img
+                          alt="South Carolina"
+                          data-nimg="fill"
+                          decoding="async"
+                          loading="lazy"
+                          sizes="2rem"
+                          src="http://localhost/mona.png"
+                          srcset="/mona.png 16w, /mona.png 32w, /mona.png 48w, /mona.png 64w, /mona.png 96w, /mona.png 128w, /mona.png 256w, /mona.png 384w, /mona.png 640w, /mona.png 750w, /mona.png 828w, /mona.png 1080w, /mona.png 1200w, /mona.png 1920w, /mona.png 2048w, /mona.png 3840w"
+                          style="position: absolute; height: 100%; width: 100%; left: 0px; top: 0px; right: 0px; bottom: 0px; color: transparent;"
+                        />
+                      </div>
+                      <div
+                        class="name"
+                      >
+                        <span>
+                          South Carolina
+                        </span>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    1
+                  </td>
+                  <td>
+                    2
+                  </td>
+                  <td>
+                    3
+                  </td>
+                  <td>
+                    4
+                  </td>
+                  <td>
+                    5
+                  </td>
+                  <td>
+                    6
+                  </td>
+                  <td>
+                    7
+                  </td>
+                  <td>
+                    8
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
-      </div>
-      <div
-        class="footer"
-      >
-        <a
-          href="https://github.com/robby-barton/stats-web"
+        <div
+          class="footer"
         >
-          &lt;/&gt; - Site source
-        </a>
-        <br />
-        <a
-          href="https://github.com/robby-barton/stats-go"
-        >
-          &lt;/&gt; - Ranking source
-        </a>
+          <a
+            href="https://github.com/robby-barton/stats-web"
+          >
+            &lt;/&gt; - Site source
+          </a>
+          <br />
+          <a
+            href="https://github.com/robby-barton/stats-go"
+          >
+            &lt;/&gt; - Ranking source
+          </a>
+        </div>
       </div>
     </div>
   </div>
