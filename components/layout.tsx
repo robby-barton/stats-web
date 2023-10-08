@@ -8,14 +8,16 @@ import styles from '@components/layout.module.css';
 
 export default function Layout({ children }: PropsWithChildren) {
 	return (
-		<div className={styles.container}>
+		<div>
 			<Head>
 				<link rel="icon" href="/favicon.ico" />
 				<meta name="viewport" content="width=device-width, height=device-height" />
 			</Head>
 			<Header />
-			<div className={styles.contentWrap}>{children}</div>
-			<Footer />
+			<div className={styles.container}>
+				<div className={styles.contentWrap}>{children}</div>
+				<Footer />
+			</div>
 		</div>
 	);
 }
