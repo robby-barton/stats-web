@@ -3,9 +3,7 @@
 exports[`About page renders correctly 1`] = `
 <body>
   <div>
-    <div
-      class="container"
-    >
+    <div>
       <div
         class="header"
       >
@@ -79,22 +77,26 @@ exports[`About page renders correctly 1`] = `
         </div>
       </div>
       <div
-        class="contentWrap"
-      />
-      <div
-        class="footer"
+        class="container"
       >
-        <a
-          href="https://github.com/robby-barton/stats-web"
+        <div
+          class="contentWrap"
+        />
+        <div
+          class="footer"
         >
-          &lt;/&gt; - Site source
-        </a>
-        <br />
-        <a
-          href="https://github.com/robby-barton/stats-go"
-        >
-          &lt;/&gt; - Ranking source
-        </a>
+          <a
+            href="https://github.com/robby-barton/stats-web"
+          >
+            &lt;/&gt; - Site source
+          </a>
+          <br />
+          <a
+            href="https://github.com/robby-barton/stats-go"
+          >
+            &lt;/&gt; - Ranking source
+          </a>
+        </div>
       </div>
     </div>
   </div>

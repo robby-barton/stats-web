@@ -5,9 +5,7 @@ exports[`Teams page renders correctly 1`] = `
   data-theme="light"
 >
   <div>
-    <div
-      class="container"
-    >
+    <div>
       <div
         class="header"
       >
@@ -81,102 +79,106 @@ exports[`Teams page renders correctly 1`] = `
         </div>
       </div>
       <div
-        class="contentWrap"
+        class="container"
       >
-        <div>
+        <div
+          class="contentWrap"
+        >
           <div>
-            <input
-              class="teamSearch"
-              placeholder="Search Teams"
-              type="search"
-            />
-          </div>
-          <div
-            class="teamList"
-          >
-            <a
-              href="/team/2579"
+            <div>
+              <input
+                class="teamSearch"
+                placeholder="Search Teams"
+                type="search"
+              />
+            </div>
+            <div
+              class="teamList"
             >
-              <div
-                class="card"
+              <a
+                href="/team/2579"
               >
                 <div
-                  class="container"
+                  class="card"
                 >
                   <div
-                    class="logo"
+                    class="container"
                   >
-                    <img
-                      alt="South Carolina"
-                      data-nimg="fill"
-                      decoding="async"
-                      loading="lazy"
-                      sizes="2rem"
-                      src="http://localhost/mona.png"
-                      srcset="/mona.png 16w, /mona.png 32w, /mona.png 48w, /mona.png 64w, /mona.png 96w, /mona.png 128w, /mona.png 256w, /mona.png 384w, /mona.png 640w, /mona.png 750w, /mona.png 828w, /mona.png 1080w, /mona.png 1200w, /mona.png 1920w, /mona.png 2048w, /mona.png 3840w"
-                      style="position: absolute; height: 100%; width: 100%; left: 0px; top: 0px; right: 0px; bottom: 0px; color: transparent;"
-                    />
-                  </div>
-                  <div
-                    class="name"
-                  >
-                    <span>
-                      South Carolina
-                    </span>
+                    <div
+                      class="logo"
+                    >
+                      <img
+                        alt="South Carolina"
+                        data-nimg="fill"
+                        decoding="async"
+                        loading="lazy"
+                        sizes="2rem"
+                        src="http://localhost/mona.png"
+                        srcset="/mona.png 16w, /mona.png 32w, /mona.png 48w, /mona.png 64w, /mona.png 96w, /mona.png 128w, /mona.png 256w, /mona.png 384w, /mona.png 640w, /mona.png 750w, /mona.png 828w, /mona.png 1080w, /mona.png 1200w, /mona.png 1920w, /mona.png 2048w, /mona.png 3840w"
+                        style="position: absolute; height: 100%; width: 100%; left: 0px; top: 0px; right: 0px; bottom: 0px; color: transparent;"
+                      />
+                    </div>
+                    <div
+                      class="name"
+                    >
+                      <span>
+                        South Carolina
+                      </span>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </a>
-            <a
-              href="/team/52"
-            >
-              <div
-                class="card"
+              </a>
+              <a
+                href="/team/52"
               >
                 <div
-                  class="container"
+                  class="card"
                 >
                   <div
-                    class="logo"
+                    class="container"
                   >
-                    <img
-                      alt="Florida State"
-                      data-nimg="fill"
-                      decoding="async"
-                      loading="lazy"
-                      sizes="2rem"
-                      src="http://localhost/major.png"
-                      srcset="/major.png 16w, /major.png 32w, /major.png 48w, /major.png 64w, /major.png 96w, /major.png 128w, /major.png 256w, /major.png 384w, /major.png 640w, /major.png 750w, /major.png 828w, /major.png 1080w, /major.png 1200w, /major.png 1920w, /major.png 2048w, /major.png 3840w"
-                      style="position: absolute; height: 100%; width: 100%; left: 0px; top: 0px; right: 0px; bottom: 0px; color: transparent;"
-                    />
-                  </div>
-                  <div
-                    class="name"
-                  >
-                    <span>
-                      Florida State
-                    </span>
+                    <div
+                      class="logo"
+                    >
+                      <img
+                        alt="Florida State"
+                        data-nimg="fill"
+                        decoding="async"
+                        loading="lazy"
+                        sizes="2rem"
+                        src="http://localhost/major.png"
+                        srcset="/major.png 16w, /major.png 32w, /major.png 48w, /major.png 64w, /major.png 96w, /major.png 128w, /major.png 256w, /major.png 384w, /major.png 640w, /major.png 750w, /major.png 828w, /major.png 1080w, /major.png 1200w, /major.png 1920w, /major.png 2048w, /major.png 3840w"
+                        style="position: absolute; height: 100%; width: 100%; left: 0px; top: 0px; right: 0px; bottom: 0px; color: transparent;"
+                      />
+                    </div>
+                    <div
+                      class="name"
+                    >
+                      <span>
+                        Florida State
+                      </span>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </a>
+              </a>
+            </div>
           </div>
         </div>
-      </div>
-      <div
-        class="footer"
-      >
-        <a
-          href="https://github.com/robby-barton/stats-web"
+        <div
+          class="footer"
         >
-          &lt;/&gt; - Site source
-        </a>
-        <br />
-        <a
-          href="https://github.com/robby-barton/stats-go"
-        >
-          &lt;/&gt; - Ranking source
-        </a>
+          <a
+            href="https://github.com/robby-barton/stats-web"
+          >
+            &lt;/&gt; - Site source
+          </a>
+          <br />
+          <a
+            href="https://github.com/robby-barton/stats-go"
+          >
+            &lt;/&gt; - Ranking source
+          </a>
+        </div>
       </div>
     </div>
   </div>

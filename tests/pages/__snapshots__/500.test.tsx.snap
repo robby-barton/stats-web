@@ -3,9 +3,7 @@
 exports[`Custom500 page renders correctly 1`] = `
 <body>
   <div>
-    <div
-      class="container"
-    >
+    <div>
       <div
         class="header"
       >
@@ -79,26 +77,30 @@ exports[`Custom500 page renders correctly 1`] = `
         </div>
       </div>
       <div
-        class="contentWrap"
+        class="container"
       >
-        <h1>
-          500 - A server error occurred
-        </h1>
-      </div>
-      <div
-        class="footer"
-      >
-        <a
-          href="https://github.com/robby-barton/stats-web"
+        <div
+          class="contentWrap"
         >
-          &lt;/&gt; - Site source
-        </a>
-        <br />
-        <a
-          href="https://github.com/robby-barton/stats-go"
+          <h1>
+            500 - A server error occurred
+          </h1>
+        </div>
+        <div
+          class="footer"
         >
-          &lt;/&gt; - Ranking source
-        </a>
+          <a
+            href="https://github.com/robby-barton/stats-web"
+          >
+            &lt;/&gt; - Site source
+          </a>
+          <br />
+          <a
+            href="https://github.com/robby-barton/stats-go"
+          >
+            &lt;/&gt; - Ranking source
+          </a>
+        </div>
       </div>
     </div>
   </div>

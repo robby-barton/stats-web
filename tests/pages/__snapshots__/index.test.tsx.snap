@@ -5,9 +5,7 @@ exports[`Home page renders correctly 1`] = `
   data-theme="light"
 >
   <div>
-    <div
-      class="container"
-    >
+    <div>
       <div
         class="header"
       >
@@ -81,296 +79,300 @@ exports[`Home page renders correctly 1`] = `
         </div>
       </div>
       <div
-        class="contentWrap"
+        class="container"
       >
-        <div>
-          <div
-            class="inputArea"
-          >
+        <div
+          class="contentWrap"
+        >
+          <div>
             <div
-              class="selectorStyling"
+              class="inputArea"
             >
-              <select
-                class="divisionDropdown"
-                title="division"
+              <div
+                class="selectorStyling"
               >
-                <option
-                  value="fbs"
+                <select
+                  class="divisionDropdown"
+                  title="division"
                 >
-                  FBS
-                </option>
-                <option
-                  value="fcs"
-                >
-                  FCS
-                </option>
-              </select>
-              <select
-                class="yearDropdown"
-                title="year"
-              >
-                <option
-                  value="2023"
-                >
-                  2023
-                </option>
-              </select>
-              <select
-                class="weekDropdown"
-                title="week"
-              >
-                <option
-                  value="1"
-                >
-                  Week 1
-                </option>
-                <option
-                  value="2"
-                >
-                  Week 2
-                </option>
-                <option
-                  value="3"
-                >
-                  Week 3
-                </option>
-                <option
-                  value="4"
-                >
-                  Week 4
-                </option>
-                <option
-                  value="5"
-                >
-                  Week 5
-                </option>
-                <option
-                  value="6"
-                >
-                  Week 6
-                </option>
-                <option
-                  value="7"
-                >
-                  Week 7
-                </option>
-                <option
-                  value="8"
-                >
-                  Week 8
-                </option>
-                <option
-                  value="9"
-                >
-                  Week 9
-                </option>
-                <option
-                  value="10"
-                >
-                  Week 10
-                </option>
-                <option
-                  value="11"
-                >
-                  Week 11
-                </option>
-                <option
-                  value="12"
-                >
-                  Week 12
-                </option>
-                <option
-                  value="13"
-                >
-                  Week 13
-                </option>
-                <option
-                  value="14"
-                >
-                  Week 14
-                </option>
-                <option
-                  value="15"
-                >
-                  Week 15
-                </option>
-                <option
-                  value="16"
-                >
-                  Week 16
-                </option>
-                <option
-                  value="final"
-                >
-                  Final
-                </option>
-              </select>
-            </div>
-            <div
-              class="searchDiv"
-            >
-              <input
-                class="searchInput"
-                placeholder="Search Teams"
-                type="search"
-              />
-            </div>
-          </div>
-          <table>
-            <thead>
-              <tr>
-                <th
-                  class=""
-                  colspan="1"
-                >
-                  <div
-                    class="cursor-pointer select-none"
+                  <option
+                    value="fbs"
                   >
-                    Rank
-                  </div>
-                </th>
-                <th
-                  class=""
-                  colspan="1"
-                >
-                  <div
-                    class="cursor-pointer select-none"
+                    FBS
+                  </option>
+                  <option
+                    value="fcs"
                   >
-                    Team
-                  </div>
-                </th>
-                <th
-                  class=""
-                  colspan="1"
+                    FCS
+                  </option>
+                </select>
+                <select
+                  class="yearDropdown"
+                  title="year"
                 >
-                  <div
-                    class="cursor-pointer select-none"
+                  <option
+                    value="2023"
                   >
-                    Conf
-                  </div>
-                </th>
-                <th
-                  class=""
-                  colspan="1"
+                    2023
+                  </option>
+                </select>
+                <select
+                  class="weekDropdown"
+                  title="week"
                 >
-                  <div
-                    class=""
+                  <option
+                    value="1"
                   >
-                    Record
-                  </div>
-                </th>
-                <th
-                  class=""
-                  colspan="1"
-                >
-                  <div
-                    class="cursor-pointer select-none"
+                    Week 1
+                  </option>
+                  <option
+                    value="2"
                   >
-                    SRS
-                  </div>
-                </th>
-                <th
-                  class=""
-                  colspan="1"
-                >
-                  <div
-                    class="cursor-pointer select-none"
+                    Week 2
+                  </option>
+                  <option
+                    value="3"
                   >
-                    SOS
-                  </div>
-                </th>
-                <th
-                  class="lastColumn"
-                  colspan="1"
-                >
-                  <div
-                    class="cursor-pointer select-none"
+                    Week 3
+                  </option>
+                  <option
+                    value="4"
+                  >
+                    Week 4
+                  </option>
+                  <option
+                    value="5"
+                  >
+                    Week 5
+                  </option>
+                  <option
+                    value="6"
+                  >
+                    Week 6
+                  </option>
+                  <option
+                    value="7"
+                  >
+                    Week 7
+                  </option>
+                  <option
+                    value="8"
+                  >
+                    Week 8
+                  </option>
+                  <option
+                    value="9"
+                  >
+                    Week 9
+                  </option>
+                  <option
+                    value="10"
+                  >
+                    Week 10
+                  </option>
+                  <option
+                    value="11"
+                  >
+                    Week 11
+                  </option>
+                  <option
+                    value="12"
+                  >
+                    Week 12
+                  </option>
+                  <option
+                    value="13"
+                  >
+                    Week 13
+                  </option>
+                  <option
+                    value="14"
+                  >
+                    Week 14
+                  </option>
+                  <option
+                    value="15"
+                  >
+                    Week 15
+                  </option>
+                  <option
+                    value="16"
+                  >
+                    Week 16
+                  </option>
+                  <option
+                    value="final"
                   >
                     Final
-                  </div>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td
-                  class=""
-                >
-                  26
-                </td>
-                <td
-                  class=""
-                >
-                  <div
-                    class="container"
+                  </option>
+                </select>
+              </div>
+              <div
+                class="searchDiv"
+              >
+                <input
+                  class="searchInput"
+                  placeholder="Search Teams"
+                  type="search"
+                />
+              </div>
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th
+                    class=""
+                    colspan="1"
                   >
                     <div
-                      class="logo"
+                      class="cursor-pointer select-none"
                     >
-                      <img
-                        alt="South Carolina"
-                        data-nimg="fill"
-                        decoding="async"
-                        loading="lazy"
-                        sizes="2rem"
-                        src="http://localhost/mona.png"
-                        srcset="/mona.png 16w, /mona.png 32w, /mona.png 48w, /mona.png 64w, /mona.png 96w, /mona.png 128w, /mona.png 256w, /mona.png 384w, /mona.png 640w, /mona.png 750w, /mona.png 828w, /mona.png 1080w, /mona.png 1200w, /mona.png 1920w, /mona.png 2048w, /mona.png 3840w"
-                        style="position: absolute; height: 100%; width: 100%; left: 0px; top: 0px; right: 0px; bottom: 0px; color: transparent;"
-                      />
+                      Rank
                     </div>
+                  </th>
+                  <th
+                    class=""
+                    colspan="1"
+                  >
                     <div
-                      class="name"
+                      class="cursor-pointer select-none"
                     >
-                      <span>
-                        South Carolina
-                      </span>
+                      Team
                     </div>
-                  </div>
-                </td>
-                <td
-                  class=""
-                >
-                  SEC
-                </td>
-                <td
-                  class=""
-                >
-                  8-5
-                </td>
-                <td
-                  class=""
-                >
-                  15
-                </td>
-                <td
-                  class=""
-                >
-                  13
-                </td>
-                <td
-                  class="lastColumn"
-                >
-                  0.12346
-                </td>
-              </tr>
-            </tbody>
-          </table>
+                  </th>
+                  <th
+                    class=""
+                    colspan="1"
+                  >
+                    <div
+                      class="cursor-pointer select-none"
+                    >
+                      Conf
+                    </div>
+                  </th>
+                  <th
+                    class=""
+                    colspan="1"
+                  >
+                    <div
+                      class=""
+                    >
+                      Record
+                    </div>
+                  </th>
+                  <th
+                    class=""
+                    colspan="1"
+                  >
+                    <div
+                      class="cursor-pointer select-none"
+                    >
+                      SRS
+                    </div>
+                  </th>
+                  <th
+                    class=""
+                    colspan="1"
+                  >
+                    <div
+                      class="cursor-pointer select-none"
+                    >
+                      SOS
+                    </div>
+                  </th>
+                  <th
+                    class="lastColumn"
+                    colspan="1"
+                  >
+                    <div
+                      class="cursor-pointer select-none"
+                    >
+                      Final
+                    </div>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td
+                    class=""
+                  >
+                    26
+                  </td>
+                  <td
+                    class=""
+                  >
+                    <div
+                      class="container"
+                    >
+                      <div
+                        class="logo"
+                      >
+                        <img
+                          alt="South Carolina"
+                          data-nimg="fill"
+                          decoding="async"
+                          loading="lazy"
+                          sizes="2rem"
+                          src="http://localhost/mona.png"
+                          srcset="/mona.png 16w, /mona.png 32w, /mona.png 48w, /mona.png 64w, /mona.png 96w, /mona.png 128w, /mona.png 256w, /mona.png 384w, /mona.png 640w, /mona.png 750w, /mona.png 828w, /mona.png 1080w, /mona.png 1200w, /mona.png 1920w, /mona.png 2048w, /mona.png 3840w"
+                          style="position: absolute; height: 100%; width: 100%; left: 0px; top: 0px; right: 0px; bottom: 0px; color: transparent;"
+                        />
+                      </div>
+                      <div
+                        class="name"
+                      >
+                        <span>
+                          South Carolina
+                        </span>
+                      </div>
+                    </div>
+                  </td>
+                  <td
+                    class=""
+                  >
+                    SEC
+                  </td>
+                  <td
+                    class=""
+                  >
+                    8-5
+                  </td>
+                  <td
+                    class=""
+                  >
+                    15
+                  </td>
+                  <td
+                    class=""
+                  >
+                    13
+                  </td>
+                  <td
+                    class="lastColumn"
+                  >
+                    0.12346
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
-      </div>
-      <div
-        class="footer"
-      >
-        <a
-          href="https://github.com/robby-barton/stats-web"
+        <div
+          class="footer"
         >
-          &lt;/&gt; - Site source
-        </a>
-        <br />
-        <a
-          href="https://github.com/robby-barton/stats-go"
-        >
-          &lt;/&gt; - Ranking source
-        </a>
+          <a
+            href="https://github.com/robby-barton/stats-web"
+          >
+            &lt;/&gt; - Site source
+          </a>
+          <br />
+          <a
+            href="https://github.com/robby-barton/stats-go"
+          >
+            &lt;/&gt; - Ranking source
+          </a>
+        </div>
       </div>
     </div>
   </div>
