@@ -2,7 +2,11 @@
 
 // next.config.js
 const nextConfig = {
-	output: 'export',
+	i18n: {
+		locales: ['en'],
+		defaultLocale: 'en',
+	},
+	output: 'standalone',
 	experimental: {
 		largePageDataBytes: 180 * 1000,
 	},
@@ -16,7 +20,6 @@ const nextConfig = {
 			},
 		],
 	},
-	trailingSlash: true,
 };
 
 module.exports = nextConfig;

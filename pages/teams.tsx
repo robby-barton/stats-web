@@ -6,6 +6,7 @@ import TeamSearch from '@components/teamSearch';
 import Title from '@components/title';
 import { Team } from '@lib/types';
 import { getRankedTeams } from '@lib/utils';
+import { REVALIDATE } from '@lib/constants';
 
 export type TeamsProps = {
 	teams: Team[];
@@ -31,5 +32,6 @@ export async function getStaticProps(): Promise<GetStaticPropsResult<TeamsProps>
 		props: {
 			teams: results,
 		},
+		revalidate: REVALIDATE,
 	};
 }

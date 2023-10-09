@@ -7,7 +7,7 @@ import Layout from '@components/layout';
 import Meta from '@components/meta';
 import TeamName from '@components/teamName';
 import Title from '@components/title';
-import { CHART_MAX_Y } from '@lib/constants';
+import { CHART_MAX_Y, REVALIDATE } from '@lib/constants';
 import { ChartPoint, Team, TeamPathParams, TeamRank } from '@lib/types';
 import { getTeamPathParams, getTeamRankings } from '@lib/utils';
 import styles from '@pages/team/[team].module.css';
@@ -63,6 +63,7 @@ export async function getStaticProps({ params }: GetStaticPropsContext): Promise
 				permanent: false,
 				destination: '/teams',
 			},
+			revalidate: REVALIDATE,
 		};
 	}
 
@@ -73,6 +74,7 @@ export async function getStaticProps({ params }: GetStaticPropsContext): Promise
 				permanent: false,
 				destination: '/teams',
 			},
+			revalidate: REVALIDATE,
 		};
 	}
 
@@ -95,6 +97,7 @@ export async function getStaticProps({ params }: GetStaticPropsContext): Promise
 			rankList: data,
 			years: years,
 		},
+		revalidate: REVALIDATE,
 	};
 }
 
