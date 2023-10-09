@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent } from 'react';
 
 import { useRouter } from 'next/router';
 
@@ -6,25 +6,30 @@ import styles from '@components/selector.module.css';
 import { DIVISIONS } from '@lib/constants';
 import { AvailRanks, YearRanks } from '@lib/types';
 
-let currDiv = '';
-let currYear = 0;
-let currWeek = '';
+type DefaultValues = {
+	division: string;
+	year: string;
+	week: string;
+};
 
 type DivisionProps = {
 	options: string[];
-	initialValue: string;
+	initials: DefaultValues;
 };
-function DivisionDropdown({ options, initialValue }: DivisionProps) {
-	const [selected, setSelected] = useState(initialValue.toLowerCase());
+function DivisionDropdown({ options, initials }: DivisionProps) {
 	const router = useRouter();
 
 	const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
-		setSelected(e.target.value);
-		router.push(`/ranking/${e.target.value}/${currYear}/${currWeek}`);
+		router.push(`/ranking/${e.target.value}/${initials.year}/${initials.week}`);
 	};
 
 	return (
-		<select title="division" className={styles.divisionDropdown} value={selected} onChange={handleChange}>
+		<select
+			title="division"
+			className={styles.divisionDropdown}
+			value={initials.division.toLowerCase()}
+			onChange={handleChange}
+		>
 			{options.map((option) => (
 				<option key={option} value={option.toLowerCase()}>
 					{option.toUpperCase()}
@@ -36,23 +41,22 @@ function DivisionDropdown({ options, initialValue }: DivisionProps) {
 
 type YearProps = {
 	options: string[];
-	initialValue: number;
+	initials: DefaultValues;
 	availRanks: AvailRanks;
 };
-function YearDropdown({ options, initialValue, availRanks }: YearProps) {
-	const [selected, setSelected] = useState(initialValue);
+function YearDropdown({ options, initials, availRanks }: YearProps) {
 	const router = useRouter();
 
 	const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
-		setSelected(Number(e.target.value));
-		if (currWeek == availRanks[currYear].weeks.toString() && !availRanks[currYear].postseason) {
-			router.push(`/ranking/${currDiv}/${e.target.value}/final`);
+		if (!availRanks[initials.year].postseason && initials.week == availRanks[initials.year].weeks.toString()) {
+			router.push(`/ranking/${initials.division}/${e.target.value}/final`);
+		} else {
+			router.push(`/ranking/${initials.division}/${e.target.value}/${initials.week}`);
 		}
-		router.push(`/ranking/${currDiv}/${e.target.value}/${currWeek}`);
 	};
 
 	return (
-		<select title="year" className={styles.yearDropdown} value={selected} onChange={handleChange}>
+		<select title="year" className={styles.yearDropdown} value={initials.year} onChange={handleChange}>
 			{options.map((option) => (
 				<option key={option} value={option}>
 					{option}
@@ -64,27 +68,25 @@ function YearDropdown({ options, initialValue, availRanks }: YearProps) {
 
 type WeekProps = {
 	options: YearRanks;
-	initialValue: string;
+	initials: DefaultValues;
 };
-function WeekDropdown({ options, initialValue }: WeekProps) {
+function WeekDropdown({ options, initials }: WeekProps) {
 	const optionList = [];
 	for (let i = 1; i <= options.weeks; i++) {
-		optionList.push({ value: i, text: 'Week ' + i });
+		optionList.push({ value: i.toString(), text: 'Week ' + i });
 	}
 	if (options.postseason) {
 		optionList.push({ value: 'final', text: 'Final' });
 	}
 
-	const [selected, setSelected] = useState(initialValue.toLowerCase());
 	const router = useRouter();
 
 	const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
-		setSelected(e.target.value);
-		router.push(`/ranking/${currDiv}/${currYear}/${e.target.value}`);
+		router.push(`/ranking/${initials.division}/${initials.year}/${e.target.value}`);
 	};
 
 	return (
-		<select title="week" className={styles.weekDropdown} value={selected} onChange={handleChange}>
+		<select title="week" className={styles.weekDropdown} value={initials.week} onChange={handleChange}>
 			{optionList.map((option) => (
 				<option key={option.value} value={option.value}>
 					{option.text}
@@ -101,19 +103,21 @@ type SelectorProps = {
 	week: string;
 };
 export default function Selector({ availRanks, division, year, week }: SelectorProps) {
-	currDiv = division.toLowerCase();
-	currYear = year;
-	currWeek = week.toLowerCase();
 	const years: string[] = [];
 	for (const key in availRanks) {
 		years.push(key);
 	}
 	years.sort().reverse();
+	const initials = {
+		division: division.toLowerCase(),
+		year: year.toString(),
+		week: week.toLowerCase(),
+	};
 	return (
 		<div className={styles.selectorStyling}>
-			<DivisionDropdown options={DIVISIONS} initialValue={division} />
-			<YearDropdown options={years} initialValue={year} availRanks={availRanks} />
-			<WeekDropdown options={availRanks[year]} initialValue={week} />
+			<DivisionDropdown options={DIVISIONS} initials={initials} />
+			<YearDropdown options={years} initials={initials} availRanks={availRanks} />
+			<WeekDropdown options={availRanks[year]} initials={initials} />
 		</div>
 	);
 }
