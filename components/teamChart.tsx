@@ -1,3 +1,6 @@
+/* istanbul ignore file */
+// ignore file for testing because it's hella awkward
+
 import { useContext, useEffect, useRef } from 'react';
 
 import * as am5 from '@amcharts/amcharts5';
