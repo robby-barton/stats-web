@@ -6,6 +6,7 @@ import Ranking from '@components/ranking';
 import Title from '@components/title';
 import { AvailRanks, Rank } from '@lib/types';
 import { availableRankings, getRanking } from '@lib/utils';
+import { REVALIDATE } from '@lib/constants';
 
 type HomeProps = {
 	availRanks: AvailRanks;
@@ -45,5 +46,6 @@ export async function getStaticProps(): Promise<GetStaticPropsResult<HomeProps>>
 			year: year,
 			week: currYear.postseason ? 'final' : currYear.weeks.toString(),
 		},
+		revalidate: REVALIDATE,
 	};
 }

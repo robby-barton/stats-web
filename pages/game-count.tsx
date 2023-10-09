@@ -6,6 +6,7 @@ import Meta from '@components/meta';
 import Title from '@components/title';
 import { TeamGames } from '@lib/types';
 import { allGames } from '@lib/utils';
+import { REVALIDATE } from '@lib/constants';
 
 type GameCountProps = {
 	games: TeamGames[];
@@ -28,5 +29,6 @@ export async function getStaticProps(): Promise<GetStaticPropsResult<GameCountPr
 		props: {
 			games: results,
 		},
+		revalidate: REVALIDATE,
 	};
 }
