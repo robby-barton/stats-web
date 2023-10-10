@@ -23,6 +23,10 @@ const avail: AvailRanks = {
 		weeks: 16,
 		postseason: true,
 	},
+	'2023': {
+		weeks: 7,
+		postseason: false,
+	},
 };
 
 const division = 'fbs';
@@ -44,6 +48,14 @@ describe('Selector', () => {
 		const newValue = '2021';
 		fireEvent.change(screen.getByTitle('year'), { target: { value: newValue } });
 		expect(mockRouter.push).toHaveBeenCalledWith(`/ranking/${division}/${newValue}/${week}`);
+	});
+
+	it('year dropdown works, current->final', () => {
+		render(<Selector availRanks={avail} division={division} year={2023} week={'7'} />);
+
+		const newValue = '2021';
+		fireEvent.change(screen.getByTitle('year'), { target: { value: newValue } });
+		expect(mockRouter.push).toHaveBeenCalledWith(`/ranking/${division}/${newValue}/final`);
 	});
 
 	it('week dropdown works', () => {
