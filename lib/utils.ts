@@ -166,39 +166,3 @@ export async function getTeamPathParams(): Promise<TeamPathParams[]> {
 
 	return paths;
 }
-
-export async function getRevalidatePaths(): Promise<string[]> {
-	const avail: AvailRanks = await availableRankings();
-	let year = -1;
-	for (const key in avail) {
-		const keyNum = Number(key);
-		if (keyNum > year) {
-			year = keyNum;
-		}
-	}
-
-	const week = avail[year].postseason ? 'final' : avail[year].weeks;
-	const paths: string[] = [];
-	if (avail[year].postseason) {
-		paths.push(`/ranking/fbs/${year}/final`);
-		paths.push(`/ranking/fcs/${year}/final`);
-	}
-	for (let i = avail[year].weeks; i > 0; i--) {
-		paths.push(`/ranking/fbs/${year}/${i}`);
-		paths.push(`/ranking/fcs/${year}/${i}`);
-	}
-
-	const fbsResults: Rank[] = await getRanking(true, year, week.toString());
-	const fcsResults: Rank[] = await getRanking(false, year, week.toString());
-
-	const teams: number[] = [];
-	fbsResults.map((result) => {
-		teams.push(result.team.team_id);
-	});
-	fcsResults.map((result) => {
-		teams.push(result.team.team_id);
-	});
-	teams.map((team) => paths.push(`/team/${team}`));
-
-	return paths;
-}

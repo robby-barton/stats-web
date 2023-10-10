@@ -25,10 +25,6 @@ function espnLoader({ src, width, quality }: ImageLoaderProps) {
 	}&location=origin`;
 }
 
-function pupLoader({ src }: ImageLoaderProps) {
-	return src;
-}
-
 type TeamName = {
 	team: Team;
 };
@@ -52,7 +48,7 @@ export default function TeamName({ team }: TeamName) {
 		if (sliceIndex < 0) {
 			return (
 				<Image
-					loader={pupLoader}
+					unoptimized={true}
 					src={img}
 					onError={() => {
 						setImg('/pups.png');

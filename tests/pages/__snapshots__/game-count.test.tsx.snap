@@ -180,9 +180,7 @@ exports[`Game Count page renders correctly 1`] = `
                           data-nimg="fill"
                           decoding="async"
                           loading="lazy"
-                          sizes="2rem"
                           src="http://localhost/mona.png"
-                          srcset="/mona.png 16w, /mona.png 32w, /mona.png 48w, /mona.png 64w, /mona.png 96w, /mona.png 128w, /mona.png 256w, /mona.png 384w, /mona.png 640w, /mona.png 750w, /mona.png 828w, /mona.png 1080w, /mona.png 1200w, /mona.png 1920w, /mona.png 2048w, /mona.png 3840w"
                           style="position: absolute; height: 100%; width: 100%; left: 0px; top: 0px; right: 0px; bottom: 0px; color: transparent;"
                         />
                       </div>
