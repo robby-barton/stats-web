@@ -20,6 +20,14 @@ const nextConfig = {
 			},
 		],
 	},
+	async rewrites() {
+		return [
+			{
+				source: '/api/:path*',
+				destination: 'https://data.robby.tech/:path*',
+			},
+		];
+	},
 };
 
 module.exports = nextConfig;
