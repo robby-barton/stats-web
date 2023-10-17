@@ -1,14 +1,11 @@
+import useSWR from 'swr';
+
 import Layout from '@components/layout';
 import Meta from '@components/meta';
 import Ranking from '@components/ranking';
 import Title from '@components/title';
 import { AvailRanks, Rank } from '@lib/types';
-import useSWR from 'swr';
-
-async function fetcher<JSON>(input: RequestInfo): Promise<JSON> {
-	const res = await fetch(input);
-	return res.json();
-}
+import { fetcher } from '@lib/newutils';
 
 export default function Home() {
 	const { data: availRanks, error: arError } = useSWR<AvailRanks, Error>('/api/availRanks.json', fetcher, {
