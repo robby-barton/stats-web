@@ -1,37 +1,28 @@
-import { GetStaticPropsResult } from 'next';
+import useSWR from 'swr';
 
 import Layout from '@components/layout';
 import Meta from '@components/meta';
 import TeamSearch from '@components/teamSearch';
 import Title from '@components/title';
 import { Team } from '@lib/types';
-import { getRankedTeams } from '@lib/utils';
-import { REVALIDATE } from '@lib/constants';
+import { fetcher } from '@lib/newutils';
 
-export type TeamsProps = {
-	teams: Team[];
-};
+export default function Teams() {
+	const { data: teams, error } = useSWR<Team[], Error>('/api/teams.json', fetcher, {
+		refreshInterval: 60000,
+	});
 
-export default function Teams({ teams }: TeamsProps) {
+	if (teams) {
+		teams.sort((a, b) => {
+			return a.name > b.name ? 1 : a.name < b.name ? -1 : 0;
+		});
+	}
+
 	return (
 		<Layout>
 			<Title title="Teams" />
 			<Meta desc="Teams included in one or more rankings" />
-			<TeamSearch teams={teams} />
+			{teams && !error ? <TeamSearch teams={teams} /> : <></>}
 		</Layout>
 	);
-}
-
-export async function getStaticProps(): Promise<GetStaticPropsResult<TeamsProps>> {
-	const results: Team[] = await getRankedTeams();
-	results.sort((a, b) => {
-		return a.name > b.name ? 1 : a.name < b.name ? -1 : 0;
-	});
-
-	return {
-		props: {
-			teams: results,
-		},
-		revalidate: REVALIDATE,
-	};
 }
