@@ -1,26 +1,38 @@
-import { ParsedUrlQuery } from 'querystring';
+import useSWR from 'swr';
 
-import { GetStaticPathsResult, GetStaticPropsContext, GetStaticPropsResult } from 'next';
+import { useRouter } from 'next/router';
 
 import Layout from '@components/layout';
 import Meta from '@components/meta';
 import Ranking from '@components/ranking';
 import Title from '@components/title';
-import { DIVISIONS, REVALIDATE } from '@lib/constants';
-import { AvailRanks, Rank, RankingPathParams } from '@lib/types';
-import { availableRankings, getRanking, getRankingPathParams } from '@lib/utils';
+import { AvailRanks, Rank } from '@lib/types';
+import { fetcher } from '@lib/newutils';
 
-type WeekProps = {
-	availRanks: AvailRanks;
-	ranking: Rank[];
-	division: string;
-	year: number;
-	week: string;
-};
-export default function Week({ availRanks, ranking, division, year, week }: WeekProps) {
+export default function Week() {
+	const { data: availRanks, error: arError } = useSWR<AvailRanks, Error>('/api/availRanks.json', fetcher, {
+		refreshInterval: 60000,
+	});
+
+	const router = useRouter();
+	const division = (router.query.division as string).toLowerCase();
+	const year = router.query.year as string;
+	const week = (router.query.week as string).toLowerCase();
+	const { data: ranking, error } = useSWR<Rank[], Error>(`/api/ranking/${year}/${division}/${week}.json`, fetcher, {
+		refreshInterval: 60000,
+	});
+
+	if (error || arError) {
+		router.push('/');
+	}
+
+	if (!ranking || !availRanks) {
+		return <Layout></Layout>;
+	}
+
 	let weekTitle: string = 'Week ' + week;
-	if (week === 'Final') {
-		weekTitle = week;
+	if (week === 'final') {
+		weekTitle = 'Final';
 	}
 	const title: string = [division, year, weekTitle].join(' ');
 	const meta = `${weekTitle} computer rankings for the ${year} ${division} college football season.`;
@@ -29,76 +41,7 @@ export default function Week({ availRanks, ranking, division, year, week }: Week
 		<Layout>
 			<Title title={title} />
 			<Meta desc={meta} />
-			<Ranking availRanks={availRanks} ranking={ranking} division={division} year={year} week={week} />
+			<Ranking availRanks={availRanks} ranking={ranking} division={division} year={Number(year)} week={week} />
 		</Layout>
 	);
-}
-
-function validateParams(
-	params: ParsedUrlQuery | undefined,
-	avail: AvailRanks,
-): { division: 'fbs' | 'fcs'; year: number; week: string } | string {
-	if (params === undefined) {
-		return '/';
-	}
-	const { division, year, week } = params;
-	if (typeof division !== 'string' || typeof year !== 'string' || typeof week !== 'string') {
-		return '/';
-	}
-
-	if (!DIVISIONS.includes(division.toLowerCase()) || !(year in avail)) {
-		return '/';
-	} else if (week.toLowerCase() === 'final' && !avail[year].postseason) {
-		return `/ranking/${division}/${year}/${avail[year].weeks}`;
-	} else if (week.toLowerCase() !== 'final') {
-		if (!Number.isInteger(Number(week))) {
-			return `/ranking/${division}/${year}/${avail[year].postseason ? 'final' : avail[year].weeks}`;
-		} else if (Number(week) > avail[year].weeks) {
-			return `/ranking/${division}/${year}/${avail[year].postseason ? 'final' : avail[year].weeks}`;
-		} else if (Number(week) < 1) {
-			return `/ranking/${division}/${year}/1`;
-		}
-	}
-
-	return {
-		division: division.toLowerCase() as 'fbs' | 'fcs',
-		year: Number(year),
-		week: week,
-	};
-}
-
-export async function getStaticProps({ params }: GetStaticPropsContext): Promise<GetStaticPropsResult<WeekProps>> {
-	const avail: AvailRanks = await availableRankings();
-	const validated = validateParams(params, avail);
-	if (typeof validated === 'string') {
-		return {
-			redirect: {
-				permanent: false,
-				destination: validated,
-			},
-			revalidate: REVALIDATE,
-		};
-	}
-
-	const { division, year, week } = validated;
-	const results: Rank[] = await getRanking(division === 'fbs' ? true : false, year, week);
-
-	return {
-		props: {
-			availRanks: avail,
-			ranking: results,
-			division: division.toUpperCase(),
-			year: Number(year),
-			week: week.toLowerCase() === 'final' ? 'Final' : week,
-		},
-		revalidate: REVALIDATE,
-	};
-}
-
-export async function getStaticPaths(): Promise<GetStaticPathsResult> {
-	const paths: RankingPathParams[] = await getRankingPathParams();
-	return {
-		paths: paths,
-		fallback: 'blocking',
-	};
 }

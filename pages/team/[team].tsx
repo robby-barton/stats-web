@@ -23,12 +23,12 @@ type TeamProps = {
 
 export default function Team() {
 	const router = useRouter();
-	const { data: teamData, error } = useSWR<TeamProps, Error>(`/api/team/${router.query.team}.json`, fetcher, {
+	const teamID = router.query.team as string;
+	const { data: teamData, error } = useSWR<TeamProps, Error>(`/api/team/${teamID}.json`, fetcher, {
 		refreshInterval: 60000,
 	});
 
 	if (error) {
-		console.log(error);
 		router.push('/');
 	}
 
