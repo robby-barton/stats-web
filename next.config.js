@@ -2,11 +2,8 @@
 
 // next.config.js
 const nextConfig = {
-	i18n: {
-		locales: ['en'],
-		defaultLocale: 'en',
-	},
-	output: 'standalone',
+	output: 'export',
+	crossOrigin: 'anonymous',
 	experimental: {
 		largePageDataBytes: 180 * 1000,
 	},
@@ -19,14 +16,6 @@ const nextConfig = {
 				pathname: '/i/teamlogos/ncaa/**',
 			},
 		],
-	},
-	async rewrites() {
-		return [
-			{
-				source: '/api/:path*',
-				destination: 'https://data.robby.tech/:path*',
-			},
-		];
 	},
 };
 

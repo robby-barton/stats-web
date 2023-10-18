@@ -10,28 +10,38 @@ import { AvailRanks, Rank } from '@lib/types';
 import { fetcher } from '@lib/newutils';
 
 export default function Week() {
-	const { data: availRanks, error: arError } = useSWR<AvailRanks, Error>('/api/availRanks.json', fetcher, {
-		refreshInterval: 60000,
-	});
+	const { data: availRanks, error: arError } = useSWR<AvailRanks, Error>(
+		'https://data.robby.tech/availRanks.json',
+		fetcher,
+		{
+			refreshInterval: 60000,
+		},
+	);
 
 	const router = useRouter();
-	const division = (router.query.division as string).toLowerCase();
+	const division = router.query.division as string;
 	const year = router.query.year as string;
-	const week = (router.query.week as string).toLowerCase();
-	const { data: ranking, error } = useSWR<Rank[], Error>(`/api/ranking/${year}/${division}/${week}.json`, fetcher, {
-		refreshInterval: 60000,
-	});
+	const week = router.query.week as string;
+	const { data: ranking, error } = useSWR<Rank[], Error>(
+		`https://data.robby.tech/ranking/${year}/${division ? division.toLowerCase() : division}/${
+			week ? week.toLowerCase() : week
+		}.json`,
+		fetcher,
+		{
+			refreshInterval: 60000,
+		},
+	);
 
 	if (error || arError) {
 		router.push('/');
 	}
 
-	if (!ranking || !availRanks) {
+	if (!ranking || !availRanks || !division || !year || !week) {
 		return <Layout></Layout>;
 	}
 
 	let weekTitle: string = 'Week ' + week;
-	if (week === 'final') {
+	if (week.toLowerCase() === 'final') {
 		weekTitle = 'Final';
 	}
 	const title: string = [division, year, weekTitle].join(' ');

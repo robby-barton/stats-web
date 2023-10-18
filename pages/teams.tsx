@@ -8,7 +8,7 @@ import { Team } from '@lib/types';
 import { fetcher } from '@lib/newutils';
 
 export default function Teams() {
-	const { data: teams, error } = useSWR<Team[], Error>('/api/teams.json', fetcher, {
+	const { data: teams, error } = useSWR<Team[], Error>('https://data.robby.tech/teams.json', fetcher, {
 		refreshInterval: 60000,
 	});
 

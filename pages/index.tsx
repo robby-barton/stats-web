@@ -8,9 +8,13 @@ import { AvailRanks, Rank } from '@lib/types';
 import { fetcher } from '@lib/newutils';
 
 export default function Home() {
-	const { data: availRanks, error: arError } = useSWR<AvailRanks, Error>('/api/availRanks.json', fetcher, {
-		refreshInterval: 60000,
-	});
+	const { data: availRanks, error: arError } = useSWR<AvailRanks, Error>(
+		'https://data.robby.tech/availRanks.json',
+		fetcher,
+		{
+			refreshInterval: 60000,
+		},
+	);
 
 	let year = new Date().getFullYear();
 	let currWeek = 'final';
@@ -23,7 +27,7 @@ export default function Home() {
 			currWeek = weeks.toString();
 		}
 	}
-	const { data: fbs, error: fbsError } = useSWR<Rank[], Error>('/api/latest.json', fetcher, {
+	const { data: fbs, error: fbsError } = useSWR<Rank[], Error>('https://data.robby.tech/latest.json', fetcher, {
 		refreshInterval: 60000,
 	});
 	return (

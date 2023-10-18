@@ -14,15 +14,19 @@ function getImgSrc(mode: string, team: Team): string {
 			return team.logo || errImg;
 		case 'dark':
 			return team.logo_dark || errImg;
+		default:
+			return 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
 	}
-
-	return errImg;
 }
 
 function espnLoader({ src, width, quality }: ImageLoaderProps) {
 	return `https://a.espncdn.com/combiner/i?img=${src}&w=${width}&h=${width}&scale=crop&cquality=${
 		quality || 75
 	}&location=origin`;
+}
+
+function pupLoader({ src }: ImageLoaderProps) {
+	return src;
 }
 
 type TeamName = {
@@ -48,7 +52,7 @@ export default function TeamName({ team }: TeamName) {
 		if (sliceIndex < 0) {
 			return (
 				<Image
-					unoptimized={true}
+					loader={pupLoader}
 					src={img}
 					onError={() => {
 						setImg('/pups.png');

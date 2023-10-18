@@ -8,7 +8,7 @@ import { TeamGames } from '@lib/types';
 import { fetcher } from '@lib/newutils';
 
 export default function GameCount() {
-	const { data: games, error } = useSWR<TeamGames[], Error>('/api/gameCount.json', fetcher, {
+	const { data: games, error } = useSWR<TeamGames[], Error>('https://data.robby.tech/gameCount.json', fetcher, {
 		refreshInterval: 60000,
 	});
 
