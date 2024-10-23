@@ -54,7 +54,9 @@ export default function SiteMap() {
 	// handled by res.write()
 }
 
-export async function getServerSideProps({ res }: GetServerSidePropsContext): Promise<GetServerSidePropsResult<{}>> {
+export async function getServerSideProps({
+	res,
+}: GetServerSidePropsContext): Promise<GetServerSidePropsResult<object>> {
 	const paths: string[] = [];
 	const rankingPaths = await getRankingPathParams();
 	rankingPaths.map(({ params }) => paths.push(`/ranking/${params.division}/${params.year}/${params.week}`));

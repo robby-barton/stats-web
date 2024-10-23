@@ -8,7 +8,7 @@ import Meta from '@components/meta';
 import TeamName from '@components/teamName';
 import Title from '@components/title';
 import { CHART_MAX_Y, REVALIDATE } from '@lib/constants';
-import { ChartPoint, Team, TeamPathParams, TeamRank } from '@lib/types';
+import { ChartPoint, TeamPathParams, TeamRank, Team as TeamType } from '@lib/types';
 import { getTeamPathParams, getTeamRankings } from '@lib/utils';
 import styles from '@pages/team/[team].module.css';
 
@@ -17,7 +17,7 @@ const TeamChart = dynamic(() => import('@components/teamChart'), {
 });
 
 type TeamProps = {
-	team: Team;
+	team: TeamType;
 	rankList: ChartPoint[];
 	years: number[];
 };

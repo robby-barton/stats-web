@@ -1,5 +1,5 @@
 # Install dependencies only when needed
-FROM node:18-alpine AS deps
+FROM node:23-alpine AS deps
 
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
@@ -10,7 +10,7 @@ RUN yarn --frozen-lockfile
 
 
 # Rebuild the source code only when needed
-FROM node:18-alpine AS builder
+FROM node:23-alpine AS builder
 
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
@@ -24,7 +24,7 @@ ENV NEXT_TELEMETRY_DISABLED 1
 RUN --mount=type=secret,id=database_url DATABASE_URL=`cat /run/secrets/database_url 2>/dev/null` yarn build
 
 # Production image, copy all the files and run next
-FROM node:18-alpine AS stats-web
+FROM node:23-alpine AS stats-web
 
 RUN apk add --no-cache tzdata
 WORKDIR /app
