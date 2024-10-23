@@ -1,9 +1,9 @@
 {
 	"private": true,
-  "engine": {
-    "npm": ">=10.0.0 <11.0.0",
-    "node": ">=23.0.0 <24.0.0"
-  },
+	"engine": {
+		"npm": ">=10.0.0 <11.0.0",
+		"node": ">=23.0.0 <24.0.0"
+	},
 	"scripts": {
 		"dev": "next dev",
 		"build": "next build",
@@ -18,10 +18,10 @@
 		"@emotion/react": "^11.10.5",
 		"@emotion/styled": "^11.10.5",
 		"@tanstack/react-table": "^8.10.6",
-		"next": "^13.5.4",
+		"next": "^15.0.1",
 		"postgres": "^3.3.4",
-		"react": "18.2.0",
-		"react-dom": "18.2.0",
+		"react": "^18.3.1",
+		"react-dom": "^18.3.1",
 		"sharp": "^0.32.6"
 	},
 	"devDependencies": {
@@ -37,7 +37,7 @@
 		"@typescript-eslint/eslint-plugin": "^6.7.4",
 		"@typescript-eslint/parser": "^6.7.4",
 		"eslint": "^8.51.0",
-		"eslint-config-next": "^13.5.4",
+		"eslint-config-next": "^15.0.1",
 		"eslint-config-prettier": "^9.0.0",
 		"eslint-import-resolver-typescript": "^3.6.1",
 		"eslint-plugin-import": "^2.27.5",
