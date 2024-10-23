@@ -8,7 +8,7 @@ README.md
 .gitignore
 jext.config.mjs
 .prettierrc
-.eslintrc.js
+eslint.config.mjs
 yarn-error.log
 .next
 coverage
