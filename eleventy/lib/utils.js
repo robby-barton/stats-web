@@ -1,21 +1,16 @@
 const { DIVISIONS, CHART_MAX_Y } = require('./constants');
-const {
-	allGamesDB,
-	availableRankingsDB,
-	availableTeamsDB,
-	getAllTeamRankingsDB,
-	getRankingsForDivisionDB,
-	getRankingsForYearDB,
-} = require('./db');
+let db = require('./db.js');
 
-const ALL_YEARS = process.env.ELEVENTY_ALL_YEARS === '1' || process.env.ELEVENTY_ALL_YEARS === 'true';
+function isAllYears() {
+	return process.env.ELEVENTY_ALL_YEARS === '1' || process.env.ELEVENTY_ALL_YEARS === 'true';
+}
 
 let rankings = {};
 let rankingsExpire = -1;
 async function availableRankings() {
 	const now = Math.floor(new Date().getTime() / 1000);
 	if (!rankings || rankingsExpire < now) {
-		const rankingObjects = await availableRankingsDB();
+		const rankingObjects = await db.availableRankingsDB();
 		if (!rankingObjects.length) {
 			throw new Error('Not found');
 		}
@@ -39,7 +34,7 @@ let teamInfoExpire = -1;
 async function availableTeams() {
 	const now = Math.floor(new Date().getTime() / 1000);
 	if (!teamInfo || teamInfoExpire < now) {
-		const teamInfoObjects = await availableTeamsDB();
+		const teamInfoObjects = await db.availableTeamsDB();
 		if (!teamInfoObjects.length) {
 			throw new Error('Not found');
 		}
@@ -95,9 +90,9 @@ async function loadRankingsForYear(fbs, year) {
 		return rankingsByYearDivision[key];
 	}
 
-	if (ALL_YEARS) {
+	if (isAllYears()) {
 		if (!rankingsByDivision[fbs]) {
-			const results = await getRankingsForDivisionDB(fbs);
+			const results = await db.getRankingsForDivisionDB(fbs);
 			const availTeams = await availableTeams();
 			rankingsByDivision[fbs] = buildRankingRecordMap(results, availTeams);
 		}
@@ -105,7 +100,7 @@ async function loadRankingsForYear(fbs, year) {
 		return byYear[year.toString()] || {};
 	}
 
-	const results = await getRankingsForYearDB(fbs, year);
+	const results = await db.getRankingsForYearDB(fbs, year);
 	const availTeams = await availableTeams();
 	const byWeek = {};
 
@@ -143,7 +138,7 @@ async function loadTeamRankings() {
 		return teamRankingsByTeam;
 	}
 
-	const results = await getAllTeamRankingsDB();
+	const results = await db.getAllTeamRankingsDB();
 	const teams = await availableTeams();
 	const byTeam = {};
 
@@ -183,7 +178,7 @@ async function getRankedTeams() {
 }
 
 async function allGames() {
-	const games = await allGamesDB();
+	const games = await db.allGamesDB();
 	const teams = await availableTeams();
 
 	const allGamesList = games
@@ -261,6 +256,17 @@ function buildTeamChartData(results) {
 	return { data, years };
 }
 
+function setDb(mockDb) {
+	db = mockDb;
+	rankings = {};
+	rankingsExpire = -1;
+	teamInfo = {};
+	teamInfoExpire = -1;
+	rankingsByYearDivision = {};
+	rankingsByDivision = {};
+	teamRankingsByTeam = null;
+}
+
 module.exports = {
 	availableRankings,
 	availableTeams,
@@ -271,4 +277,5 @@ module.exports = {
 	getRankingPathParams,
 	getTeamPathParams,
 	buildTeamChartData,
+	setDb,
 };

@@ -14,7 +14,9 @@
     "dev:eleventy": "concurrently -k \"yarn dev:assets\" \"yarn dev:sync\" \"yarn dev:11ty\"",
     "dev:11ty": "eleventy --serve",
     "dev": "yarn dev:eleventy",
-    "build": "yarn build:eleventy"
+    "build": "yarn build:eleventy",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "dependencies": {
     "@amcharts/amcharts5": "^5.4.10",
@@ -39,15 +41,16 @@
     "concurrently": "^8.2.2",
     "eslint": "^9.13.0",
     "eslint-config-prettier": "^9.0.0",
-		"eslint-import-resolver-typescript": "^3.6.1",
-		"eslint-plugin-import": "^2.27.5",
-		"eslint-plugin-prettier": "^5.0.0",
-		"eslint-plugin-react-hooks": "^4.6.0",
-		"dotenv": "^16.4.5",
+    "eslint-import-resolver-typescript": "^3.6.1",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-prettier": "^5.0.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "dotenv": "^16.4.5",
     "globals": "^15.11.0",
     "prettier": "^3.0.3",
     "typescript": "5.6.3",
     "typescript-eslint-language-service": "^5.0.5",
-    "vite": "^5.4.11"
+    "vite": "^5.4.11",
+    "vitest": "^2.1.3"
   }
 }
