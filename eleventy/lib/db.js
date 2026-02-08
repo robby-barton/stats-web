@@ -68,6 +68,33 @@ async function getRankingDB(fbs, year, week) {
 	return results;
 }
 
+async function getRankingsForYearDB(fbs, year) {
+	const results = await sql`
+		select
+			team_id,
+			conf,
+			final_rank,
+			final_raw,
+			wins,
+			losses,
+			ties,
+			sos_rank,
+			srs_rank,
+			week,
+			postseason
+		from team_week_results
+		where
+			fbs = ${fbs} and
+			year = ${year}
+		order by
+			postseason,
+			week,
+			final_rank
+	`;
+
+	return results;
+}
+
 async function getTeamRankingsDB(team) {
 	const results = await sql`
 		select
@@ -80,6 +107,25 @@ async function getTeamRankingsDB(team) {
 		where
 			team_id = ${team}
 		order by
+			year,
+			postseason,
+			week
+	`;
+
+	return results;
+}
+
+async function getAllTeamRankingsDB() {
+	const results = await sql`
+		select
+			team_id,
+			final_rank,
+			year,
+			week,
+			postseason
+		from team_week_results
+		order by
+			team_id,
 			year,
 			postseason,
 			week
@@ -139,7 +185,9 @@ module.exports = {
 	availableRankingsDB,
 	availableTeamsDB,
 	getRankingDB,
+	getRankingsForYearDB,
 	getTeamRankingsDB,
+	getAllTeamRankingsDB,
 	getRankedTeamsDB,
 	allGamesDB,
 };

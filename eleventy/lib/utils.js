@@ -3,9 +3,8 @@ const {
 	allGamesDB,
 	availableRankingsDB,
 	availableTeamsDB,
-	getRankedTeamsDB,
-	getRankingDB,
-	getTeamRankingsDB,
+	getAllTeamRankingsDB,
+	getRankingsForYearDB,
 } = require('./db');
 
 let rankings = {};
@@ -58,51 +57,88 @@ async function availableTeams() {
 	return teamInfo;
 }
 
-async function getRanking(fbs, year, week) {
-	const results = await getRankingDB(fbs, year, week);
-	const availTeams = await availableTeams();
+let rankingsByYearDivision = {};
+async function loadRankingsForYear(fbs, year) {
+	const key = `${fbs}-${year}`;
+	if (rankingsByYearDivision[key]) {
+		return rankingsByYearDivision[key];
+	}
 
-	const data = [];
+	const results = await getRankingsForYearDB(fbs, year);
+	const availTeams = await availableTeams();
+	const byWeek = {};
+
 	for (let i = 0; i < results.length; i++) {
-		data.push({
-			team: availTeams[results[i].team_id.toString()],
-			final_rank: results[i].final_rank,
-			conf: results[i].conf,
+		const row = results[i];
+		const weekKey = row.postseason === 1 ? 'final' : row.week.toString();
+		if (!byWeek[weekKey]) {
+			byWeek[weekKey] = [];
+		}
+		byWeek[weekKey].push({
+			team: availTeams[row.team_id.toString()],
+			final_rank: row.final_rank,
+			conf: row.conf,
 			record:
-				results[i].ties === 0
-					? results[i].wins + '-' + results[i].losses
-					: results[i].wins + '-' + results[i].losses + '-' + results[i].ties,
-			srs_rank: results[i].srs_rank,
-			sos_rank: results[i].sos_rank,
-			final_raw: results[i].final_raw,
+				row.ties === 0 ? row.wins + '-' + row.losses : row.wins + '-' + row.losses + '-' + row.ties,
+			srs_rank: row.srs_rank,
+			sos_rank: row.sos_rank,
+			final_raw: row.final_raw,
 		});
 	}
 
-	return data;
+	rankingsByYearDivision[key] = byWeek;
+	return byWeek;
+}
+
+async function getRanking(fbs, year, week) {
+	const byWeek = await loadRankingsForYear(fbs, year);
+	const weekKey = week.toLowerCase();
+	return byWeek[weekKey] || [];
+}
+
+let teamRankingsByTeam = null;
+async function loadTeamRankings() {
+	if (teamRankingsByTeam) {
+		return teamRankingsByTeam;
+	}
+
+	const results = await getAllTeamRankingsDB();
+	const teams = await availableTeams();
+	const byTeam = {};
+
+	for (let i = 0; i < results.length; i++) {
+		const row = results[i];
+		const team = teams[row.team_id.toString()];
+		if (!team) {
+			continue;
+		}
+		if (!byTeam[row.team_id]) {
+			byTeam[row.team_id] = [];
+		}
+		byTeam[row.team_id].push({
+			team,
+			final_rank: row.final_rank,
+			year: row.year,
+			week: row.week,
+			postseason: row.postseason,
+		});
+	}
+
+	teamRankingsByTeam = byTeam;
+	return byTeam;
 }
 
 async function getTeamRankings(team) {
-	const rankings = await getTeamRankingsDB(team);
-	const teams = await availableTeams();
-
-	const ranks = rankings.map((rank) => ({
-		team: teams[rank.team_id.toString()],
-		final_rank: rank.final_rank,
-		year: rank.year,
-		week: rank.week,
-		postseason: rank.postseason,
-	}));
-
-	return ranks;
+	const byTeam = await loadTeamRankings();
+	return byTeam[team] || [];
 }
 
 async function getRankedTeams() {
-	const rankedTeams = await getRankedTeamsDB();
+	const byTeam = await loadTeamRankings();
 	const allTeams = await availableTeams();
-
-	const teams = rankedTeams.map((team) => allTeams[team.team_id.toString()]);
-
-	return teams;
+	return Object.keys(byTeam)
+		.map((teamId) => allTeams[teamId])
+		.filter(Boolean);
 }
 
 async function allGames() {
@@ -156,10 +192,10 @@ async function getRankingPathParams() {
 }
 
 async function getTeamPathParams() {
-	const rankedTeams = await getRankedTeamsDB();
-	const paths = rankedTeams.map((team) => ({
+	const byTeam = await loadTeamRankings();
+	const paths = Object.keys(byTeam).map((teamId) => ({
 		params: {
-			team: team.team_id.toString(),
+			team: teamId.toString(),
 		},
 	}));
 
