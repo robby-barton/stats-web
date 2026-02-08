@@ -1,22 +1,29 @@
 # Site for my college football rankings.
 
-Data is updated by a [scheduler](https://github.com/robby-barton/stats-go).
+This version is built with Eleventy and React islands for client-side interactivity.
 
-## Testing
+Data is updated by a scheduler in [stats-go](https://github.com/robby-barton/stats-go).
 
-Run `yarn` to install dependencies.
+## Local Dev
 
-Ensure you have a `.env` file with the `DEV_DATABASE_URL` set for the database to test against.
+Install dependencies:
 
-### Local Dev
-
-`yarn dev`
-
-### Local Production (Docker)
 ```sh
-# build the image locally
-yarn docker:build
-
-# run the local image
-yarn docker:run
+yarn
 ```
+
+Build assets + Eleventy:
+
+```sh
+yarn build:eleventy
+```
+
+Run dev watcher (assets + Eleventy serve):
+
+```sh
+yarn dev:eleventy
+```
+
+## Environment
+
+Provide a `.env` file with `DATABASE_URL` or `DEV_DATABASE_URL` for build-time data.

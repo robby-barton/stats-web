@@ -1,13 +1,11 @@
-import Link from 'next/link';
-
 import styles from '@components/footer.module.css';
 
 export default function Footer() {
 	return (
 		<div className={styles.footer}>
-			<Link href="https://github.com/robby-barton/stats-web">&lt;/&gt; - Site source</Link>
+			<a href="https://github.com/robby-barton/stats-web">&lt;/&gt; - Site source</a>
 			<br />
-			<Link href="https://github.com/robby-barton/stats-go">&lt;/&gt; - Ranking source</Link>
+			<a href="https://github.com/robby-barton/stats-go">&lt;/&gt; - Ranking source</a>
 		</div>
 	);
 }

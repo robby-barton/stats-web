@@ -6,6 +6,7 @@ import globals from 'globals';
 import tsParser from '@typescript-eslint/parser';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import reactHooks from 'eslint-plugin-react-hooks';
 import js from '@eslint/js';
 import { FlatCompat } from '@eslint/eslintrc';
 
@@ -19,7 +20,7 @@ const compat = new FlatCompat({
 
 const eslintConfig = [
 	{
-		ignores: ['**/out', '**/node_modules', '**/.next', '**/.swc', '**/coverage'],
+		ignores: ['**/out', '**/node_modules', '**/.next', '**/.swc', '**/coverage', '**/_site', '**/src/assets/build'],
 	},
 	...fixupConfigRules(
 		compat.extends(
@@ -27,7 +28,6 @@ const eslintConfig = [
 			'plugin:@typescript-eslint/recommended',
 			'plugin:prettier/recommended',
 			'plugin:import/recommended',
-			'next',
 		),
 	),
 	{
@@ -35,6 +35,7 @@ const eslintConfig = [
 			'@typescript-eslint': fixupPluginRules(typescriptEslint),
 			prettier: fixupPluginRules(prettier),
 			import: fixupPluginRules(_import),
+			'react-hooks': fixupPluginRules(reactHooks),
 		},
 
 		languageOptions: {
@@ -86,7 +87,6 @@ const eslintConfig = [
 			'plugin:prettier/recommended',
 			'plugin:import/recommended',
 			'plugin:import/typescript',
-			'next',
 		),
 	).map((config) => ({
 		...config,
@@ -99,12 +99,20 @@ const eslintConfig = [
 			'@typescript-eslint': fixupPluginRules(typescriptEslint),
 			prettier: fixupPluginRules(prettier),
 			import: fixupPluginRules(_import),
+			'react-hooks': fixupPluginRules(reactHooks),
 		},
 
 		languageOptions: {
 			parser: tsParser,
 			ecmaVersion: 2018,
 			sourceType: 'module',
+		},
+	},
+	{
+		files: ['**/*.js', '**/*.cjs'],
+		rules: {
+			'@typescript-eslint/no-require-imports': 'off',
+			'@typescript-eslint/no-unused-vars': 'off',
 		},
 	},
 ];

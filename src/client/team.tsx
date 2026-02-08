@@ -4,7 +4,7 @@ import TeamChart from '@components/teamChart';
 import TeamName from '@components/teamName';
 import { ThemeProvider } from '@components/themeProvider';
 import { ChartPoint, Team } from '@lib/types';
-import styles from '@pages/team/[team].module.css';
+import styles from '@components/teamPage.module.css';
 
 import { getIslandProps } from './island-utils';
 

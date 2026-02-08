@@ -1,5 +1,3 @@
-import Link from 'next/link';
-
 import styles from '@components/header.module.css';
 import ThemeToggle from '@components/themeToggle';
 import commonStyles from '@styles/common.module.css';
@@ -8,22 +6,22 @@ export default function Header() {
 	return (
 		<div className={styles.header}>
 			<div className={styles.headerTitle}>
-				<Link href="/">Robby&apos;s Ranking</Link>
+				<a href="/">Robby&apos;s Ranking</a>
 			</div>
 			<div className={styles.headerLink}>
-				<Link href="/game-count">
+				<a href="/game-count">
 					<span className={commonStyles.headingMd}>Game Count</span>
-				</Link>
+				</a>
 			</div>
 			<div className={styles.headerLink}>
-				<Link href="/teams">
+				<a href="/teams">
 					<span className={commonStyles.headingMd}>Teams</span>
-				</Link>
+				</a>
 			</div>
 			<div className={styles.headerLink}>
-				<Link href="/about">
+				<a href="/about">
 					<span className={commonStyles.headingMd}>About</span>
-				</Link>
+				</a>
 			</div>
 			<div className={styles.headerToggle}>
 				<ThemeToggle />

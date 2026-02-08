@@ -1,6 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
-
-import Image, { ImageLoaderProps } from 'next/image';
+import { CSSProperties, useContext, useEffect, useState } from 'react';
 
 import styles from '@components/teamName.module.css';
 import { ThemeContext } from '@components/themeProvider';
@@ -19,7 +17,7 @@ function getImgSrc(mode: string, team: Team): string {
 	return errImg;
 }
 
-function espnLoader({ src, width, quality }: ImageLoaderProps) {
+function espnLoader({ src, width, quality }: { src: string; width: number; quality?: number }) {
 	return `https://a.espncdn.com/combiner/i?img=${src}&w=${width}&h=${width}&scale=crop&cquality=${
 		quality || 75
 	}&location=origin`;
@@ -36,7 +34,7 @@ export default function TeamName({ team }: TeamName) {
 		if (colorMode !== '') {
 			setImg(getImgSrc(colorMode, team));
 		}
-	}, [colorMode]); // eslint-disable-line react-hooks/exhaustive-deps
+	}, [colorMode]);
 
 	function teamLogo() {
 		if (img === '') {
@@ -44,34 +42,35 @@ export default function TeamName({ team }: TeamName) {
 		}
 
 		const sliceIndex = img.indexOf('/i/teamlogos/ncaa');
+		const imgStyle: CSSProperties = {
+			position: 'absolute',
+			inset: 0,
+			width: '100%',
+			height: '100%',
+			objectFit: 'contain',
+		};
 
 		if (sliceIndex < 0) {
 			return (
-				<Image
-					unoptimized={true}
+				<img
 					src={img}
 					onError={() => {
 						setImg('/pups.png');
 					}}
 					alt={team.name}
-					fill
-					sizes="2rem"
-					placeholder="empty"
+					style={imgStyle}
 				/>
 			);
 		}
 
 		return (
-			<Image
-				loader={espnLoader}
-				src={img.slice(sliceIndex)}
+			<img
+				src={espnLoader({ src: img.slice(sliceIndex), width: 64 })}
 				onError={() => {
 					setImg('/pups.png');
 				}}
 				alt={team.name}
-				fill
-				sizes="4rem, 2rem"
-				placeholder="empty"
+				style={imgStyle}
 			/>
 		);
 	}

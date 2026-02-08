@@ -276,7 +276,7 @@ export default function TeamChart({ rankList, years }: TeamChartProps) {
 		return () => {
 			root.dispose();
 		};
-	}, []); // eslint-disable-line react-hooks/exhaustive-deps
+	}, []);
 
 	useEffect(() => {
 		const color = colorByTheme(colorMode);

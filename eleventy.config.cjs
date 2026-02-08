@@ -1,5 +1,3 @@
-const path = require('path');
-
 module.exports = function (eleventyConfig) {
 	eleventyConfig.addFilter('json', (value) => JSON.stringify(value));
 

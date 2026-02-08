@@ -9,10 +9,6 @@ export default defineConfig({
 			'@components': path.resolve(__dirname, 'components'),
 			'@lib': path.resolve(__dirname, 'lib'),
 			'@styles': path.resolve(__dirname, 'styles'),
-			'@pages': path.resolve(__dirname, 'pages'),
-			'next/link': path.resolve(__dirname, 'src/shims/next-link.tsx'),
-			'next/router': path.resolve(__dirname, 'src/shims/next-router.ts'),
-			'next/image': path.resolve(__dirname, 'src/shims/next-image.tsx'),
 		},
 	},
 	build: {
