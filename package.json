@@ -1,13 +1,14 @@
 {
   "private": true,
-  "engine": {
-    "npm": ">=10.0.0 <11.0.0",
-    "node": ">=23.0.0 <24.0.0"
+  "packageManager": "yarn@1.22.19",
+  "engines": {
+    "npm": ">=11.0.0 <12.0.0",
+    "node": ">=24.13.0 <25.0.0"
   },
   "scripts": {
     "lint": "eslint .",
     "build:assets": "vite build",
-    "build:11ty": "DEBUG=Eleventy* eleventy",
+    "build:11ty": "node scripts/eleventy-progress.mjs",
     "build:eleventy": "yarn build:assets && yarn build:11ty",
     "dev:assets": "vite build --watch",
     "dev:sync": "chokidar \"src/assets/build/**/*\" -c \"node -e \\\"require('fs').writeFileSync('src/_data/.assets-stamp', Date.now().toString())\\\"\"",
@@ -32,7 +33,7 @@
     "@eslint/compat": "^1.2.1",
     "@eslint/eslintrc": "^3.1.0",
     "@eslint/js": "^9.13.0",
-    "@types/node": "22.7.8",
+    "@types/node": "24.10.12",
     "@types/react": "18.3.11",
     "@vitejs/plugin-react": "^4.3.1",
     "@typescript-eslint/eslint-plugin": "^8.11.0",
