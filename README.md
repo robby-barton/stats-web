@@ -27,3 +27,11 @@ yarn dev:eleventy
 ## Environment
 
 Provide a `.env` file with `DATABASE_URL` or `DEV_DATABASE_URL` for build-time data.
+
+### Optional: build all years per division
+
+By default, rankings are fetched per division per year. To fetch all years per division in one query (fewer DB round trips, more memory), set:
+
+```sh
+ELEVENTY_ALL_YEARS=1
+```

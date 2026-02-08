@@ -4,8 +4,11 @@ const {
 	availableRankingsDB,
 	availableTeamsDB,
 	getAllTeamRankingsDB,
+	getRankingsForDivisionDB,
 	getRankingsForYearDB,
 } = require('./db');
+
+const ALL_YEARS = process.env.ELEVENTY_ALL_YEARS === '1' || process.env.ELEVENTY_ALL_YEARS === 'true';
 
 let rankings = {};
 let rankingsExpire = -1;
@@ -57,11 +60,49 @@ async function availableTeams() {
 	return teamInfo;
 }
 
+function buildRankingRecordMap(results, availTeams) {
+	const byYear = {};
+	for (let i = 0; i < results.length; i++) {
+		const row = results[i];
+		const yearKey = row.year.toString();
+		const weekKey = row.postseason === 1 ? 'final' : row.week.toString();
+		if (!byYear[yearKey]) {
+			byYear[yearKey] = {};
+		}
+		if (!byYear[yearKey][weekKey]) {
+			byYear[yearKey][weekKey] = [];
+		}
+		byYear[yearKey][weekKey].push({
+			team: availTeams[row.team_id.toString()],
+			final_rank: row.final_rank,
+			conf: row.conf,
+			record:
+				row.ties === 0 ? row.wins + '-' + row.losses : row.wins + '-' + row.losses + '-' + row.ties,
+			srs_rank: row.srs_rank,
+			sos_rank: row.sos_rank,
+			final_raw: row.final_raw,
+		});
+	}
+
+	return byYear;
+}
+
 let rankingsByYearDivision = {};
+let rankingsByDivision = {};
 async function loadRankingsForYear(fbs, year) {
 	const key = `${fbs}-${year}`;
 	if (rankingsByYearDivision[key]) {
 		return rankingsByYearDivision[key];
+	}
+
+	if (ALL_YEARS) {
+		if (!rankingsByDivision[fbs]) {
+			const results = await getRankingsForDivisionDB(fbs);
+			const availTeams = await availableTeams();
+			rankingsByDivision[fbs] = buildRankingRecordMap(results, availTeams);
+		}
+		const byYear = rankingsByDivision[fbs];
+		return byYear[year.toString()] || {};
 	}
 
 	const results = await getRankingsForYearDB(fbs, year);
