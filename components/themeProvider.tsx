@@ -19,6 +19,7 @@ export const ThemeProvider = ({ children }: PropsWithChildren) => {
 			window.localStorage.setItem('theme', newValue);
 
 			rawSetColorMode(newValue);
+			window.dispatchEvent(new CustomEvent('theme-change', { detail: newValue }));
 		}
 
 		return {
@@ -26,6 +27,20 @@ export const ThemeProvider = ({ children }: PropsWithChildren) => {
 			setColorMode,
 		};
 	}, [colorMode, rawSetColorMode]);
+
+	useEffect(() => {
+		function syncTheme() {
+			const current = document.body.dataset.theme as string;
+			if (current && current !== colorMode) {
+				rawSetColorMode(current);
+			}
+		}
+
+		window.addEventListener('theme-change', syncTheme);
+		return () => {
+			window.removeEventListener('theme-change', syncTheme);
+		};
+	}, [colorMode]);
 
 	return <ThemeContext.Provider value={contextValue}>{children}</ThemeContext.Provider>;
 };

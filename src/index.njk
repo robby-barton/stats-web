@@ -1,0 +1,9 @@
+---
+layout: layouts/base.njk
+---
+
+<script type="application/json" id="ranking-data">{{ rankingData | json | safe }}</script>
+<div data-island="ranking" data-props-id="ranking-data"></div>
+<noscript>
+	<p>JavaScript is required to view interactive rankings.</p>
+</noscript>

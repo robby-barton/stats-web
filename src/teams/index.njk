@@ -1,0 +1,9 @@
+---
+layout: layouts/base.njk
+---
+
+<script type="application/json" id="teams-data">{{ teamsData | json | safe }}</script>
+<div data-island="teams" data-props-id="teams-data"></div>
+<noscript>
+	<p>JavaScript is required to view the team list.</p>
+</noscript>

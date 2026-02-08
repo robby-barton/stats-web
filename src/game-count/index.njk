@@ -1,0 +1,9 @@
+---
+layout: layouts/base.njk
+---
+
+<script type="application/json" id="game-count-data">{{ gameCountData | json | safe }}</script>
+<div data-island="game-count" data-props-id="game-count-data"></div>
+<noscript>
+	<p>JavaScript is required to view game counts.</p>
+</noscript>
