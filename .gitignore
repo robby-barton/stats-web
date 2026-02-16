@@ -1,8 +1,12 @@
 node_modules
 .next
+_site
+src/assets/build
+src/_data/.assets-stamp
 next-env.d.ts
 yarn-error.log
 coverage
 out
+.DS_Store
 # Keep environment variables out of version control
 .env

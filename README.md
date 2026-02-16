@@ -1,22 +1,43 @@
 # Site for my college football rankings.
 
-Data is updated by a [scheduler](https://github.com/robby-barton/stats-go).
+This version is built with Eleventy and React islands for client-side interactivity.
 
-## Testing
+Data is updated by a scheduler in [stats-go](https://github.com/robby-barton/stats-go).
 
-Run `yarn` to install dependencies.
+## Local Dev
 
-Ensure you have a `.env` file with the `DEV_DATABASE_URL` set for the database to test against.
+Prereqs:
+- Node `>=24.13.0 <25.0.0` (use `nvm use` to read `.nvmrc`)
+- Yarn `1.22.19` (via Corepack)
 
-### Local Dev
+Install dependencies:
 
-`yarn dev`
-
-### Local Production (Docker)
 ```sh
-# build the image locally
-yarn docker:build
+yarn
+```
 
-# run the local image
-yarn docker:run
+Build assets + Eleventy:
+
+```sh
+yarn build
+```
+
+Run dev watcher (assets + Eleventy serve):
+
+```sh
+yarn dev
+```
+
+## Environment
+
+Provide a `.env` file with `DATABASE_URL` or `DEV_DATABASE_URL` for build-time data.
+
+Note: `yarn build:11ty` uses a lightweight progress ticker (see `scripts/eleventy-progress.mjs`).
+
+### Optional: build all years per division
+
+By default, rankings are fetched per division per year. To fetch all years per division in one query (fewer DB round trips, more memory), set:
+
+```sh
+ELEVENTY_ALL_YEARS=1
 ```

@@ -8,8 +8,6 @@ import {
 	getSortedRowModel,
 	useReactTable,
 } from '@tanstack/react-table';
-import { useRouter } from 'next/router';
-
 import styles from '@components/rankingTable.module.css';
 import TeamName from '@components/teamName';
 import { Rank, Team } from '@lib/types';
@@ -19,8 +17,6 @@ type RankingTableProps = {
 };
 export default function RankingTable({ teams }: RankingTableProps) {
 	const [sorting, setSorting] = useState<SortingState>([]);
-	const router = useRouter();
-
 	const columns = useMemo<ColumnDef<Rank>[]>(
 		() => [
 			{
@@ -121,7 +117,7 @@ export default function RankingTable({ teams }: RankingTableProps) {
 			<tbody>
 				{table.getRowModel().rows.map((row) => {
 					return (
-						<tr key={row.id} onClick={() => router.push(`/team/${row.id}`)}>
+						<tr key={row.id} onClick={() => (window.location.href = `/team/${row.id}`)}>
 							{row.getVisibleCells().map((cell, i, row) => {
 								return (
 									<td key={cell.id} className={i + 1 === row.length ? styles.lastColumn : ''}>

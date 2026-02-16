@@ -1,5 +1,3 @@
-import Link from 'next/link';
-
 import styles from '@components/teamCard.module.css';
 import TeamName from '@components/teamName';
 import { Team } from '@lib/types';
@@ -9,10 +7,10 @@ type TeamCardProps = {
 };
 export default function TeamCard({ team }: TeamCardProps) {
 	return (
-		<Link href={`/team/${team.team_id}`}>
+		<a href={`/team/${team.team_id}`}>
 			<div className={styles.card}>
 				<TeamName team={team} />
 			</div>
-		</Link>
+		</a>
 	);
 }

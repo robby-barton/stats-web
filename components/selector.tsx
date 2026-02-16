@@ -1,7 +1,5 @@
 import { ChangeEvent } from 'react';
 
-import { useRouter } from 'next/router';
-
 import styles from '@components/selector.module.css';
 import { DIVISIONS } from '@lib/constants';
 import { AvailRanks, YearRanks } from '@lib/types';
@@ -17,10 +15,8 @@ type DivisionProps = {
 	initials: DefaultValues;
 };
 function DivisionDropdown({ options, initials }: DivisionProps) {
-	const router = useRouter();
-
 	const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
-		router.push(`/ranking/${e.target.value}/${initials.year}/${initials.week}`);
+		window.location.href = `/ranking/${e.target.value}/${initials.year}/${initials.week}`;
 	};
 
 	return (
@@ -45,13 +41,11 @@ type YearProps = {
 	availRanks: AvailRanks;
 };
 function YearDropdown({ options, initials, availRanks }: YearProps) {
-	const router = useRouter();
-
 	const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
 		if (!availRanks[initials.year].postseason && initials.week == availRanks[initials.year].weeks.toString()) {
-			router.push(`/ranking/${initials.division}/${e.target.value}/final`);
+			window.location.href = `/ranking/${initials.division}/${e.target.value}/final`;
 		} else {
-			router.push(`/ranking/${initials.division}/${e.target.value}/${initials.week}`);
+			window.location.href = `/ranking/${initials.division}/${e.target.value}/${initials.week}`;
 		}
 	};
 
@@ -79,10 +73,8 @@ function WeekDropdown({ options, initials }: WeekProps) {
 		optionList.push({ value: 'final', text: 'Final' });
 	}
 
-	const router = useRouter();
-
 	const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
-		router.push(`/ranking/${initials.division}/${initials.year}/${e.target.value}`);
+		window.location.href = `/ranking/${initials.division}/${initials.year}/${e.target.value}`;
 	};
 
 	return (

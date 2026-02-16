@@ -1,0 +1,64 @@
+---
+layout: layouts/base.njk
+title: 404
+permalink: 404.html
+---
+
+<h1>Not Found</h1>
+<p>The page you requested could not be found.</p>
+
+<script type="application/json" id="available-rankings">{{ availableRankings | json | safe }}</script>
+<script>
+	(function () {
+		const path = window.location.pathname.replace(/\/$/, '');
+		const parts = path.split('/').filter(Boolean);
+		if (parts.length < 1) return;
+
+		if (parts[0] === 'team') {
+			window.location.replace('/teams');
+			return;
+		}
+
+		if (parts[0] !== 'ranking' || parts.length < 4) {
+			return;
+		}
+
+		const division = parts[1] ? parts[1].toLowerCase() : '';
+		const year = parts[2] || '';
+		const week = parts[3] || '';
+
+		const dataEl = document.getElementById('available-rankings');
+		if (!dataEl || !dataEl.textContent) return;
+		const avail = JSON.parse(dataEl.textContent);
+
+		if (!['fbs', 'fcs'].includes(division) || !(year in avail)) {
+			window.location.replace('/');
+			return;
+		}
+
+		const yearInfo = avail[year];
+		const weeks = Number(yearInfo.weeks);
+		const postseason = Boolean(yearInfo.postseason);
+
+		if (week.toLowerCase() === 'final' && !postseason) {
+			window.location.replace(`/ranking/${division}/${year}/${weeks}`);
+			return;
+		}
+
+		if (week.toLowerCase() !== 'final') {
+			const weekNum = Number(week);
+			if (!Number.isInteger(weekNum)) {
+				window.location.replace(`/ranking/${division}/${year}/${postseason ? 'final' : weeks}`);
+				return;
+			}
+			if (weekNum > weeks) {
+				window.location.replace(`/ranking/${division}/${year}/${postseason ? 'final' : weeks}`);
+				return;
+			}
+			if (weekNum < 1) {
+				window.location.replace(`/ranking/${division}/${year}/1`);
+				return;
+			}
+		}
+	})();
+</script>

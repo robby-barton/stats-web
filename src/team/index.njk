@@ -1,0 +1,13 @@
+---
+layout: layouts/base.njk
+---
+
+{% if teamData %}
+<script type="application/json" id="team-data">{{ teamData | json | safe }}</script>
+<div data-island="team" data-props-id="team-data"></div>
+<noscript>
+	<p>JavaScript is required to view team history.</p>
+</noscript>
+{% else %}
+<p>Team not found.</p>
+{% endif %}

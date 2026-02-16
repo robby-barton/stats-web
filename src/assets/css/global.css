@@ -1,0 +1,148 @@
+body,
+body[data-theme="light"] {
+	--color-text-primary: #27201a;
+	--color-text-secondary: #076963;
+	--color-bg-primary: #f6f0e8;
+	--color-bg-toggle: #1e90ff;
+}
+
+body[data-theme="dark"] {
+	--color-text-primary: #e3e3e3;
+	--color-text-secondary: #ff6b00;
+	--color-bg-primary: #15232d;
+	--color-bg-toggle: #a9a9a9;
+}
+
+html,
+body {
+	background: var(--color-bg-primary);
+	color: var(--color-text-primary);
+	font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans,
+		Droid Sans, Helvetica Neue, sans-serif;
+	font-variant-numeric: tabular-nums;
+	font-size: 16px;
+	padding: 0;
+	max-width: 60rem;
+	min-width: 45rem;
+	width: 100%;
+	height: 100vh;
+	height: 100dvh;
+}
+
+html {
+	display: table;
+	margin: 0 auto;
+}
+
+body {
+	display: table-cell;
+	vertical-align: middle;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+a {
+	color: inherit;
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+table {
+	overflow-x: auto;
+	text-align: left !important;
+	width: 100%;
+	border-spacing: 0;
+}
+
+tbody > tr:hover {
+	box-shadow: 0px 0px 5px 4px black;
+}
+
+th {
+	background: var(--color-bg-primary) !important;
+	position: sticky;
+	top: 7rem;
+	z-index: 1;
+	border-top: 1px solid #333;
+}
+
+th,
+td {
+	padding: 0.75rem;
+	line-height: 1.2;
+	border-bottom: 1px solid #333;
+}
+
+.site-root {
+	height: 100%;
+	width: 100%;
+}
+
+.layout-container {
+	margin: 0 auto;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+}
+
+.layout-content {
+	padding: 0 1rem;
+	width: 100%;
+	flex-grow: 1;
+}
+
+.site-header {
+	background: var(--color-bg-primary);
+	width: 100%;
+	padding: 0 1rem;
+	display: flex;
+	gap: 0 1rem;
+	position: sticky;
+	top: 0;
+	height: 4rem;
+	border-bottom: 2px solid;
+	margin: 0;
+	z-index: 1;
+}
+
+.site-header-title {
+	display: flex;
+	font-size: 2rem;
+	font-weight: 800;
+	letter-spacing: -0.05rem;
+	align-items: center;
+	flex-grow: 1;
+}
+
+.site-header-title a:hover {
+	text-decoration: none;
+}
+
+.site-header-link,
+.site-header-toggle {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.heading-md {
+	font-size: 1.2rem;
+	line-height: 1.3;
+}
+
+.site-footer {
+	background: var(--color-bg-primary);
+	border-top: 2px solid;
+	height: 6rem;
+	width: 100%;
+	margin: 0 auto;
+	text-align: center;
+	padding-top: 0.5rem;
+	line-height: 1.75rem;
+}

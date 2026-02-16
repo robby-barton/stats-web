@@ -27,9 +27,6 @@
       ],
       "@lib/*": [
         "lib/*"
-      ],
-      "@pages/*": [
-        "pages/*"
       ]
     },
     "plugins": [
@@ -40,7 +37,6 @@
     "target": "ES2017"
   },
   "include": [
-    "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
   ],
