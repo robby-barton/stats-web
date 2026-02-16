@@ -71,8 +71,7 @@ function buildRankingRecordMap(results, availTeams) {
 			team: availTeams[row.team_id.toString()],
 			final_rank: row.final_rank,
 			conf: row.conf,
-			record:
-				row.ties === 0 ? row.wins + '-' + row.losses : row.wins + '-' + row.losses + '-' + row.ties,
+			record: row.ties === 0 ? row.wins + '-' + row.losses : row.wins + '-' + row.losses + '-' + row.ties,
 			srs_rank: row.srs_rank,
 			sos_rank: row.sos_rank,
 			final_raw: row.final_raw,
@@ -114,8 +113,7 @@ async function loadRankingsForYear(fbs, year) {
 			team: availTeams[row.team_id.toString()],
 			final_rank: row.final_rank,
 			conf: row.conf,
-			record:
-				row.ties === 0 ? row.wins + '-' + row.losses : row.wins + '-' + row.losses + '-' + row.ties,
+			record: row.ties === 0 ? row.wins + '-' + row.losses : row.wins + '-' + row.losses + '-' + row.ties,
 			srs_rank: row.srs_rank,
 			sos_rank: row.sos_rank,
 			final_raw: row.final_raw,
