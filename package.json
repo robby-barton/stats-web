@@ -14,8 +14,9 @@
     "dev:sync": "chokidar \"src/assets/build/**/*\" -c \"node -e \\\"require('fs').writeFileSync('src/_data/.assets-stamp', Date.now().toString())\\\"\"",
     "dev:eleventy": "concurrently -k \"yarn dev:assets\" \"yarn dev:sync\" \"yarn dev:11ty\"",
     "dev:11ty": "eleventy --serve",
-    "dev": "yarn dev:eleventy",
-    "build": "yarn build:eleventy",
+    "clean": "rm -rf _site",
+    "dev": "yarn clean && yarn dev:eleventy",
+    "build": "yarn clean && yarn build:eleventy",
     "test": "vitest run",
     "test:watch": "vitest"
   },

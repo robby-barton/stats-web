@@ -1,4 +1,9 @@
 module.exports = function (eleventyConfig) {
+	eleventyConfig.on('eleventy.before', () => {
+		const { clearCaches } = require('./eleventy/lib/utils');
+		clearCaches();
+	});
+
 	eleventyConfig.addFilter('json', (value) => JSON.stringify(value));
 
 	eleventyConfig.addPassthroughCopy({ public: '.' });

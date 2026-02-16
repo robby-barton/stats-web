@@ -19,7 +19,7 @@ permalink: 404.html
 			return;
 		}
 
-		var knownSports = ['cfb', 'cbb'];
+		var knownSports = ['ncaaf', 'ncaam'];
 		var sport = '';
 		var rankingParts = parts;
 
@@ -40,8 +40,8 @@ permalink: 404.html
 		if (!dataEl || !dataEl.textContent) return;
 		var allAvail = JSON.parse(dataEl.textContent);
 
-		var avail = sport ? allAvail[sport] : allAvail['cfb'];
-		var prefix = sport || 'cfb';
+		var avail = sport ? allAvail[sport] : allAvail['ncaaf'];
+		var prefix = sport || 'ncaaf';
 
 		if (!avail || !(year in avail)) {
 			window.location.replace('/');
@@ -49,8 +49,8 @@ permalink: 404.html
 		}
 
 		var sportDivisions = {
-			cfb: ['fbs', 'fcs'],
-			cbb: ['d1'],
+			ncaaf: ['fbs', 'fcs'],
+			ncaam: ['d1'],
 		};
 		var validDivisions = sportDivisions[prefix] || ['fbs', 'fcs'];
 		if (!validDivisions.includes(division)) {
