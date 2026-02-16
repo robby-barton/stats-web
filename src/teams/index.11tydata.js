@@ -2,7 +2,7 @@ const { getRankedTeams } = require('../../eleventy/lib/utils');
 const { assetPath } = require('../../eleventy/lib/manifest');
 
 module.exports = async function () {
-	const teams = await getRankedTeams('cfb');
+	const teams = await getRankedTeams('ncaaf');
 	teams.sort((a, b) => (a.name > b.name ? 1 : a.name < b.name ? -1 : 0));
 
 	return {

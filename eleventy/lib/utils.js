@@ -179,8 +179,8 @@ async function getRankedTeams(sport) {
 }
 
 async function allGames() {
-	const games = await db.allGamesDB('cfb');
-	const teams = await availableTeams('cfb');
+	const games = await db.allGamesDB('ncaaf');
+	const teams = await availableTeams('ncaaf');
 
 	const allGamesList = games
 		.filter((gameSet) => {
@@ -271,8 +271,7 @@ function buildTeamChartData(results) {
 	return { data, years, chartMaxY };
 }
 
-function setDb(mockDb) {
-	db = mockDb;
+function clearCaches() {
 	rankingsBySport = {};
 	rankingsExpireBySport = {};
 	teamInfoBySport = {};
@@ -280,6 +279,11 @@ function setDb(mockDb) {
 	rankingsByYearDivision = {};
 	rankingsByDivision = {};
 	teamRankingsBySport = {};
+}
+
+function setDb(mockDb) {
+	db = mockDb;
+	clearCaches();
 }
 
 module.exports = {
@@ -293,4 +297,5 @@ module.exports = {
 	getTeamPathParams,
 	buildTeamChartData,
 	setDb,
+	clearCaches,
 };

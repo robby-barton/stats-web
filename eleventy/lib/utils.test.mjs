@@ -34,7 +34,7 @@ describe('rankings', () => {
 			allGamesDB: async () => [],
 		});
 
-		const ranking = await utils.getRanking('cfb', true, 2024, '1');
+		const ranking = await utils.getRanking('ncaaf', true, 2024, '1');
 		expect(ranking).toHaveLength(1);
 		expect(ranking[0].team.name).toBe('Alpha');
 		expect(ranking[0].record).toBe('10-2');
@@ -67,7 +67,7 @@ describe('rankings', () => {
 			allGamesDB: async () => [],
 		});
 
-		const ranking = await utils.getRanking('cfb', false, 2023, '2');
+		const ranking = await utils.getRanking('ncaaf', false, 2023, '2');
 		expect(ranking).toHaveLength(1);
 		expect(ranking[0].team.name).toBe('Beta');
 		expect(ranking[0].record).toBe('8-4-1');
@@ -78,13 +78,13 @@ describe('rankings', () => {
 		utils.setDb({
 			availableRankingsDB: async () => [],
 			availableTeamsDB: async (sport) => {
-				if (sport === 'cbb') {
+				if (sport === 'ncaam') {
 					return [{ team_id: 10, name: 'Hoops U', logo: '', logo_dark: '' }];
 				}
 				return [{ team_id: 1, name: 'Gridiron U', logo: '', logo_dark: '' }];
 			},
 			getRankingsForYearDB: async (sport) => {
-				if (sport === 'cbb') {
+				if (sport === 'ncaam') {
 					return [
 						{
 							team_id: 10,
@@ -108,12 +108,12 @@ describe('rankings', () => {
 			allGamesDB: async () => [],
 		});
 
-		const cbbRanking = await utils.getRanking('cbb', true, 2025, '5');
+		const cbbRanking = await utils.getRanking('ncaam', true, 2025, '5');
 		expect(cbbRanking).toHaveLength(1);
 		expect(cbbRanking[0].team.name).toBe('Hoops U');
 		expect(cbbRanking[0].record).toBe('25-5');
 
-		const cfbRanking = await utils.getRanking('cfb', true, 2025, '5');
+		const cfbRanking = await utils.getRanking('ncaaf', true, 2025, '5');
 		expect(cfbRanking).toHaveLength(0);
 	});
 });
@@ -136,8 +136,8 @@ describe('teams', () => {
 			allGamesDB: async () => [],
 		});
 
-		const alphaRanks = await utils.getTeamRankings('cfb', 1);
-		const teams = await utils.getRankedTeams('cfb');
+		const alphaRanks = await utils.getTeamRankings('ncaaf', 1);
+		const teams = await utils.getRankedTeams('ncaaf');
 
 		expect(alphaRanks).toHaveLength(1);
 		expect(alphaRanks[0].team.name).toBe('Alpha');
@@ -153,10 +153,10 @@ describe('teams', () => {
 				{ team_id: 3, name: 'Delta', logo: '', logo_dark: '' },
 			],
 			getAllTeamRankingsDB: async (sport) => {
-				if (sport === 'cfb') {
+				if (sport === 'ncaaf') {
 					return [{ team_id: 1, final_rank: 5, year: 2020, week: 1, postseason: 0 }];
 				}
-				if (sport === 'cbb') {
+				if (sport === 'ncaam') {
 					return [{ team_id: 3, final_rank: 2, year: 2021, week: 1, postseason: 0 }];
 				}
 				return [];

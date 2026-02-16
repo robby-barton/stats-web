@@ -13,7 +13,8 @@ module.exports = {
 		islandScript: (data) => `/assets/build/${data.viteManifest['src/client/ranking.tsx'].file}`,
 		title: (data) => {
 			const sport = data.rankingPath.params.sport;
-			const sportLabel = sport.charAt(0).toUpperCase() + sport.slice(1);
+			const sportLabels = { ncaaf: 'NCAAF', ncaam: 'NCAAM' };
+			const sportLabel = sportLabels[sport] || sport.toUpperCase();
 			const division = data.rankingPath.params.division.toUpperCase();
 			const week =
 				data.rankingPath.params.week.toLowerCase() === 'final'
@@ -23,7 +24,8 @@ module.exports = {
 		},
 		description: (data) => {
 			const sport = data.rankingPath.params.sport;
-			const sportLabel = sport.charAt(0).toUpperCase() + sport.slice(1);
+			const sportLabels = { ncaaf: 'NCAAF', ncaam: 'NCAAM' };
+			const sportLabel = sportLabels[sport] || sport.toUpperCase();
 			const division = data.rankingPath.params.division.toUpperCase();
 			const week =
 				data.rankingPath.params.week.toLowerCase() === 'final'

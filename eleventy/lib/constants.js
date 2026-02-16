@@ -1,8 +1,8 @@
 const DIVISIONS = ['fbs', 'fcs'];
 const CHART_MAX_Y = 150;
 const SPORTS = {
-	cfb: { dbSport: 'cfb', divisions: ['fbs', 'fcs'] },
-	cbb: { dbSport: 'cbb', divisions: ['d1'] },
+	ncaaf: { dbSport: 'ncaaf', divisions: ['fbs', 'fcs'] },
+	ncaam: { dbSport: 'ncaam', divisions: ['d1'] },
 };
 
 module.exports = {

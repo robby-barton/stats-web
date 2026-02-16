@@ -109,8 +109,8 @@ export async function getRankedTeams(sport: string): Promise<Team[]> {
 }
 
 export async function allGames(): Promise<TeamGames[]> {
-	const games = await allGamesDB('cfb');
-	const teams = await availableTeams('cfb');
+	const games = await allGamesDB('ncaaf');
+	const teams = await availableTeams('ncaaf');
 
 	const allGames: TeamGames[] = games
 		.filter((gameSet) => {
