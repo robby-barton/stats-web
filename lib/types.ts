@@ -51,6 +51,7 @@ export type TeamGames = {
 };
 
 export type RankingPath = {
+	sport: string;
 	division: string;
 	year: string;
 	week: string;

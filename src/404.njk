@@ -19,44 +19,66 @@ permalink: 404.html
 			return;
 		}
 
-		if (parts[0] !== 'ranking' || parts.length < 4) {
+		var knownSports = ['football', 'basketball'];
+		var sport = '';
+		var rankingParts = parts;
+
+		if (knownSports.includes(parts[0])) {
+			sport = parts[0];
+			rankingParts = parts.slice(1);
+		}
+
+		if (rankingParts[0] !== 'ranking' || rankingParts.length < 4) {
 			return;
 		}
 
-		const division = parts[1] ? parts[1].toLowerCase() : '';
-		const year = parts[2] || '';
-		const week = parts[3] || '';
+		var division = rankingParts[1] ? rankingParts[1].toLowerCase() : '';
+		var year = rankingParts[2] || '';
+		var week = rankingParts[3] || '';
 
-		const dataEl = document.getElementById('available-rankings');
+		var dataEl = document.getElementById('available-rankings');
 		if (!dataEl || !dataEl.textContent) return;
-		const avail = JSON.parse(dataEl.textContent);
+		var allAvail = JSON.parse(dataEl.textContent);
 
-		if (!['fbs', 'fcs'].includes(division) || !(year in avail)) {
+		var avail = sport ? allAvail[sport] : allAvail['football'];
+		var prefix = sport || 'football';
+
+		if (!avail || !(year in avail)) {
 			window.location.replace('/');
 			return;
 		}
 
-		const yearInfo = avail[year];
-		const weeks = Number(yearInfo.weeks);
-		const postseason = Boolean(yearInfo.postseason);
+		var sportDivisions = {
+			football: ['fbs', 'fcs'],
+			basketball: ['d1'],
+		};
+		var validDivisions = sportDivisions[prefix] || ['fbs', 'fcs'];
+		if (!validDivisions.includes(division)) {
+			window.location.replace('/');
+			return;
+		}
+
+		var yearInfo = avail[year];
+		var weeks = Number(yearInfo.weeks);
+		var postseason = Boolean(yearInfo.postseason);
 
 		if (week.toLowerCase() === 'final' && !postseason) {
-			window.location.replace(`/ranking/${division}/${year}/${weeks}`);
+			window.location.replace('/' + prefix + '/ranking/' + division + '/' + year + '/' + weeks);
 			return;
 		}
 
 		if (week.toLowerCase() !== 'final') {
-			const weekNum = Number(week);
+			var weekNum = Number(week);
 			if (!Number.isInteger(weekNum)) {
-				window.location.replace(`/ranking/${division}/${year}/${postseason ? 'final' : weeks}`);
+				window.location.replace('/' + prefix + '/ranking/' + division + '/' + year + '/' + (postseason ? 'final' : weeks));
 				return;
 			}
 			if (weekNum > weeks) {
-				window.location.replace(`/ranking/${division}/${year}/${postseason ? 'final' : weeks}`);
+				window.location.replace('/' + prefix + '/ranking/' + division + '/' + year + '/' + (postseason ? 'final' : weeks));
 				return;
 			}
 			if (weekNum < 1) {
-				window.location.replace(`/ranking/${division}/${year}/1`);
+				window.location.replace('/' + prefix + '/ranking/' + division + '/' + year + '/1');
 				return;
 			}
 		}

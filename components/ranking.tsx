@@ -11,8 +11,9 @@ type RankingProps = {
 	division: string;
 	year: number;
 	week: string;
+	sport: string;
 };
-export default function Ranking({ availRanks, ranking, division, year, week }: RankingProps) {
+export default function Ranking({ availRanks, ranking, division, year, week, sport }: RankingProps) {
 	const [searchField, setSearchField] = useState('');
 
 	const filteredTeams = ranking.filter((rank) => {
@@ -33,7 +34,7 @@ export default function Ranking({ availRanks, ranking, division, year, week }: R
 	return (
 		<div>
 			<div className={styles.inputArea}>
-				<Selector availRanks={availRanks} division={division} year={year} week={week} />
+				<Selector availRanks={availRanks} division={division} year={year} week={week} sport={sport} />
 				<div className={styles.searchDiv}>
 					<input
 						type="search"

@@ -12,6 +12,7 @@ type RankingData = {
 	division: string;
 	year: number;
 	week: string;
+	sport: string;
 };
 
 const island = getIslandProps<RankingData>('ranking');
@@ -26,6 +27,7 @@ if (island) {
 				division={props.division}
 				year={props.year}
 				week={props.week}
+				sport={props.sport}
 			/>
 		</ThemeProvider>,
 	);

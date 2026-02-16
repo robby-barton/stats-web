@@ -34,7 +34,7 @@ describe('rankings', () => {
 			allGamesDB: async () => [],
 		});
 
-		const ranking = await utils.getRanking(true, 2024, '1');
+		const ranking = await utils.getRanking('cfb', true, 2024, '1');
 		expect(ranking).toHaveLength(1);
 		expect(ranking[0].team.name).toBe('Alpha');
 		expect(ranking[0].record).toBe('10-2');
@@ -67,10 +67,54 @@ describe('rankings', () => {
 			allGamesDB: async () => [],
 		});
 
-		const ranking = await utils.getRanking(false, 2023, '2');
+		const ranking = await utils.getRanking('cfb', false, 2023, '2');
 		expect(ranking).toHaveLength(1);
 		expect(ranking[0].team.name).toBe('Beta');
 		expect(ranking[0].record).toBe('8-4-1');
+	});
+
+	it('isolates rankings by sport', async () => {
+		const utils = await loadUtils();
+		utils.setDb({
+			availableRankingsDB: async () => [],
+			availableTeamsDB: async (sport) => {
+				if (sport === 'cbb') {
+					return [{ team_id: 10, name: 'Hoops U', logo: '', logo_dark: '' }];
+				}
+				return [{ team_id: 1, name: 'Gridiron U', logo: '', logo_dark: '' }];
+			},
+			getRankingsForYearDB: async (sport) => {
+				if (sport === 'cbb') {
+					return [
+						{
+							team_id: 10,
+							conf: 'B10',
+							final_rank: 1,
+							final_raw: 8.0,
+							wins: 25,
+							losses: 5,
+							ties: 0,
+							sos_rank: 3,
+							srs_rank: 2,
+							week: 5,
+							postseason: 0,
+						},
+					];
+				}
+				return [];
+			},
+			getRankingsForDivisionDB: async () => [],
+			getAllTeamRankingsDB: async () => [],
+			allGamesDB: async () => [],
+		});
+
+		const cbbRanking = await utils.getRanking('cbb', true, 2025, '5');
+		expect(cbbRanking).toHaveLength(1);
+		expect(cbbRanking[0].team.name).toBe('Hoops U');
+		expect(cbbRanking[0].record).toBe('25-5');
+
+		const cfbRanking = await utils.getRanking('cfb', true, 2025, '5');
+		expect(cfbRanking).toHaveLength(0);
 	});
 });
 

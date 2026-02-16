@@ -1,7 +1,7 @@
 const { availableRankings, getRanking } = require('../eleventy/lib/utils');
 
 module.exports = async function () {
-	const avail = await availableRankings();
+	const avail = await availableRankings('cfb');
 	let year = -1;
 	for (const key in avail) {
 		const keyNum = Number(key);
@@ -12,7 +12,7 @@ module.exports = async function () {
 
 	const currYear = avail[year.toString()];
 	const week = currYear.postseason ? 'final' : currYear.weeks.toString();
-	const ranking = await getRanking(true, year, week);
+	const ranking = await getRanking('cfb', true, year, week);
 
 	return {
 		title: null,
@@ -24,6 +24,7 @@ module.exports = async function () {
 			division: 'fbs',
 			year,
 			week,
+			sport: 'football',
 		},
 	};
 };

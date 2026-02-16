@@ -12,13 +12,15 @@ const sql = postgres(getDatabaseUrl(), {
 	prepare: false,
 });
 
-async function availableRankingsDB() {
+async function availableRankingsDB(sport) {
 	const rankingObjects = await sql`
 		select
 			year,
 			max(case when postseason = 0 then week else 0 end) as weeks,
 			max(postseason) as postseason
 		from team_week_results
+		where
+			sport = ${sport}
 		group by
 			year
 		order by
@@ -28,7 +30,7 @@ async function availableRankingsDB() {
 	return rankingObjects;
 }
 
-async function availableTeamsDB() {
+async function availableTeamsDB(sport) {
 	const results = await sql`
 		select
 			team_id,
@@ -36,6 +38,8 @@ async function availableTeamsDB() {
 			logo,
 			logo_dark
 		from team_names
+		where
+			sport = ${sport}
 		order by
 			name
 	`;
@@ -43,7 +47,7 @@ async function availableTeamsDB() {
 	return results;
 }
 
-async function getRankingDB(fbs, year, week) {
+async function getRankingDB(sport, fbs, year, week) {
 	const isFinal = week.toLowerCase() === 'final';
 	const results = await sql`
 		select
@@ -58,6 +62,7 @@ async function getRankingDB(fbs, year, week) {
 			srs_rank
 		from team_week_results
 		where
+			sport = ${sport} and
 			fbs = ${fbs} and
 			year = ${year} and
 			${isFinal ? sql`postseason = 1` : sql`week = ${week} and postseason = 0`}
@@ -68,7 +73,7 @@ async function getRankingDB(fbs, year, week) {
 	return results;
 }
 
-async function getRankingsForYearDB(fbs, year) {
+async function getRankingsForYearDB(sport, fbs, year) {
 	const results = await sql`
 		select
 			team_id,
@@ -84,6 +89,7 @@ async function getRankingsForYearDB(fbs, year) {
 			postseason
 		from team_week_results
 		where
+			sport = ${sport} and
 			fbs = ${fbs} and
 			year = ${year}
 		order by
@@ -95,7 +101,7 @@ async function getRankingsForYearDB(fbs, year) {
 	return results;
 }
 
-async function getRankingsForDivisionDB(fbs) {
+async function getRankingsForDivisionDB(sport, fbs) {
 	const results = await sql`
 		select
 			team_id,
@@ -112,6 +118,7 @@ async function getRankingsForDivisionDB(fbs) {
 			year
 		from team_week_results
 		where
+			sport = ${sport} and
 			fbs = ${fbs}
 		order by
 			year,
@@ -123,7 +130,7 @@ async function getRankingsForDivisionDB(fbs) {
 	return results;
 }
 
-async function getTeamRankingsDB(team) {
+async function getTeamRankingsDB(sport, team) {
 	const results = await sql`
 		select
 			team_id,
@@ -133,6 +140,7 @@ async function getTeamRankingsDB(team) {
 			postseason
 		from team_week_results
 		where
+			sport = ${sport} and
 			team_id = ${team}
 		order by
 			year,
@@ -143,7 +151,7 @@ async function getTeamRankingsDB(team) {
 	return results;
 }
 
-async function getAllTeamRankingsDB() {
+async function getAllTeamRankingsDB(sport) {
 	const results = await sql`
 		select
 			team_id,
@@ -152,6 +160,8 @@ async function getAllTeamRankingsDB() {
 			week,
 			postseason
 		from team_week_results
+		where
+			sport = ${sport}
 		order by
 			team_id,
 			year,
@@ -162,17 +172,19 @@ async function getAllTeamRankingsDB() {
 	return results;
 }
 
-async function getRankedTeamsDB() {
+async function getRankedTeamsDB(sport) {
 	const results = await sql`
 		select
 			distinct team_id
 		from team_week_results
+		where
+			sport = ${sport}
 	`;
 
 	return results;
 }
 
-async function allGamesDB() {
+async function allGamesDB(sport) {
 	const results = await sql`
 		with gamesList as (
 			(
@@ -181,12 +193,16 @@ async function allGamesDB() {
 					extract(dow from start_time) as dow,
 					game_id
 				from games
+				where
+					sport = ${sport}
 			) union all (
 				select
 					away_id as team_id,
 					extract(dow from start_time) as dow,
 					game_id
 				from games
+				where
+					sport = ${sport}
 			)
 		)
 		select

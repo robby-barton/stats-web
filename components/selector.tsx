@@ -1,10 +1,11 @@
 import { ChangeEvent } from 'react';
 
 import styles from '@components/selector.module.css';
-import { DIVISIONS } from '@lib/constants';
+import { SPORTS } from '@lib/constants';
 import { AvailRanks, YearRanks } from '@lib/types';
 
 type DefaultValues = {
+	sport: string;
 	division: string;
 	year: string;
 	week: string;
@@ -16,7 +17,7 @@ type DivisionProps = {
 };
 function DivisionDropdown({ options, initials }: DivisionProps) {
 	const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
-		window.location.href = `/ranking/${e.target.value}/${initials.year}/${initials.week}`;
+		window.location.href = `/${initials.sport}/ranking/${e.target.value}/${initials.year}/${initials.week}`;
 	};
 
 	return (
@@ -43,9 +44,9 @@ type YearProps = {
 function YearDropdown({ options, initials, availRanks }: YearProps) {
 	const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
 		if (!availRanks[initials.year].postseason && initials.week == availRanks[initials.year].weeks.toString()) {
-			window.location.href = `/ranking/${initials.division}/${e.target.value}/final`;
+			window.location.href = `/${initials.sport}/ranking/${initials.division}/${e.target.value}/final`;
 		} else {
-			window.location.href = `/ranking/${initials.division}/${e.target.value}/${initials.week}`;
+			window.location.href = `/${initials.sport}/ranking/${initials.division}/${e.target.value}/${initials.week}`;
 		}
 	};
 
@@ -74,7 +75,7 @@ function WeekDropdown({ options, initials }: WeekProps) {
 	}
 
 	const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
-		window.location.href = `/ranking/${initials.division}/${initials.year}/${e.target.value}`;
+		window.location.href = `/${initials.sport}/ranking/${initials.division}/${initials.year}/${e.target.value}`;
 	};
 
 	return (
@@ -93,21 +94,24 @@ type SelectorProps = {
 	division: string;
 	year: number;
 	week: string;
+	sport: string;
 };
-export default function Selector({ availRanks, division, year, week }: SelectorProps) {
+export default function Selector({ availRanks, division, year, week, sport }: SelectorProps) {
+	const divisions = SPORTS[sport].divisions;
 	const years: string[] = [];
 	for (const key in availRanks) {
 		years.push(key);
 	}
 	years.sort().reverse();
 	const initials = {
+		sport: sport,
 		division: division.toLowerCase(),
 		year: year.toString(),
 		week: week.toLowerCase(),
 	};
 	return (
 		<div className={styles.selectorStyling}>
-			<DivisionDropdown options={DIVISIONS} initials={initials} />
+			{divisions.length > 1 && <DivisionDropdown options={divisions} initials={initials} />}
 			<YearDropdown options={years} initials={initials} availRanks={availRanks} />
 			<WeekDropdown options={availRanks[year]} initials={initials} />
 		</div>
