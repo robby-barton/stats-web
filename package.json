@@ -8,7 +8,7 @@
   "scripts": {
     "lint": "eslint .",
     "build:assets": "vite build",
-    "build:11ty": "node scripts/eleventy-progress.mjs",
+    "build:11ty": "eleventy",
     "build:eleventy": "yarn build:assets && yarn build:11ty",
     "dev:assets": "vite build --watch",
     "dev:sync": "chokidar \"src/assets/build/**/*\" -c \"node -e \\\"require('fs').writeFileSync('src/_data/.assets-stamp', Date.now().toString())\\\"\"",
