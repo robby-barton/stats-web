@@ -14,8 +14,9 @@ import { Rank, Team } from '@lib/types';
 
 type RankingTableProps = {
 	teams: Rank[];
+	sport?: string;
 };
-export default function RankingTable({ teams }: RankingTableProps) {
+export default function RankingTable({ teams, sport }: RankingTableProps) {
 	const [sorting, setSorting] = useState<SortingState>([]);
 	const columns = useMemo<ColumnDef<Rank>[]>(
 		() => [
@@ -117,7 +118,10 @@ export default function RankingTable({ teams }: RankingTableProps) {
 			<tbody>
 				{table.getRowModel().rows.map((row) => {
 					return (
-						<tr key={row.id} onClick={() => (window.location.href = `/team/${row.id}`)}>
+						<tr
+							key={row.id}
+							onClick={() => (window.location.href = `/team/${row.id}${sport ? `#${sport}` : ''}`)}
+						>
 							{row.getVisibleCells().map((cell, i, row) => {
 								return (
 									<td key={cell.id} className={i + 1 === row.length ? styles.lastColumn : ''}>

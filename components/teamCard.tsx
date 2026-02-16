@@ -4,10 +4,11 @@ import { Team } from '@lib/types';
 
 type TeamCardProps = {
 	team: Team;
+	sport?: string;
 };
-export default function TeamCard({ team }: TeamCardProps) {
+export default function TeamCard({ team, sport }: TeamCardProps) {
 	return (
-		<a href={`/team/${team.team_id}`}>
+		<a href={`/team/${team.team_id}${sport ? `#${sport}` : ''}`}>
 			<div className={styles.card}>
 				<TeamName team={team} />
 			</div>

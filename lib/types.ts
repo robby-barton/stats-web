@@ -74,3 +74,9 @@ export type ChartPoint = {
 	rank: number;
 	fillLevel: number;
 };
+
+export type SportTeamData = {
+	rankList: ChartPoint[];
+	years: number[];
+	chartMaxY: number;
+};

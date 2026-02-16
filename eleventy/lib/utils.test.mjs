@@ -136,11 +136,38 @@ describe('teams', () => {
 			allGamesDB: async () => [],
 		});
 
-		const alphaRanks = await utils.getTeamRankings(1);
-		const teams = await utils.getRankedTeams();
+		const alphaRanks = await utils.getTeamRankings('cfb', 1);
+		const teams = await utils.getRankedTeams('cfb');
 
 		expect(alphaRanks).toHaveLength(1);
 		expect(alphaRanks[0].team.name).toBe('Alpha');
 		expect(teams.map((team) => team.name)).toEqual(['Alpha', 'Gamma']);
+	});
+
+	it('returns team path params across all sports', async () => {
+		const utils = await loadUtils();
+		utils.setDb({
+			availableRankingsDB: async () => [],
+			availableTeamsDB: async () => [
+				{ team_id: 1, name: 'Alpha', logo: '', logo_dark: '' },
+				{ team_id: 3, name: 'Delta', logo: '', logo_dark: '' },
+			],
+			getAllTeamRankingsDB: async (sport) => {
+				if (sport === 'cfb') {
+					return [{ team_id: 1, final_rank: 5, year: 2020, week: 1, postseason: 0 }];
+				}
+				if (sport === 'cbb') {
+					return [{ team_id: 3, final_rank: 2, year: 2021, week: 1, postseason: 0 }];
+				}
+				return [];
+			},
+			getRankingsForDivisionDB: async () => [],
+			getRankingsForYearDB: async () => [],
+			allGamesDB: async () => [],
+		});
+
+		const paths = await utils.getTeamPathParams();
+		const teamIds = paths.map((p) => p.params.team).sort();
+		expect(teamIds).toEqual(['1', '3']);
 	});
 });

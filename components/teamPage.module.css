@@ -5,3 +5,33 @@
 	zoom: 2;
 	font-weight: 600;
 }
+
+.tabs {
+	display: flex;
+	gap: 0.5rem;
+	padding: 0.5rem 1rem;
+}
+
+.tab {
+	padding: 0.4rem 1rem;
+	border: 1px solid var(--border-color, #ccc);
+	border-radius: 4px;
+	background: transparent;
+	color: inherit;
+	cursor: pointer;
+	font-size: 1rem;
+}
+
+.tab:hover {
+	background: var(--hover-bg, rgba(0, 0, 0, 0.05));
+}
+
+.tabActive {
+	background: var(--active-tab-bg, #333);
+	color: var(--active-tab-color, #fff);
+	border-color: var(--active-tab-bg, #333);
+}
+
+.tabActive:hover {
+	background: var(--active-tab-bg, #333);
+}

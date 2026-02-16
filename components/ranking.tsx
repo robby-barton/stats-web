@@ -28,7 +28,7 @@ export default function Ranking({ availRanks, ranking, division, year, week, spo
 	};
 
 	function searchTeams() {
-		return <RankingTable teams={filteredTeams} />;
+		return <RankingTable teams={filteredTeams} sport={sport} />;
 	}
 
 	return (

@@ -1,3 +1,4 @@
+const { SPORTS } = require('../../eleventy/lib/constants');
 const { getTeamRankings, buildTeamChartData } = require('../../eleventy/lib/utils');
 
 module.exports = {
@@ -11,16 +12,26 @@ module.exports = {
 		islandScript: () => '/assets/build/team.js',
 		teamData: async (data) => {
 			const teamId = Number(data.teamPath.params.team);
-			const results = await getTeamRankings(teamId);
-			if (!results.length) {
+			const sports = {};
+			let team = null;
+
+			for (const [sportKey, sportConfig] of Object.entries(SPORTS)) {
+				const results = await getTeamRankings(sportConfig.dbSport, teamId);
+				if (!results.length) {
+					continue;
+				}
+				if (!team) {
+					team = results[0].team;
+				}
+				const { data: rankList, years, chartMaxY } = buildTeamChartData(results);
+				sports[sportKey] = { rankList, years, chartMaxY };
+			}
+
+			if (!team) {
 				return null;
 			}
-			const { data: rankList, years } = buildTeamChartData(results);
-			return {
-				team: results[0].team,
-				rankList,
-				years,
-			};
+
+			return { team, sports };
 		},
 		title: (data) => (data.teamData ? data.teamData.team.name : 'Teams'),
 		description: (data) => (data.teamData ? `${data.teamData.team.name} historical rankings.` : ''),
