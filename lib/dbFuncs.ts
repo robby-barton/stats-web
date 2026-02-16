@@ -19,13 +19,15 @@ type SQLYearWeeks = {
 	weeks: number;
 	postseason: number;
 };
-export async function availableRankingsDB(): Promise<SQLYearWeeks[]> {
+export async function availableRankingsDB(sport: string): Promise<SQLYearWeeks[]> {
 	const rankingObjects: SQLYearWeeks[] = await sql<SQLYearWeeks[]>`
 		select
 			year,
 			max(case when postseason = 0 then week else 0 end) as weeks,
 			max(postseason) as postseason
 		from team_week_results
+		where
+			sport = ${sport}
 		group by
 			year
 		order by
@@ -35,7 +37,7 @@ export async function availableRankingsDB(): Promise<SQLYearWeeks[]> {
 	return rankingObjects;
 }
 
-export async function availableTeamsDB(): Promise<Team[]> {
+export async function availableTeamsDB(sport: string): Promise<Team[]> {
 	const results: Team[] = await sql<Team[]>`
 		select
 			team_id,
@@ -43,6 +45,8 @@ export async function availableTeamsDB(): Promise<Team[]> {
 			logo,
 			logo_dark
 		from team_names
+		where
+			sport = ${sport}
 		order by
 			name
 	`;
@@ -61,7 +65,7 @@ type SQLRank = {
 	sos_rank: number;
 	srs_rank: number;
 };
-export async function getRankingDB(fbs: boolean, year: number, week: string): Promise<SQLRank[]> {
+export async function getRankingDB(sport: string, fbs: boolean, year: number, week: string): Promise<SQLRank[]> {
 	const results = await sql<SQLRank[]>`
 		select
 			team_id,
@@ -75,6 +79,7 @@ export async function getRankingDB(fbs: boolean, year: number, week: string): Pr
 			srs_rank
 		from team_week_results
 		where
+			sport = ${sport} and
 			fbs = ${fbs} and
 			year = ${year} and
 			${week.toLowerCase() === 'final' ? sql`postseason = 1` : sql`week = ${week} and postseason = 0`}
@@ -92,7 +97,7 @@ type SQLTeamRank = {
 	week: string;
 	postseason: number;
 };
-export async function getTeamRankingsDB(team: number): Promise<SQLTeamRank[]> {
+export async function getTeamRankingsDB(sport: string, team: number): Promise<SQLTeamRank[]> {
 	const results: SQLTeamRank[] = await sql<SQLTeamRank[]>`
 		select
 			team_id,
@@ -102,6 +107,7 @@ export async function getTeamRankingsDB(team: number): Promise<SQLTeamRank[]> {
 			postseason
 		from team_week_results
 		where
+			sport = ${sport} and
 			team_id = ${team}
 		order by
 			year,
@@ -115,11 +121,13 @@ export async function getTeamRankingsDB(team: number): Promise<SQLTeamRank[]> {
 type SQLRankedTeam = {
 	team_id: number;
 };
-export async function getRankedTeamsDB(): Promise<SQLRankedTeam[]> {
+export async function getRankedTeamsDB(sport: string): Promise<SQLRankedTeam[]> {
 	const results: SQLRankedTeam[] = await sql<SQLRankedTeam[]>`
 		select
 			distinct team_id
 		from team_week_results
+		where
+			sport = ${sport}
 	`;
 
 	return results;
@@ -136,7 +144,7 @@ type SQLTeamGames = {
 	sat: number;
 	total: number;
 };
-export async function allGamesDB(): Promise<SQLTeamGames[]> {
+export async function allGamesDB(sport: string): Promise<SQLTeamGames[]> {
 	const results: SQLTeamGames[] = await sql<SQLTeamGames[]>`
 		with gamesList as (
 			(
@@ -145,12 +153,16 @@ export async function allGamesDB(): Promise<SQLTeamGames[]> {
 					extract(dow from start_time) as dow,
 					game_id
 				from games
+				where
+					sport = ${sport}
 			) union all (
 				select
 					away_id as team_id,
 					extract(dow from start_time) as dow,
 					game_id
 				from games
+				where
+					sport = ${sport}
 			)
 		)
 		select

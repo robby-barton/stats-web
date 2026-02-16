@@ -51,6 +51,7 @@ export type TeamGames = {
 };
 
 export type RankingPath = {
+	sport: string;
 	division: string;
 	year: string;
 	week: string;
@@ -72,4 +73,10 @@ export type ChartPoint = {
 	week: string;
 	rank: number;
 	fillLevel: number;
+};
+
+export type SportTeamData = {
+	rankList: ChartPoint[];
+	years: number[];
+	chartMaxY: number;
 };

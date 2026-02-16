@@ -1,4 +1,4 @@
-import { DIVISIONS } from '@lib/constants';
+import { SPORTS } from '@lib/constants';
 import {
 	allGamesDB,
 	availableRankingsDB,
@@ -9,17 +9,17 @@ import {
 } from '@lib/dbFuncs';
 import { AvailRanks, AvailTeams, Rank, RankingPathParams, Team, TeamGames, TeamPathParams, TeamRank } from '@lib/types';
 
-let rankings: AvailRanks = {};
-let rankingsExpire = -1;
-export async function availableRankings(): Promise<AvailRanks> {
+const rankingsBySport: Record<string, AvailRanks> = {};
+const rankingsExpireBySport: Record<string, number> = {};
+export async function availableRankings(sport: string): Promise<AvailRanks> {
 	const now: number = Math.floor(new Date().getTime() / 1000);
-	if (!rankings || rankingsExpire < now) {
-		const rankingObjects = await availableRankingsDB();
+	if (!rankingsBySport[sport] || (rankingsExpireBySport[sport] || -1) < now) {
+		const rankingObjects = await availableRankingsDB(sport);
 		if (!rankingObjects.length) {
 			throw new Error('Not found');
 		}
 
-		rankings = {};
+		const rankings: AvailRanks = {};
 		for (let i = 0; i < rankingObjects.length; i++) {
 			const obj = rankingObjects[i];
 			rankings[obj.year] = {
@@ -27,23 +27,24 @@ export async function availableRankings(): Promise<AvailRanks> {
 				postseason: obj.postseason === 1 ? true : false,
 			};
 		}
-		rankingsExpire = now + 300; // refresh every 5 minutes
+		rankingsBySport[sport] = rankings;
+		rankingsExpireBySport[sport] = now + 300;
 	}
 
-	return rankings;
+	return rankingsBySport[sport];
 }
 
-let teamInfo: AvailTeams = {};
-let teamInfoExpire = -1;
-export async function availableTeams(): Promise<AvailTeams> {
+const teamInfoBySport: Record<string, AvailTeams> = {};
+const teamInfoExpireBySport: Record<string, number> = {};
+export async function availableTeams(sport: string): Promise<AvailTeams> {
 	const now: number = Math.floor(new Date().getTime() / 1000);
-	if (!teamInfo || teamInfoExpire < now) {
-		const teamInfoObjects = await availableTeamsDB();
+	if (!teamInfoBySport[sport] || (teamInfoExpireBySport[sport] || -1) < now) {
+		const teamInfoObjects = await availableTeamsDB(sport);
 		if (!teamInfoObjects.length) {
 			throw new Error('Not found');
 		}
 
-		teamInfo = {};
+		const teamInfo: AvailTeams = {};
 		for (let i = 0; i < teamInfoObjects.length; i++) {
 			const obj = teamInfoObjects[i];
 			teamInfo[obj.team_id.toString()] = {
@@ -53,15 +54,16 @@ export async function availableTeams(): Promise<AvailTeams> {
 				logo_dark: obj.logo_dark || '',
 			};
 		}
-		teamInfoExpire = now + 300; // refresh every 5 minutes
+		teamInfoBySport[sport] = teamInfo;
+		teamInfoExpireBySport[sport] = now + 300;
 	}
 
-	return teamInfo;
+	return teamInfoBySport[sport];
 }
 
-export async function getRanking(fbs: boolean, year: number, week: string): Promise<Rank[]> {
-	const results = await getRankingDB(fbs, year, week);
-	const availTeams = await availableTeams();
+export async function getRanking(sport: string, fbs: boolean, year: number, week: string): Promise<Rank[]> {
+	const results = await getRankingDB(sport, fbs, year, week);
+	const availTeams = await availableTeams(sport);
 
 	const data: Rank[] = [];
 	for (let i = 0; i < results.length; i++) {
@@ -82,9 +84,9 @@ export async function getRanking(fbs: boolean, year: number, week: string): Prom
 	return data;
 }
 
-export async function getTeamRankings(team: number): Promise<TeamRank[]> {
-	const rankings = await getTeamRankingsDB(team);
-	const teams = await availableTeams();
+export async function getTeamRankings(sport: string, team: number): Promise<TeamRank[]> {
+	const rankings = await getTeamRankingsDB(sport, team);
+	const teams = await availableTeams(sport);
 
 	const ranks: TeamRank[] = rankings.map((rank) => ({
 		team: teams[rank.team_id.toString()],
@@ -97,9 +99,9 @@ export async function getTeamRankings(team: number): Promise<TeamRank[]> {
 	return ranks;
 }
 
-export async function getRankedTeams(): Promise<Team[]> {
-	const rankedTeams = await getRankedTeamsDB();
-	const allTeams = await availableTeams();
+export async function getRankedTeams(sport: string): Promise<Team[]> {
+	const rankedTeams = await getRankedTeamsDB(sport);
+	const allTeams = await availableTeams(sport);
 
 	const teams = rankedTeams.map((team) => allTeams[team.team_id.toString()]);
 
@@ -107,8 +109,8 @@ export async function getRankedTeams(): Promise<Team[]> {
 }
 
 export async function allGames(): Promise<TeamGames[]> {
-	const games = await allGamesDB();
-	const teams = await availableTeams();
+	const games = await allGamesDB('cfb');
+	const teams = await availableTeams('cfb');
 
 	const allGames: TeamGames[] = games
 		.filter((gameSet) => {
@@ -130,39 +132,46 @@ export async function allGames(): Promise<TeamGames[]> {
 }
 
 export async function getRankingPathParams(): Promise<RankingPathParams[]> {
-	const avail: AvailRanks = await availableRankings();
 	const paths: RankingPathParams[] = [];
-	DIVISIONS.map((division) =>
-		Object.entries(avail).forEach((entry) => {
-			const [year, value] = entry;
-			const { weeks, postseason } = value;
-			for (let i = 1; i <= weeks; i++) {
-				paths.push({
-					params: {
-						division: division,
-						year: year,
-						week: i.toString(),
-					},
-				});
+	for (const [sportKey, sportConfig] of Object.entries(SPORTS)) {
+		const avail: AvailRanks = await availableRankings(sportConfig.dbSport);
+		for (const division of sportConfig.divisions) {
+			for (const [year, value] of Object.entries(avail)) {
+				const { weeks, postseason } = value;
+				for (let i = 1; i <= weeks; i++) {
+					paths.push({
+						params: {
+							sport: sportKey,
+							division: division,
+							year: year,
+							week: i.toString(),
+						},
+					});
+				}
+				if (postseason) {
+					paths.push({
+						params: { sport: sportKey, division: division, year: year, week: 'final' },
+					});
+				}
 			}
-			if (postseason) {
-				paths.push({
-					params: { division: division, year: year, week: 'final' },
-				});
-			}
-		}),
-	);
+		}
+	}
 
 	return paths;
 }
 
 export async function getTeamPathParams(): Promise<TeamPathParams[]> {
-	const rankedTeams = await getRankedTeamsDB();
-	const paths = rankedTeams.map((team) => ({
+	const teamIds = new Set<string>();
+	for (const sportConfig of Object.values(SPORTS)) {
+		const rankedTeams = await getRankedTeamsDB(sportConfig.dbSport);
+		for (const team of rankedTeams) {
+			teamIds.add(team.team_id.toString());
+		}
+	}
+
+	return Array.from(teamIds).map((teamId) => ({
 		params: {
-			team: team.team_id.toString(),
+			team: teamId,
 		},
 	}));
-
-	return paths;
 }

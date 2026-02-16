@@ -8,7 +8,6 @@ import am5themes_Animated from '@amcharts/amcharts5/themes/Animated';
 import * as am5xy from '@amcharts/amcharts5/xy';
 
 import { ThemeContext } from '@components/themeProvider';
-import { CHART_MAX_Y } from '@lib/constants';
 import { ChartPoint } from '@lib/types';
 
 function colorByTheme(theme: string): am5.Color {
@@ -76,8 +75,9 @@ function createValueRange(start: number, axis: am5xy.ValueAxis<am5xy.AxisRendere
 type TeamChartProps = {
 	rankList: ChartPoint[];
 	years: number[];
+	chartMaxY: number;
 };
-export default function TeamChart({ rankList, years }: TeamChartProps) {
+export default function TeamChart({ rankList, years, chartMaxY }: TeamChartProps) {
 	const { colorMode } = useContext(ThemeContext);
 	const rootRef = useRef<am5.Root | null>(null);
 	const seriesRef = useRef<am5xy.LineSeries | null>(null);
@@ -126,7 +126,7 @@ export default function TeamChart({ rankList, years }: TeamChartProps) {
 		const yAxis = chart.yAxes.push(
 			am5xy.ValueAxis.new(root, {
 				min: 1,
-				max: CHART_MAX_Y,
+				max: chartMaxY,
 				strictMinMax: true,
 				renderer: am5xy.AxisRendererY.new(root, {
 					inversed: true,
@@ -199,12 +199,9 @@ export default function TeamChart({ rankList, years }: TeamChartProps) {
 		rendererY.labels.template.set('forceHidden', true);
 
 		createValueRange(1, yAxis, '1');
-		createValueRange(25, yAxis, '25');
-		createValueRange(50, yAxis, '50');
-		createValueRange(75, yAxis, '75');
-		createValueRange(100, yAxis, '100');
-		createValueRange(125, yAxis, '125');
-		createValueRange(150, yAxis, '150');
+		for (let v = 25; v <= chartMaxY; v += 25) {
+			createValueRange(v, yAxis, v.toString());
+		}
 
 		const scrollbar = chart.set(
 			'scrollbarX',
@@ -238,7 +235,7 @@ export default function TeamChart({ rankList, years }: TeamChartProps) {
 		const sbyAxis = scrollbar.chart.yAxes.push(
 			am5xy.ValueAxis.new(root, {
 				min: 0,
-				max: CHART_MAX_Y,
+				max: chartMaxY,
 				strictMinMax: true,
 				renderer: am5xy.AxisRendererY.new(root, {
 					inversed: true,

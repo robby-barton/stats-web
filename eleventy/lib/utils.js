@@ -1,21 +1,21 @@
-const { DIVISIONS, CHART_MAX_Y } = require('./constants');
+const { CHART_MAX_Y, SPORTS } = require('./constants');
 let db = require('./db.js');
 
 function isAllYears() {
 	return process.env.ELEVENTY_ALL_YEARS === '1' || process.env.ELEVENTY_ALL_YEARS === 'true';
 }
 
-let rankings = {};
-let rankingsExpire = -1;
-async function availableRankings() {
+let rankingsBySport = {};
+let rankingsExpireBySport = {};
+async function availableRankings(sport) {
 	const now = Math.floor(new Date().getTime() / 1000);
-	if (!rankings || rankingsExpire < now) {
-		const rankingObjects = await db.availableRankingsDB();
+	if (!rankingsBySport[sport] || (rankingsExpireBySport[sport] || -1) < now) {
+		const rankingObjects = await db.availableRankingsDB(sport);
 		if (!rankingObjects.length) {
 			throw new Error('Not found');
 		}
 
-		rankings = {};
+		const rankings = {};
 		for (let i = 0; i < rankingObjects.length; i++) {
 			const obj = rankingObjects[i];
 			rankings[obj.year] = {
@@ -23,23 +23,24 @@ async function availableRankings() {
 				postseason: obj.postseason === 1,
 			};
 		}
-		rankingsExpire = now + 300;
+		rankingsBySport[sport] = rankings;
+		rankingsExpireBySport[sport] = now + 300;
 	}
 
-	return rankings;
+	return rankingsBySport[sport];
 }
 
-let teamInfo = {};
-let teamInfoExpire = -1;
-async function availableTeams() {
+let teamInfoBySport = {};
+let teamInfoExpireBySport = {};
+async function availableTeams(sport) {
 	const now = Math.floor(new Date().getTime() / 1000);
-	if (!teamInfo || teamInfoExpire < now) {
-		const teamInfoObjects = await db.availableTeamsDB();
+	if (!teamInfoBySport[sport] || (teamInfoExpireBySport[sport] || -1) < now) {
+		const teamInfoObjects = await db.availableTeamsDB(sport);
 		if (!teamInfoObjects.length) {
 			throw new Error('Not found');
 		}
 
-		teamInfo = {};
+		const teamInfo = {};
 		for (let i = 0; i < teamInfoObjects.length; i++) {
 			const obj = teamInfoObjects[i];
 			teamInfo[obj.team_id.toString()] = {
@@ -49,10 +50,11 @@ async function availableTeams() {
 				logo_dark: obj.logo_dark || '',
 			};
 		}
-		teamInfoExpire = now + 300;
+		teamInfoBySport[sport] = teamInfo;
+		teamInfoExpireBySport[sport] = now + 300;
 	}
 
-	return teamInfo;
+	return teamInfoBySport[sport];
 }
 
 function buildRankingRecordMap(results, availTeams) {
@@ -83,24 +85,25 @@ function buildRankingRecordMap(results, availTeams) {
 
 let rankingsByYearDivision = {};
 let rankingsByDivision = {};
-async function loadRankingsForYear(fbs, year) {
-	const key = `${fbs}-${year}`;
+async function loadRankingsForYear(sport, fbs, year) {
+	const key = `${sport}-${fbs}-${year}`;
 	if (rankingsByYearDivision[key]) {
 		return rankingsByYearDivision[key];
 	}
 
+	const divKey = `${sport}-${fbs}`;
 	if (isAllYears()) {
-		if (!rankingsByDivision[fbs]) {
-			const results = await db.getRankingsForDivisionDB(fbs);
-			const availTeams = await availableTeams();
-			rankingsByDivision[fbs] = buildRankingRecordMap(results, availTeams);
+		if (!rankingsByDivision[divKey]) {
+			const results = await db.getRankingsForDivisionDB(sport, fbs);
+			const availTeams = await availableTeams(sport);
+			rankingsByDivision[divKey] = buildRankingRecordMap(results, availTeams);
 		}
-		const byYear = rankingsByDivision[fbs];
+		const byYear = rankingsByDivision[divKey];
 		return byYear[year.toString()] || {};
 	}
 
-	const results = await db.getRankingsForYearDB(fbs, year);
-	const availTeams = await availableTeams();
+	const results = await db.getRankingsForYearDB(sport, fbs, year);
+	const availTeams = await availableTeams(sport);
 	const byWeek = {};
 
 	for (let i = 0; i < results.length; i++) {
@@ -124,20 +127,20 @@ async function loadRankingsForYear(fbs, year) {
 	return byWeek;
 }
 
-async function getRanking(fbs, year, week) {
-	const byWeek = await loadRankingsForYear(fbs, year);
+async function getRanking(sport, fbs, year, week) {
+	const byWeek = await loadRankingsForYear(sport, fbs, year);
 	const weekKey = week.toLowerCase();
 	return byWeek[weekKey] || [];
 }
 
-let teamRankingsByTeam = null;
-async function loadTeamRankings() {
-	if (teamRankingsByTeam) {
-		return teamRankingsByTeam;
+let teamRankingsBySport = {};
+async function loadTeamRankings(sport) {
+	if (teamRankingsBySport[sport]) {
+		return teamRankingsBySport[sport];
 	}
 
-	const results = await db.getAllTeamRankingsDB();
-	const teams = await availableTeams();
+	const results = await db.getAllTeamRankingsDB(sport);
+	const teams = await availableTeams(sport);
 	const byTeam = {};
 
 	for (let i = 0; i < results.length; i++) {
@@ -158,26 +161,26 @@ async function loadTeamRankings() {
 		});
 	}
 
-	teamRankingsByTeam = byTeam;
+	teamRankingsBySport[sport] = byTeam;
 	return byTeam;
 }
 
-async function getTeamRankings(team) {
-	const byTeam = await loadTeamRankings();
+async function getTeamRankings(sport, team) {
+	const byTeam = await loadTeamRankings(sport);
 	return byTeam[team] || [];
 }
 
-async function getRankedTeams() {
-	const byTeam = await loadTeamRankings();
-	const allTeams = await availableTeams();
+async function getRankedTeams(sport) {
+	const byTeam = await loadTeamRankings(sport);
+	const allTeams = await availableTeams(sport);
 	return Object.keys(byTeam)
 		.map((teamId) => allTeams[teamId])
 		.filter(Boolean);
 }
 
 async function allGames() {
-	const games = await db.allGamesDB();
-	const teams = await availableTeams();
+	const games = await db.allGamesDB('cfb');
+	const teams = await availableTeams('cfb');
 
 	const allGamesList = games
 		.filter((gameSet) => {
@@ -199,51 +202,63 @@ async function allGames() {
 }
 
 async function getRankingPathParams() {
-	const avail = await availableRankings();
 	const paths = [];
-	DIVISIONS.map((division) =>
-		Object.entries(avail).forEach((entry) => {
-			const [year, value] = entry;
-			const { weeks, postseason } = value;
-			for (let i = 1; i <= weeks; i++) {
-				paths.push({
-					params: {
-						division: division,
-						year: year,
-						week: i.toString(),
-					},
-				});
+	for (const [sportKey, sportConfig] of Object.entries(SPORTS)) {
+		const avail = await availableRankings(sportConfig.dbSport);
+		for (const division of sportConfig.divisions) {
+			for (const [year, value] of Object.entries(avail)) {
+				const { weeks, postseason } = value;
+				for (let i = 1; i <= weeks; i++) {
+					paths.push({
+						params: {
+							sport: sportKey,
+							division: division,
+							year: year,
+							week: i.toString(),
+						},
+					});
+				}
+				if (postseason) {
+					paths.push({
+						params: { sport: sportKey, division: division, year: year, week: 'final' },
+					});
+				}
 			}
-			if (postseason) {
-				paths.push({
-					params: { division: division, year: year, week: 'final' },
-				});
-			}
-		}),
-	);
+		}
+	}
 
 	return paths;
 }
 
 async function getTeamPathParams() {
-	const byTeam = await loadTeamRankings();
-	const paths = Object.keys(byTeam).map((teamId) => ({
+	const teamIds = new Set();
+	for (const sportConfig of Object.values(SPORTS)) {
+		const byTeam = await loadTeamRankings(sportConfig.dbSport);
+		for (const teamId of Object.keys(byTeam)) {
+			teamIds.add(teamId.toString());
+		}
+	}
+
+	return Array.from(teamIds).map((teamId) => ({
 		params: {
-			team: teamId.toString(),
+			team: teamId,
 		},
 	}));
-
-	return paths;
 }
 
 function buildTeamChartData(results) {
 	const data = [];
 	const years = [];
+	let maxRank = 0;
 
 	for (let i = 0; i < results.length; i++) {
+		const rank = results[i].final_rank;
+		if (rank > maxRank) {
+			maxRank = rank;
+		}
 		data.push({
 			week: `${results[i].year} Week ${results[i].postseason ? 'Final' : results[i].week}`,
-			rank: results[i].final_rank,
+			rank,
 			fillLevel: CHART_MAX_Y,
 		});
 		if (!years.includes(results[i].year)) {
@@ -251,18 +266,20 @@ function buildTeamChartData(results) {
 		}
 	}
 
-	return { data, years };
+	const chartMaxY = Math.max(CHART_MAX_Y, Math.ceil(maxRank / 50) * 50);
+
+	return { data, years, chartMaxY };
 }
 
 function setDb(mockDb) {
 	db = mockDb;
-	rankings = {};
-	rankingsExpire = -1;
-	teamInfo = {};
-	teamInfoExpire = -1;
+	rankingsBySport = {};
+	rankingsExpireBySport = {};
+	teamInfoBySport = {};
+	teamInfoExpireBySport = {};
 	rankingsByYearDivision = {};
 	rankingsByDivision = {};
-	teamRankingsByTeam = null;
+	teamRankingsBySport = {};
 }
 
 module.exports = {
