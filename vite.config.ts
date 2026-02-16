@@ -26,9 +26,9 @@ export default defineConfig({
 				themeToggle: path.resolve(__dirname, 'src/client/theme-toggle.tsx'),
 			},
 			output: {
-				entryFileNames: '[name].js',
-				chunkFileNames: 'chunks/[name].js',
-				assetFileNames: 'assets/[name][extname]',
+				entryFileNames: '[name]-[hash].js',
+				chunkFileNames: 'chunks/[name]-[hash].js',
+				assetFileNames: 'assets/[name]-[hash][extname]',
 			},
 		},
 	},

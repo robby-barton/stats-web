@@ -1,4 +1,5 @@
 const { getRankedTeams } = require('../../eleventy/lib/utils');
+const { assetPath } = require('../../eleventy/lib/manifest');
 
 module.exports = async function () {
 	const teams = await getRankedTeams('cfb');
@@ -7,7 +8,7 @@ module.exports = async function () {
 	return {
 		title: 'Teams',
 		description: 'Teams included in one or more rankings',
-		islandScript: '/assets/build/teams.js',
+		islandScript: assetPath('src/client/teams.tsx'),
 		teamsData: {
 			teams,
 		},

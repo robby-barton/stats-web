@@ -7,7 +7,7 @@
 		{% if description %}<meta name="description" content="{{ description }}" />{% endif %}
 		<link rel="icon" href="/favicon.ico" />
 		<link rel="stylesheet" href="/assets/css/global.css" />
-		<link rel="stylesheet" href="/assets/build/assets/style.css" />
+		<link rel="stylesheet" href="/assets/build/{{ viteManifest['style.css'].file }}" />
 	</head>
 	<body>
 		<script>
@@ -59,7 +59,7 @@
 				</footer>
 			</div>
 		</div>
-		<script type="module" src="/assets/build/themeToggle.js"></script>
+		<script type="module" src="/assets/build/{{ viteManifest['src/client/theme-toggle.tsx'].file }}"></script>
 		{% if islandScript %}<script type="module" src="{{ islandScript }}"></script>{% endif %}
 	</body>
 </html>

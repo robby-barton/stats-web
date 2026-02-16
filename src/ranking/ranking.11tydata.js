@@ -10,7 +10,7 @@ module.exports = {
 	permalink: (data) =>
 		`/${data.rankingPath.params.sport}/ranking/${data.rankingPath.params.division}/${data.rankingPath.params.year}/${data.rankingPath.params.week}/`,
 	eleventyComputed: {
-		islandScript: () => '/assets/build/ranking.js',
+		islandScript: (data) => `/assets/build/${data.viteManifest['src/client/ranking.tsx'].file}`,
 		title: (data) => {
 			const sport = data.rankingPath.params.sport;
 			const sportLabel = sport.charAt(0).toUpperCase() + sport.slice(1);

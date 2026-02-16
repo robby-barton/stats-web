@@ -1,4 +1,5 @@
 const { availableRankings, getRanking } = require('../eleventy/lib/utils');
+const { assetPath } = require('../eleventy/lib/manifest');
 
 module.exports = async function () {
 	const avail = await availableRankings('cfb');
@@ -17,7 +18,7 @@ module.exports = async function () {
 	return {
 		title: null,
 		description: 'Computer rankings for FBS and FCS college football seasons.',
-		islandScript: '/assets/build/ranking.js',
+		islandScript: assetPath('src/client/ranking.tsx'),
 		rankingData: {
 			availRanks: avail,
 			ranking,
