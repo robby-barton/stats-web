@@ -6,12 +6,12 @@ islands for client-side interactivity. Data is updated by a scheduler in
 
 ## Sports
 
-- **Football** — FBS and FCS divisions
-- **Basketball** — D1
+- **CFB** (College Football) — FBS and FCS divisions
+- **CBB** (College Basketball) — D1
 
 Team pages aggregate ranking history across all sports and provide tabs to switch
 between them. Ranking links include a `#sport` hash (e.g.
-`/team/123#basketball`) so the correct tab opens by default.
+`/team/123#cbb`) so the correct tab opens by default.
 
 ## Local Dev
 

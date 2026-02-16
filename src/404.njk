@@ -19,7 +19,7 @@ permalink: 404.html
 			return;
 		}
 
-		var knownSports = ['football', 'basketball'];
+		var knownSports = ['cfb', 'cbb'];
 		var sport = '';
 		var rankingParts = parts;
 
@@ -40,8 +40,8 @@ permalink: 404.html
 		if (!dataEl || !dataEl.textContent) return;
 		var allAvail = JSON.parse(dataEl.textContent);
 
-		var avail = sport ? allAvail[sport] : allAvail['football'];
-		var prefix = sport || 'football';
+		var avail = sport ? allAvail[sport] : allAvail['cfb'];
+		var prefix = sport || 'cfb';
 
 		if (!avail || !(year in avail)) {
 			window.location.replace('/');
@@ -49,8 +49,8 @@ permalink: 404.html
 		}
 
 		var sportDivisions = {
-			football: ['fbs', 'fcs'],
-			basketball: ['d1'],
+			cfb: ['fbs', 'fcs'],
+			cbb: ['d1'],
 		};
 		var validDivisions = sportDivisions[prefix] || ['fbs', 'fcs'];
 		if (!validDivisions.includes(division)) {

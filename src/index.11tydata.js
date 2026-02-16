@@ -16,7 +16,7 @@ module.exports = async function () {
 
 	return {
 		title: null,
-		description: 'Computer rankings for to FBS and FCS college football seasons.',
+		description: 'Computer rankings for FBS and FCS college football seasons.',
 		islandScript: '/assets/build/ranking.js',
 		rankingData: {
 			availRanks: avail,
@@ -24,7 +24,7 @@ module.exports = async function () {
 			division: 'fbs',
 			year,
 			week,
-			sport: 'football',
+			sport: 'cfb',
 		},
 	};
 };
