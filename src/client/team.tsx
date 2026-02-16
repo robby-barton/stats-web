@@ -36,7 +36,7 @@ function TeamIsland({ team, sports }: TeamData) {
 							className={`${styles.tab} ${key === activeTab ? styles.tabActive : ''}`}
 							onClick={() => setActiveTab(key)}
 						>
-							{key.charAt(0).toUpperCase() + key.slice(1)}
+							{key.toUpperCase()}
 						</button>
 					))}
 				</div>
