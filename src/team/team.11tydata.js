@@ -9,7 +9,7 @@ module.exports = {
 	},
 	permalink: (data) => `/team/${data.teamPath.params.team}/`,
 	eleventyComputed: {
-		islandScript: (data) => `/assets/build/${data.viteManifest['src/client/team.tsx'].file}`,
+		islandScript: (data) => `/assets/build/${data.viteManifest['src/client/team.ts'].file}`,
 		teamData: async (data) => {
 			const teamId = Number(data.teamPath.params.team);
 			const sports = {};
