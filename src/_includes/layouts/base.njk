@@ -52,7 +52,11 @@
 					</div>
 				</nav>
 				<div class="site-header-toggle">
-					<div id="theme-toggle-root"></div>
+					<button class="theme-toggle-btn" type="button" aria-label="Toggle theme">
+						<span class="theme-toggle-thumb"></span>
+						<span>🌙</span>
+						<span>☀️</span>
+					</button>
 				</div>
 			</header>
 			<script>
@@ -87,7 +91,25 @@
 				</footer>
 			</div>
 		</div>
-		<script type="module" src="/assets/build/{{ viteManifest['src/client/theme-toggle.tsx'].file }}"></script>
+		<script>
+			(function () {
+				var btn = document.querySelector('.theme-toggle-btn');
+				if (!btn) return;
+				function setLabel(theme) {
+					var alt = theme === 'light' ? 'dark' : 'light';
+					btn.setAttribute('aria-label', 'Change to ' + alt + ' mode');
+					btn.setAttribute('title', 'Change to ' + alt + ' mode');
+				}
+				setLabel(document.body.dataset.theme);
+				btn.addEventListener('click', function () {
+					var next = document.body.dataset.theme === 'dark' ? 'light' : 'dark';
+					document.body.dataset.theme = next;
+					window.localStorage.setItem('theme', next);
+					window.dispatchEvent(new CustomEvent('theme-change', { detail: next }));
+					setLabel(next);
+				});
+			})();
+		</script>
 		{% if islandScript %}<script type="module" src="{{ islandScript }}"></script>{% endif %}
 	</body>
 </html>

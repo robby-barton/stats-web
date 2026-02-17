@@ -42,7 +42,6 @@ src/
     team.tsx          Team page island
     teams.tsx         Teams list island
     game-count.tsx    Game count island
-    theme-toggle.tsx  Theme toggle island
   ranking/            Ranking page (Eleventy template + data)
   team/               Team detail page
   teams/              Teams list page

@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { Suspense, lazy, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 
-import TeamChart from '@components/teamChart';
+const TeamChart = lazy(() => import('@components/teamChart'));
 import TeamName from '@components/teamName';
 import { ThemeProvider } from '@components/themeProvider';
 import { SportTeamData, Team } from '@lib/types';
@@ -41,12 +41,14 @@ function TeamIsland({ team, sports }: TeamData) {
 					))}
 				</div>
 			)}
-			<TeamChart
-				key={activeTab}
-				rankList={activeSport.rankList}
-				years={activeSport.years}
-				chartMaxY={activeSport.chartMaxY}
-			/>
+			<Suspense fallback={<div style={{ width: '100%', height: '400px' }} />}>
+				<TeamChart
+					key={activeTab}
+					rankList={activeSport.rankList}
+					years={activeSport.years}
+					chartMaxY={activeSport.chartMaxY}
+				/>
+			</Suspense>
 		</>
 	);
 }

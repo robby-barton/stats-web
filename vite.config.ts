@@ -23,7 +23,6 @@ export default defineConfig({
 				teams: path.resolve(__dirname, 'src/client/teams.tsx'),
 				team: path.resolve(__dirname, 'src/client/team.tsx'),
 				gameCount: path.resolve(__dirname, 'src/client/game-count.tsx'),
-				themeToggle: path.resolve(__dirname, 'src/client/theme-toggle.tsx'),
 			},
 			output: {
 				entryFileNames: '[name]-[hash].js',
