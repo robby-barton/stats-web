@@ -1,6 +1,5 @@
 .selectorStyling {
 	display: flex;
-	width: 50%;
 }
 
 .selectorStyling select {
@@ -26,4 +25,18 @@
 
 .weekDropdown {
 	width: 6.5rem;
+}
+
+@media (max-width: 48rem) {
+	.divisionDropdown {
+		width: auto;
+	}
+
+	.yearDropdown {
+		width: auto;
+	}
+
+	.weekDropdown {
+		width: auto;
+	}
 }

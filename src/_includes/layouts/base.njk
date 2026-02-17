@@ -2,7 +2,7 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, height=device-height" />
+		<meta name="viewport" content="width=720" />
 		<title>{% if title %}{{ site.title }} - {{ title }}{% else %}{{ site.title }}{% endif %}</title>
 		{% if description %}<meta name="description" content="{{ description }}" />{% endif %}
 		<link rel="icon" href="/favicon.ico" />
@@ -27,29 +27,57 @@
 				<div class="site-header-title">
 					<a href="/">{{ site.title }}</a>
 				</div>
-				{% if sportNav.ncaaf %}
-				<div class="site-header-link">
-					<a href="{{ sportNav.ncaaf }}"><span class="heading-md">NCAAF</span></a>
-				</div>
-				{% endif %}
-				{% if sportNav.ncaam %}
-				<div class="site-header-link">
-					<a href="{{ sportNav.ncaam }}"><span class="heading-md">NCAAM</span></a>
-				</div>
-				{% endif %}
-				<div class="site-header-link">
-					<a href="/game-count"><span class="heading-md">Game Count</span></a>
-				</div>
-				<div class="site-header-link">
-					<a href="/teams"><span class="heading-md">Teams</span></a>
-				</div>
-				<div class="site-header-link">
-					<a href="/about"><span class="heading-md">About</span></a>
-				</div>
+				<button class="site-header-menu-toggle" aria-label="Toggle navigation" aria-expanded="false">
+					&#9776;
+				</button>
+				<nav class="site-header-nav">
+					{% if sportNav.ncaaf %}
+					<div class="site-header-link">
+						<a href="{{ sportNav.ncaaf }}"><span class="heading-md">NCAAF</span></a>
+					</div>
+					{% endif %}
+					{% if sportNav.ncaam %}
+					<div class="site-header-link">
+						<a href="{{ sportNav.ncaam }}"><span class="heading-md">NCAAM</span></a>
+					</div>
+					{% endif %}
+					<div class="site-header-link">
+						<a href="/game-count"><span class="heading-md">Game Count</span></a>
+					</div>
+					<div class="site-header-link">
+						<a href="/teams"><span class="heading-md">Teams</span></a>
+					</div>
+					<div class="site-header-link">
+						<a href="/about"><span class="heading-md">About</span></a>
+					</div>
+				</nav>
 				<div class="site-header-toggle">
 					<div id="theme-toggle-root"></div>
 				</div>
 			</header>
+			<script>
+				(function () {
+					var btn = document.querySelector('.site-header-menu-toggle');
+					var nav = document.querySelector('.site-header-nav');
+					if (!btn || !nav) return;
+					btn.addEventListener('click', function () {
+						var open = nav.classList.toggle('site-header-nav--open');
+						btn.setAttribute('aria-expanded', open);
+					});
+					nav.addEventListener('click', function (e) {
+						if (e.target.closest('a')) {
+							nav.classList.remove('site-header-nav--open');
+							btn.setAttribute('aria-expanded', 'false');
+						}
+					});
+					document.addEventListener('click', function (e) {
+						if (!e.target.closest('.site-header')) {
+							nav.classList.remove('site-header-nav--open');
+							btn.setAttribute('aria-expanded', 'false');
+						}
+					});
+				})();
+			</script>
 			<div class="layout-container">
 				<main class="layout-content">{{ content | safe }}</main>
 				<footer class="site-footer">
