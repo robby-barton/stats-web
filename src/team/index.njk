@@ -4,7 +4,23 @@ layout: layouts/base.njk
 
 {% if teamData %}
 <script type="application/json" id="team-data">{{ teamData | json | safe }}</script>
-<div data-island="team" data-props-id="team-data"></div>
+<div class="team-name">
+	<div class="team-logo">
+		<img id="team-logo" alt="{{ teamData.team.name }}" />
+	</div>
+	<div class="team-name-text">
+		<span>{{ teamData.team.name }}</span>
+	</div>
+</div>
+{% set sportCount = teamData.sports | length %}
+{% if sportCount > 1 %}
+<div class="team-tabs">
+	{% for key, value in teamData.sports %}
+	<button class="team-tab" data-sport-tab="{{ key }}">{{ key | upper }}</button>
+	{% endfor %}
+</div>
+{% endif %}
+<div id="chartDiv" style="width: 100%; height: 400px;"></div>
 <noscript>
 	<p>JavaScript is required to view team history.</p>
 </noscript>

@@ -21,7 +21,7 @@ export default defineConfig({
 			input: {
 				ranking: path.resolve(__dirname, 'src/client/ranking.tsx'),
 				teams: path.resolve(__dirname, 'src/client/teams.tsx'),
-				team: path.resolve(__dirname, 'src/client/team.tsx'),
+				team: path.resolve(__dirname, 'src/client/team.ts'),
 				gameCount: path.resolve(__dirname, 'src/client/game-count.tsx'),
 			},
 			output: {
