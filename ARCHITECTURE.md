@@ -94,7 +94,6 @@ Each entry point in `src/client/` corresponds to a Vite input in
 | `team.tsx`       | `team`         | `/team/{id}/`     |
 | `teams.tsx`      | `teams`        | `/teams/`         |
 | `game-count.tsx` | `game-count`   | `/game-count/`    |
-| `theme-toggle.tsx` | `theme-toggle` | All pages (layout) |
 
 ## Component Hierarchy
 
@@ -118,10 +117,9 @@ src/client/game-count.tsx
   └─ components/games.tsx
        └─ components/gameTable.tsx
 
-src/client/theme-toggle.tsx
-  └─ components/themeToggle.tsx
-       └─ components/themeProvider.tsx
 ```
+
+The theme toggle is implemented as vanilla JS in `base.njk` (not a React island).
 
 ## Eleventy Data Pipeline
 

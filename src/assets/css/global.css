@@ -133,8 +133,6 @@ td {
 .site-header-toggle {
 	width: 2.5rem;
 	min-height: 1.25rem;
-	opacity: 0;
-	animation: footerFadeIn 0.2s ease-in 0.2s forwards;
 }
 
 .site-header-nav {
@@ -153,6 +151,53 @@ td {
 	padding: 0.5rem;
 	font-size: 1.5rem;
 	line-height: 1;
+}
+
+.theme-toggle-btn {
+	--toggle-width: 2.5rem;
+	--toggle-height: 1.25rem;
+	--toggle-padding: 0.125rem;
+	position: relative;
+	float: right;
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+	font-size: 0.7rem;
+	width: var(--toggle-width);
+	height: var(--toggle-height);
+	padding: var(--toggle-padding);
+	border: 0;
+	border-radius: calc(var(--toggle-width) / 2);
+	cursor: pointer;
+	background: var(--color-bg-toggle);
+	transition: background 0.25s ease-in-out, box-shadow 0.25s ease-in-out;
+}
+
+.theme-toggle-btn:focus {
+	outline-offset: 5px;
+}
+
+.theme-toggle-btn:focus:not(:focus-visible) {
+	outline: none;
+}
+
+.theme-toggle-btn:hover {
+	box-shadow: 0 0 5px 2px var(--color-bg-toggle);
+}
+
+.theme-toggle-thumb {
+	position: absolute;
+	top: var(--toggle-padding);
+	left: var(--toggle-padding);
+	width: calc(var(--toggle-height) - (var(--toggle-padding) * 2));
+	height: calc(var(--toggle-height) - (var(--toggle-padding) * 2));
+	border-radius: 50%;
+	background: white;
+	transition: transform 0.25s ease-in-out;
+}
+
+body[data-theme="dark"] .theme-toggle-thumb {
+	transform: translate3d(calc(var(--toggle-width) - var(--toggle-height)), 0, 0);
 }
 
 .heading-md {
