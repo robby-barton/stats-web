@@ -18,7 +18,7 @@ module.exports = async function () {
 	return {
 		title: null,
 		description: 'Computer rankings for FBS and FCS college football seasons.',
-		islandScript: assetPath('src/client/ranking.tsx'),
+		islandScript: assetPath('src/client/ranking.ts'),
 		rankingData: {
 			availRanks: avail,
 			ranking,

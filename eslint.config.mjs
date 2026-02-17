@@ -46,7 +46,6 @@ const eslintConfig = [
 		},
 
 		settings: {
-			'import/core-modules': ['react', 'react-dom', 'react-dom/client'],
 			'import/resolver': {
 				typescript: {
 					project: './tsconfig.json',
@@ -89,10 +88,10 @@ const eslintConfig = [
 		),
 	).map((config) => ({
 		...config,
-		files: ['**/*.ts', '**/*.tsx'],
+		files: ['**/*.ts'],
 	})),
 	{
-		files: ['**/*.ts', '**/*.tsx'],
+		files: ['**/*.ts'],
 
 		plugins: {
 			'@typescript-eslint': fixupPluginRules(typescriptEslint),

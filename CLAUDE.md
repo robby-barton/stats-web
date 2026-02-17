@@ -1,7 +1,7 @@
 # stats-web
 
-Static site for college sports computer rankings. Built with Eleventy and React
-islands for client-side interactivity. Data is written to PostgreSQL by
+Static site for college sports computer rankings. Built with Eleventy and vanilla
+TypeScript islands for client-side interactivity. Data is written to PostgreSQL by
 [stats-go](https://github.com/robby-barton/stats-go) and read at build time via
 direct SQL queries.
 
@@ -36,12 +36,12 @@ for the full cross-repo process.
 src/
   _data/              Eleventy global data files (DB queries at build time)
   _includes/          Nunjucks layout templates
-  client/             React island entry points (hydration targets)
-    island-utils.ts   Shared hydration utility
-    ranking.tsx       Ranking page island
-    team.tsx          Team page island
-    teams.tsx         Teams list island
-    game-count.tsx    Game count island
+  client/             Vanilla TS island entry points
+    island-utils.ts   Shared island props utility
+    ranking.ts        Ranking page island
+    team.ts           Team page island
+    teams.ts          Teams list island
+    game-count.ts     Game count island
   ranking/            Ranking page (Eleventy template + data)
   team/               Team detail page
   teams/              Teams list page
@@ -50,7 +50,7 @@ src/
   assets/
     css/              Stylesheets
     build/            Vite output (JS bundles, generated)
-components/           React components (shared across islands)
+components/           Vanilla TS components (shared across islands)
 lib/                  TypeScript types, constants, and utilities
 eleventy/lib/         CJS modules for Eleventy build-time data
   db.js               SQL queries (postgres package)
@@ -68,15 +68,15 @@ See [ARCHITECTURE.md](ARCHITECTURE.md) for the full data flow and component
 hierarchy.
 
 Key patterns:
-- **Eleventy + React islands** — Eleventy generates static HTML at build time;
-  React hydrates interactive components client-side
+- **Eleventy + vanilla TS islands** — Eleventy generates static HTML at build
+  time; vanilla TypeScript initializes interactive components client-side
 - **Build-time DB access** — `eleventy/lib/db.js` queries PostgreSQL directly
   during `yarn build`. No runtime API server.
 - **Dual module systems** — `eleventy/lib/` is CJS (required by Eleventy);
   `lib/` and `components/` are ESM/TypeScript (bundled by Vite)
-- **Island hydration** — Templates mark DOM nodes with `data-island` and
+- **Island initialization** — Templates mark DOM nodes with `data-island` and
   `data-props-id` attributes; `island-utils.ts` reads serialized JSON props
-  and hydrates React into the target node
+  and each island script initializes its DOM into the target node
 - **Vite builds assets independently** — `yarn build:assets` produces JS
   bundles in `src/assets/build/`; Eleventy copies them to `_site/`
 - **Path aliases** — `@components`, `@lib`, `@styles` (configured in
@@ -84,8 +84,7 @@ Key patterns:
 
 ## Conventions
 
-- CSS modules (`*.module.css`) for component styles. No CSS-in-JS beyond
-  Emotion usage in amcharts integration.
+- CSS modules (`*.module.css`) for component styles.
 - Prettier + ESLint for formatting and linting.
 - TypeScript for all `components/`, `lib/`, and `src/client/` files.
 - CJS for `eleventy/lib/` (Eleventy does not support ESM config).
@@ -100,9 +99,9 @@ Key patterns:
    `eleventy/lib/utils.js`, which calls `eleventy/lib/db.js`.
 3. SQL results are transformed into page data (ranking lists, team paths, etc.).
 4. Eleventy renders Nunjucks templates with the data, embedding serialized JSON
-   for React islands.
-5. Vite bundles React island entry points into `src/assets/build/`.
-6. At page load, each island reads its `data-props-id` JSON and hydrates.
+   for vanilla TS islands.
+5. Vite bundles island entry points into `src/assets/build/`.
+6. At page load, each island reads its `data-props-id` JSON and initializes.
 
 ## Database Queries
 

@@ -14,16 +14,14 @@
     "dev:sync": "chokidar \"src/assets/build/**/*\" -c \"node -e \\\"require('fs').writeFileSync('src/_data/.assets-stamp', Date.now().toString())\\\"\"",
     "dev:eleventy": "concurrently -k \"yarn dev:assets\" \"yarn dev:sync\" \"yarn dev:11ty\"",
     "dev:11ty": "eleventy --serve",
-    "clean": "rm -rf _site",
-    "dev": "yarn clean && yarn dev:eleventy",
+    "clean": "rm -rf _site src/assets/build",
+    "dev": "yarn clean && yarn build:assets && yarn dev:eleventy",
     "build": "yarn clean && yarn build:eleventy",
     "test": "vitest run",
     "test:watch": "vitest"
   },
   "dependencies": {
-    "@tanstack/react-table": "^8.10.6",
-    "postgres": "^3.3.4",
-    "preact": "^10.25.4"
+    "postgres": "^3.3.4"
   },
   "devDependencies": {
     "@11ty/eleventy": "^3.0.0",
@@ -31,7 +29,6 @@
     "@eslint/eslintrc": "^3.1.0",
     "@eslint/js": "^9.13.0",
     "@types/node": "24.10.12",
-    "@preact/preset-vite": "^2.9.3",
     "@typescript-eslint/eslint-plugin": "^8.11.0",
     "@typescript-eslint/parser": "^8.11.0",
     "chokidar-cli": "^3.0.0",

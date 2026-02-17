@@ -8,7 +8,7 @@ module.exports = async function () {
 	return {
 		title: 'Teams',
 		description: 'Teams included in one or more rankings',
-		islandScript: assetPath('src/client/teams.tsx'),
+		islandScript: assetPath('src/client/teams.ts'),
 		teamsData: {
 			teams,
 		},

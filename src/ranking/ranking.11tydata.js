@@ -10,7 +10,7 @@ module.exports = {
 	permalink: (data) =>
 		`/${data.rankingPath.params.sport}/ranking/${data.rankingPath.params.division}/${data.rankingPath.params.year}/${data.rankingPath.params.week}/`,
 	eleventyComputed: {
-		islandScript: (data) => `/assets/build/${data.viteManifest['src/client/ranking.tsx'].file}`,
+		islandScript: (data) => `/assets/build/${data.viteManifest['src/client/ranking.ts'].file}`,
 		title: (data) => {
 			const sport = data.rankingPath.params.sport;
 			const sportLabels = { ncaaf: 'NCAAF', ncaam: 'NCAAM' };
