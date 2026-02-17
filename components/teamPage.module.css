@@ -1,14 +1,14 @@
 .teamName {
 	display: flex;
 	padding: 0 1rem;
-	padding-top: 0.5rem;
+	padding-top: 1rem;
 	zoom: 2;
 	font-weight: 600;
 }
 
 .tabs {
 	display: flex;
-	margin-top: 1rem;
+	margin-top: 2rem;
 	padding: 0 1rem;
 	border-bottom: 1px solid var(--color-text-primary);
 }
