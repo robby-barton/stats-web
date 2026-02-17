@@ -6,7 +6,6 @@ import globals from 'globals';
 import tsParser from '@typescript-eslint/parser';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import reactHooks from 'eslint-plugin-react-hooks';
 import js from '@eslint/js';
 import { FlatCompat } from '@eslint/eslintrc';
 
@@ -35,7 +34,6 @@ const eslintConfig = [
 			'@typescript-eslint': fixupPluginRules(typescriptEslint),
 			prettier: fixupPluginRules(prettier),
 			import: fixupPluginRules(_import),
-			'react-hooks': fixupPluginRules(reactHooks),
 		},
 
 		languageOptions: {
@@ -48,6 +46,7 @@ const eslintConfig = [
 		},
 
 		settings: {
+			'import/core-modules': ['react', 'react-dom', 'react-dom/client'],
 			'import/resolver': {
 				typescript: {
 					project: './tsconfig.json',
@@ -99,7 +98,6 @@ const eslintConfig = [
 			'@typescript-eslint': fixupPluginRules(typescriptEslint),
 			prettier: fixupPluginRules(prettier),
 			import: fixupPluginRules(_import),
-			'react-hooks': fixupPluginRules(reactHooks),
 		},
 
 		languageOptions: {

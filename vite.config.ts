@@ -1,14 +1,18 @@
 import path from 'path';
 import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
+import preact from '@preact/preset-vite';
 
 export default defineConfig({
-	plugins: [react()],
+	plugins: [preact()],
 	resolve: {
 		alias: {
 			'@components': path.resolve(__dirname, 'components'),
 			'@lib': path.resolve(__dirname, 'lib'),
 			'@styles': path.resolve(__dirname, 'styles'),
+			react: 'preact/compat',
+			'react-dom': 'preact/compat',
+			'react-dom/client': 'preact/compat',
+			'react/jsx-runtime': 'preact/jsx-runtime',
 		},
 	},
 	build: {
