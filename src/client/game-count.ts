@@ -1,7 +1,4 @@
-import { createRoot } from 'react-dom/client';
-
-import Games from '@components/games';
-import { ThemeProvider } from '@components/themeProvider';
+import { initGames } from '@components/games';
 import { TeamGames } from '@lib/types';
 
 import { getIslandProps } from './island-utils';
@@ -14,9 +11,5 @@ const island = getIslandProps<GameCountData>('game-count');
 
 if (island) {
 	const { root, props } = island;
-	createRoot(root).render(
-		<ThemeProvider>
-			<Games games={props.games} />
-		</ThemeProvider>,
-	);
+	initGames(root, props.games);
 }

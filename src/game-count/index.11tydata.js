@@ -6,7 +6,7 @@ module.exports = async function () {
 	return {
 		title: 'Game Count',
 		description: 'Count of games played by day per team',
-		islandScript: assetPath('src/client/game-count.tsx'),
+		islandScript: assetPath('src/client/game-count.ts'),
 		gameCountData: {
 			games,
 		},

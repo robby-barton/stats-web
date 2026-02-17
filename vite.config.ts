@@ -1,32 +1,27 @@
 import path from 'path';
 import { defineConfig } from 'vite';
-import preact from '@preact/preset-vite';
 
 export default defineConfig({
-	plugins: [preact()],
+	publicDir: false,
 	resolve: {
 		alias: {
 			'@components': path.resolve(__dirname, 'components'),
 			'@lib': path.resolve(__dirname, 'lib'),
 			'@styles': path.resolve(__dirname, 'styles'),
-			react: 'preact/compat',
-			'react-dom': 'preact/compat',
-			'react-dom/client': 'preact/compat',
-			'react/jsx-runtime': 'preact/jsx-runtime',
 		},
 	},
 	build: {
 		manifest: true,
 		cssCodeSplit: false,
 		outDir: 'src/assets/build',
-		emptyOutDir: true,
+		emptyOutDir: false,
 		sourcemap: true,
 		rollupOptions: {
 			input: {
-				ranking: path.resolve(__dirname, 'src/client/ranking.tsx'),
-				teams: path.resolve(__dirname, 'src/client/teams.tsx'),
+				ranking: path.resolve(__dirname, 'src/client/ranking.ts'),
+				teams: path.resolve(__dirname, 'src/client/teams.ts'),
 				team: path.resolve(__dirname, 'src/client/team.ts'),
-				gameCount: path.resolve(__dirname, 'src/client/game-count.tsx'),
+				gameCount: path.resolve(__dirname, 'src/client/game-count.ts'),
 			},
 			output: {
 				entryFileNames: '[name]-[hash].js',
