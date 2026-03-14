@@ -1,3 +1,4 @@
+import '../assets/css/global.css';
 import { initRanking } from '@components/ranking';
 import { AvailRanks, Rank } from '@lib/types';
 

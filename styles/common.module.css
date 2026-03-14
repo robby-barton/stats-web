@@ -47,7 +47,7 @@
 }
 
 .lightText {
-  color: #666;
+  color: var(--color-text-secondary);
 }
 
 .inputArea {
@@ -55,7 +55,7 @@
 	width: 100%;
 	padding: 0 1rem;
 	position: sticky;
-	top: 4rem;
+	top: 3.5rem;
 	height: 3rem;
 	line-height: 3rem;
 	z-index: 2;

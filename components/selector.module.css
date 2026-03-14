@@ -1,18 +1,26 @@
 .selectorStyling {
 	display: flex;
+	gap: 0.25rem;
 }
 
 .selectorStyling select {
-	border-radius: 5rem;
-	border: 0.25px solid;
+	border-radius: 0.375rem;
+	border: 1px solid var(--color-border);
 	cursor: inherit;
 	outline: none;
+	background: var(--color-bg-surface);
+	color: var(--color-text-primary);
 	font-family: inherit;
-	font-size: 1rem;
+	font-size: 0.875rem;
 	font-weight: 550;
 	line-height: inherit;
 	text-align-last: center;
 	text-align: center;
+}
+
+.selectorStyling select:focus {
+	border-color: var(--color-accent);
+	box-shadow: 0 0 0 3px rgb(37 99 235 / 0.15);
 }
 
 .divisionDropdown {
