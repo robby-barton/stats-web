@@ -7,7 +7,6 @@ module.exports = function (eleventyConfig) {
 	eleventyConfig.addFilter('json', (value) => JSON.stringify(value));
 
 	eleventyConfig.addPassthroughCopy({ public: '.' });
-	eleventyConfig.addPassthroughCopy({ 'src/assets/css': 'assets/css' });
 	eleventyConfig.addPassthroughCopy({ 'src/assets/build': 'assets/build' });
 
 	return {
