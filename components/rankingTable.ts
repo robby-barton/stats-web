@@ -33,7 +33,10 @@ const COLUMNS: Column[] = [
 		header: 'Final',
 		sortable: true,
 		sortDescFirst: true,
-		format: (val) => (val as number).toFixed(5),
+		// final_raw arrives as a string when the DB column type is numeric
+		// (postgres.js returns numerics as strings); coerce defensively.
+		format: (val) => Number(val).toFixed(5),
+		sortValue: (row: Rank) => Number(row.final_raw),
 		isLast: true,
 	},
 ];
