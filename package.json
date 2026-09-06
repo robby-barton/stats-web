@@ -18,6 +18,7 @@
     "dev": "yarn clean && yarn build:assets && yarn dev:eleventy",
     "build": "yarn clean && yarn build:eleventy",
     "test": "vitest run",
+    "typecheck": "tsc --noEmit",
     "test:watch": "vitest"
   },
   "dependencies": {

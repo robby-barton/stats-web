@@ -16,3 +16,11 @@ jobs:
   test:
     name: Test
     uses: ./.github/workflows/test.yml
+
+  typecheck:
+    name: Typecheck
+    uses: ./.github/workflows/typecheck.yml
+
+  build-assets:
+    name: Build Assets
+    uses: ./.github/workflows/build-assets.yml
