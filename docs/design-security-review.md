@@ -14,7 +14,7 @@ a product decision.
 
 ## Major findings
 
-### 1. [ ] XSS via unsafe JSON serialization
+### 1. [x] XSS via unsafe JSON serialization
 
 - `eleventy.config.cjs:7` registers the `json` filter as bare `JSON.stringify`,
   embedded as `{{ data | json | safe }}` inside
@@ -29,7 +29,10 @@ a product decision.
   extract to a testable CJS module; add a regression test with a
   `</script><script>` payload and a `JSON.parse` round-trip check.
 
-### 2. [ ] CI never builds or type-checks
+  **Fixed** on `chore/design-security-cleanup`: `eleventy/lib/serialize.js` +
+  regression tests; `json` filter rewired.
+
+### 2. [x] CI never builds or type-checks
 
 - `.github/workflows/ci.yml` → `lint.yml` + `test.yml` run lint and 5 unit
   tests only. Vite bundling, manifest lookups, and SQL-backed template
@@ -45,7 +48,11 @@ a product decision.
 - **[~] Deferred:** an Eleventy fixture-DB build job in CI (needs a schema
   fixture; coordinate with stats-go).
 
-### 3. [ ] Dead duplicate data layer in the client tree
+  **Fixed** on `chore/design-security-cleanup`: `yarn typecheck` script
+  (`moduleResolution: "bundler"`, `css-modules.d.ts`); new `typecheck` and
+  `build-assets` reusable workflows wired into `ci.yml`.
+
+### 3. [x] Dead duplicate data layer in the client tree
 
 - `lib/utils.ts` + `lib/dbFuncs.ts` are a stale, partial ESM mirror of the live
   CJS layer (`eleventy/lib/utils.js` + `db.js`); the only reference to either is
@@ -55,6 +62,10 @@ a product decision.
 - **Fix:** delete both files; add an ESLint `no-restricted-imports` guard
   (`postgres`/`dotenv`/`eleventy/*`) for the client tree to enforce the
   CJS/ESM boundary.
+
+  **Fixed** on `chore/design-security-cleanup`: both files deleted;
+  `no-restricted-imports` guard added to `eslint.config.mjs` for the client
+  tree.
 
 ### 4. [~] Islands are not statically rendered (needs product decision)
 
