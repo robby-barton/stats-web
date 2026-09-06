@@ -112,6 +112,27 @@ const eslintConfig = [
 			'@typescript-eslint/no-unused-vars': 'off',
 		},
 	},
+	{
+		// Client tree: forbid the Node-only data layer (CJS tree eleventy/lib/, the
+		// postgres driver, dotenv). See CLAUDE.md — the CJS and ESM module trees
+		// are separate. Eleventy data files use require(), which this rule does
+		// not flag, so build-time code is unaffected.
+		files: ['lib/**', 'components/**', 'src/**'],
+		rules: {
+			'no-restricted-imports': [
+				'error',
+				{
+					patterns: [
+						{
+							group: ['postgres', 'dotenv', 'eleventy', 'eleventy/**', '**/eleventy/**'],
+							message:
+								'The client tree must not import the Node-only data layer (eleventy/lib, postgres, dotenv). See CLAUDE.md.',
+						},
+					],
+				},
+			],
+		},
+	},
 ];
 
 export default eslintConfig;
