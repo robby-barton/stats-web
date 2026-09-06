@@ -129,6 +129,26 @@ a product decision.
       currently hardcoded/integer, but the pattern is fragile.
 - [ ] Sitemap `lastmod` uses `new Date().toISOString()` — builds are
       non-reproducible.
+- [ ] Tailwind v4 automatic content detection scans every non-gitignored
+      file — adding `docs/design-security-review.md` changed the CSS bundle
+      (added unused `.fixed`/`.inline`/`.filter` utilities, new hash) because
+      the prose contains those words. Scope sources explicitly with `@source`
+      in `src/assets/css/global.css` (src/, components/, lib/, styles/) so
+      build output only depends on actual source files.
+
+## Build verification (2026-09-06, PR branch vs master @ ed6adda)
+
+Full `yarn build` against the dev database on both trees, then compared all
+3,746 generated pages:
+
+- **Props:** 3,742 `<script type="application/json">` blocks — 0 parse
+  failures, 0 raw `<` sequences (escaping active), 0 semantic diffs vs master
+  (`deepStrictEqual` on every parsed block).
+- **HTML outside props blocks:** 0 diffs after normalizing the CSS asset hash
+  (the hash changed only because of the Tailwind content-detection item above;
+  JS bundles byte-identical).
+- `yarn build:11ty` is still not exercised in CI — see the deferred fixture-DB
+  build job under finding 2.
 
 ## Verified clean (do not re-audit without cause)
 
