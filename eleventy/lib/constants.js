@@ -1,4 +1,3 @@
-const DIVISIONS = ['fbs', 'fcs'];
 const CHART_MAX_Y = 150;
 const SPORTS = {
 	ncaaf: { dbSport: 'ncaaf', divisions: ['fbs', 'fcs'] },
@@ -6,7 +5,6 @@ const SPORTS = {
 };
 
 module.exports = {
-	DIVISIONS,
 	CHART_MAX_Y,
 	SPORTS,
 };
