@@ -17,7 +17,6 @@ export default defineConfig({
 		cssCodeSplit: false,
 		outDir: 'src/assets/build',
 		emptyOutDir: false,
-		sourcemap: true,
 		rollupOptions: {
 			input: {
 				ranking: path.resolve(__dirname, 'src/client/ranking.ts'),
