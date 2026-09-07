@@ -18,5 +18,5 @@ export function nextSort(state: SortState, col: string, defaultDesc: boolean): S
 
 export function comparator<T>(a: T, b: T, dir: 'asc' | 'desc'): number {
 	const result = a > b ? 1 : a < b ? -1 : 0;
-	return dir === 'desc' ? -result : result;
+	return dir === 'desc' ? 0 - result : result;
 }
