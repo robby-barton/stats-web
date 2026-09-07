@@ -10,8 +10,37 @@ type SelectorProps = {
 	sport: string;
 };
 
+export type SelectorInitials = {
+	sport: string;
+	division: string;
+	year: string;
+	week: string;
+};
+
+/** Target URL when the division dropdown changes. */
+export function divisionTargetUrl(initials: SelectorInitials, newDivision: string): string {
+	return `/${initials.sport}/ranking/${newDivision}/${initials.year}/${initials.week}`;
+}
+
+/**
+ * Target URL when the year dropdown changes. The "final" week only exists for
+ * years with a postseason, so a week pointing at the last week of a
+ * non-postseason year follows along as a plain week number.
+ */
+export function yearTargetUrl(availRanks: AvailRanks, initials: SelectorInitials, newYear: string): string {
+	if (!availRanks[initials.year].postseason && initials.week == availRanks[initials.year].weeks.toString()) {
+		return `/${initials.sport}/ranking/${initials.division}/${newYear}/final`;
+	}
+	return `/${initials.sport}/ranking/${initials.division}/${newYear}/${initials.week}`;
+}
+
+/** Target URL when the week dropdown changes. */
+export function weekTargetUrl(initials: SelectorInitials, newWeek: string): string {
+	return `/${initials.sport}/ranking/${initials.division}/${initials.year}/${newWeek}`;
+}
+
 export function renderSelector({ availRanks, division, year, week, sport }: SelectorProps): HTMLElement {
-	const initials = {
+	const initials: SelectorInitials = {
 		sport,
 		division: division.toLowerCase(),
 		year: year.toString(),
@@ -35,7 +64,7 @@ export function renderSelector({ availRanks, division, year, week, sport }: Sele
 		}
 		divSelect.value = initials.division;
 		divSelect.addEventListener('change', () => {
-			window.location.href = `/${initials.sport}/ranking/${divSelect.value}/${initials.year}/${initials.week}`;
+			window.location.href = divisionTargetUrl(initials, divSelect.value);
 		});
 		wrapper.appendChild(divSelect);
 	}
@@ -53,11 +82,7 @@ export function renderSelector({ availRanks, division, year, week, sport }: Sele
 	}
 	yearSelect.value = initials.year;
 	yearSelect.addEventListener('change', () => {
-		if (!availRanks[initials.year].postseason && initials.week == availRanks[initials.year].weeks.toString()) {
-			window.location.href = `/${initials.sport}/ranking/${initials.division}/${yearSelect.value}/final`;
-		} else {
-			window.location.href = `/${initials.sport}/ranking/${initials.division}/${yearSelect.value}/${initials.week}`;
-		}
+		window.location.href = yearTargetUrl(availRanks, initials, yearSelect.value);
 	});
 	wrapper.appendChild(yearSelect);
 
@@ -80,7 +105,7 @@ export function renderSelector({ availRanks, division, year, week, sport }: Sele
 	}
 	weekSelect.value = initials.week;
 	weekSelect.addEventListener('change', () => {
-		window.location.href = `/${initials.sport}/ranking/${initials.division}/${initials.year}/${weekSelect.value}`;
+		window.location.href = weekTargetUrl(initials, weekSelect.value);
 	});
 	wrapper.appendChild(weekSelect);
 

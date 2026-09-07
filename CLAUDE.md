@@ -28,6 +28,7 @@ for the full cross-repo process.
 - **Build:** `yarn build`
 - **Dev:** `yarn dev`
 - **Test:** `yarn test`
+- **Typecheck:** `yarn typecheck`
 - **Lint:** `yarn lint`
 
 ## Repository Layout
@@ -47,6 +48,7 @@ src/
   teams/              Teams list page
   game-count/         Game count page
   about/              About page
+  404.njk             404 page (smart redirects via public/js/404.js)
   assets/
     css/              Stylesheets
     build/            Vite output (JS bundles, generated)
@@ -55,10 +57,14 @@ lib/                  TypeScript types, constants, and utilities
 eleventy/lib/         CJS modules for Eleventy build-time data
   db.js               SQL queries (postgres package)
   utils.js            Business logic and data transforms
-  constants.js        DIVISIONS, CHART_MAX_Y
-scripts/              Build helper scripts
+  constants.js        SPORTS, CHART_MAX_Y
+  manifest.js         Vite manifest lookup for asset paths
+  serialize.js        XSS-safe JSON serialization for embedded props
 styles/               Shared CSS modules
 public/               Static assets (copied to output root)
+  js/                 Plain JS served as-is under the strict CSP
+                      (site.js header/menu/theme wiring, 404.js redirects)
+docs/                 Project documentation (design reviews, etc.)
 _site/                Build output (generated)
 ```
 

@@ -133,34 +133,64 @@ a product decision.
 
 ## Minor cleanup
 
-- [ ] Delete `src/_data/availableTeams.js` — consumed by no template.
-- [ ] `src/client/team.ts` bypasses the `data-island`/`data-props-id` contract
+- [x] Delete `src/_data/availableTeams.js` — consumed by no template.
+
+      **Fixed** on `chore/minor-cleanup`: data file deleted; the underlying
+      `utils.availableTeams()` util stays (used internally by the ranking/team
+      path loaders).
+- [x] `src/client/team.ts` bypasses the `data-island`/`data-props-id` contract
       (reads `#team-data` directly) and duplicates logo selection/ESPN-URL
       logic from `teamNameRenderer.ts` — unify.
-- [ ] Constants drift: unused exports in `lib/constants.ts` (`REVALIDATE`,
+
+      **Fixed** on `chore/minor-cleanup`: team page mounts via
+      `data-island`/`data-props-id` and uses `getIslandProps`; shared logo
+      helper extracted to `lib/logo.ts`.
+- [x] Constants drift: unused exports in `lib/constants.ts` (`REVALIDATE`,
       `DIVISIONS`, `CHART_MAX_Y`, `SITE_TITLE`) and `eleventy/lib/constants.js`
       (`DIVISIONS`); division lists hard-coded a third time in `404.njk`
       inline JS.
-- [ ] Test coverage: `lib/teamChart.ts` (633 lines), `lib/tableSort.ts`,
+
+      **Fixed** on `chore/minor-cleanup`: unused exports removed;
+      `public/js/404.js` (externalized by the hardening batch) now derives its
+      sport list from the serialized `#available-rankings` JSON. The per-sport
+      division lists stay hard-coded in 404.js — that JSON carries no division
+      info; serializing a sport→divisions map into the page would be needed to
+      remove them.
+- [~] Test coverage: `lib/teamChart.ts` (633 lines), `lib/tableSort.ts`,
       `components/selector.ts`, and all components are untested (suite is 5
       tests over `eleventy/lib/utils.js`).
+
+      **Partially fixed** on `chore/minor-cleanup`: `lib/tableSort.ts`, the
+      selector URL builders, and the shared logo helper (`lib/logo.ts`) are
+      covered. **Open follow-up:** `lib/teamChart.ts` needs refactoring to
+      make its chart-building functions pure before it can be unit-tested.
 - [ ] `sourcemap: true` ships source maps to production (`vite.config.ts`) —
       disable or upload privately.
-- [ ] Doc drift: README still says React/`cfb`/`cbb` and references a
+- [x] Doc drift: README still says React/`cfb`/`cbb` and references a
       nonexistent progress script; ARCHITECTURE.md omits `manifest.js`/
       `viteManifest.js`, presents the dead `lib` files as client modules, and
       overstates static fallback; CLAUDE.md lists a nonexistent `scripts/` dir.
+
+      **Fixed** on `chore/minor-cleanup`.
 - [ ] `src/ncaaf/index.njk` / `src/ncaam/index.njk` interpolate `sportNav`
       values into JS string literals and a meta-refresh attribute — inputs are
       currently hardcoded/integer, but the pattern is fragile.
-- [ ] Sitemap `lastmod` uses `new Date().toISOString()` — builds are
+- [x] Sitemap `lastmod` uses `new Date().toISOString()` — builds are
       non-reproducible.
-- [ ] Tailwind v4 automatic content detection scans every non-gitignored
+
+      **Fixed** on `chore/minor-cleanup`: `lastmod` is now the HEAD commit
+      timestamp (`git log -1 --format=%cI`); falls back to the epoch when git
+      is unavailable.
+- [x] Tailwind v4 automatic content detection scans every non-gitignored
       file — adding `docs/design-security-review.md` changed the CSS bundle
       (added unused `.fixed`/`.inline`/`.filter` utilities, new hash) because
       the prose contains those words. Scope sources explicitly with `@source`
       in `src/assets/css/global.css` (src/, components/, lib/, styles/) so
       build output only depends on actual source files.
+
+      **Fixed** on `chore/minor-cleanup`: `@import 'tailwindcss' source(none)`
+      plus explicit `@source` directives; the four doc-prose utilities are
+      gone from the bundle and all source-derived classes are unchanged.
 
 ## Build verification (2026-09-06, PR branch vs master @ ed6adda)
 

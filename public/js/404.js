@@ -11,7 +11,19 @@
 		return;
 	}
 
-	var knownSports = ['ncaaf', 'ncaam'];
+	// Sport keys are derived from the serialized rankings JSON rather than a
+	// hard-coded list. (Divisions are not present in that JSON, so the
+	// per-sport division lists below stay hard-coded.)
+	var dataEl = document.getElementById('available-rankings');
+	if (!dataEl || !dataEl.textContent) return;
+	var allAvail;
+	try {
+		allAvail = JSON.parse(dataEl.textContent);
+	} catch (e) {
+		return;
+	}
+
+	var knownSports = Object.keys(allAvail);
 	var sport = '';
 	var rankingParts = parts;
 
@@ -27,10 +39,6 @@
 	var division = rankingParts[1] ? rankingParts[1].toLowerCase() : '';
 	var year = rankingParts[2] || '';
 	var week = rankingParts[3] || '';
-
-	var dataEl = document.getElementById('available-rankings');
-	if (!dataEl || !dataEl.textContent) return;
-	var allAvail = JSON.parse(dataEl.textContent);
 
 	var avail = sport ? allAvail[sport] : allAvail['ncaaf'];
 	var prefix = sport || 'ncaaf';
