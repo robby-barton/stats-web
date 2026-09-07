@@ -1,5 +1,13 @@
 @import '@fontsource-variable/inter';
-@import 'tailwindcss';
+@import 'tailwindcss' source(none);
+
+/* Explicit content sources. Automatic content detection would scan every
+   non-gitignored file (docs prose once changed the CSS bundle), so only the
+   actual source dirs are scanned. Paths are relative to this file. */
+@source '../../../src';
+@source '../../../components';
+@source '../../../lib';
+@source '../../../styles';
 
 /* Dark mode: applies when <html> has .dark */
 @variant dark (&:where(.dark, .dark *));
