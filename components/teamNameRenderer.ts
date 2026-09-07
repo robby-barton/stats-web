@@ -1,29 +1,15 @@
 import styles from '@components/teamName.module.css';
-import { ERROR_IMAGES } from '@lib/constants';
-import { isAllowedLogoUrl } from '@lib/logoHosts';
+import { getLogoSrc } from '@lib/logo';
 import { Team } from '@lib/types';
 
 function getTheme(): string {
 	return (document.body.dataset.theme as string) || 'light';
 }
 
-function getImgSrc(mode: string, team: Team): string {
-	const errImg = ERROR_IMAGES[team.team_id % 3];
-	const candidate = mode === 'dark' ? team.logo_dark : team.logo;
-	if (!candidate || !isAllowedLogoUrl(candidate)) return errImg;
-	return candidate;
-}
-
-function espnLoader(src: string, width: number): string {
-	return `https://a.espncdn.com/combiner/i?img=${src}&w=${width}&h=${width}&scale=crop&cquality=75&location=origin`;
-}
-
 function buildLogoImg(team: Team): HTMLImageElement {
 	const mode = getTheme();
-	const raw = getImgSrc(mode, team);
-	const sliceIndex = raw.indexOf('/i/teamlogos/ncaa');
 	const img = document.createElement('img');
-	img.src = sliceIndex < 0 ? raw : espnLoader(raw.slice(sliceIndex), 64);
+	img.src = getLogoSrc(mode, team);
 	img.alt = team.name;
 	img.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:contain';
 	img.onerror = () => {
