@@ -45,8 +45,9 @@ a product decision.
 - **Fix:** add a `typecheck` script (moduleResolution `bundler` or scoped
   config; add `*.module.css` ambient declaration); run `typecheck` and
   `yarn build:assets` in CI.
-- **[~] Deferred:** an Eleventy fixture-DB build job in CI (needs a schema
-  fixture; coordinate with stats-go).
+- **[x] Won't do (decided 2026-09-07):** no fixture-DB CI job. The full
+  `yarn build` (Eleventy + DB) is verified manually after dependency updates
+  and significant merges instead.
 
   **Fixed** on `chore/design-security-cleanup`: `yarn typecheck` script
   (`moduleResolution: "bundler"`, `css-modules.d.ts`); new `typecheck` and
@@ -203,8 +204,8 @@ Full `yarn build` against the dev database on both trees, then compared all
 - **HTML outside props blocks:** 0 diffs after normalizing the CSS asset hash
   (the hash changed only because of the Tailwind content-detection item above;
   JS bundles byte-identical).
-- `yarn build:11ty` is still not exercised in CI — see the deferred fixture-DB
-  build job under finding 2.
+- `yarn build:11ty` is not exercised in CI (see finding 2: fixture-DB job
+  declined); verify with a manual full build after dependency updates.
 
 ## Verified clean (do not re-audit without cause)
 
