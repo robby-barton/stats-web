@@ -81,29 +81,55 @@ a product decision.
 
 ## Hardening (nice to have)
 
-- [ ] Security headers absent — `public/_headers` is cache-control only. Add
+- [x] Security headers absent — `public/_headers` is cache-control only. Add
       CSP (requires hashing/externalizing the three inline scripts in
       `src/_includes/layouts/base.njk`), `X-Content-Type-Options: nosniff`,
       `Referrer-Policy`, `frame-ancestors 'none'`.
-- [ ] DB-controlled logo URLs assigned directly to `img.src`
+
+      **Fixed** on `chore/hardening`: headers + strict script-src CSP added;
+      menu/theme scripts externalized to `public/js/site.js`, theme-paint
+      script hashed (`sha256-…` in `_headers`, regeneration documented there).
+- [x] DB-controlled logo URLs assigned directly to `img.src`
       (`components/teamNameRenderer.ts:18-24`, `src/client/team.ts:22-27`) —
       third-party visitor-tracking vector. Allowlist hosts or enforce via
       CSP `img-src`.
+
+      **Fixed** on `chore/hardening`: shared `lib/logoHosts.ts` https-host
+      allowlist (enforced at both call sites and mirrored in CSP `img-src`);
+      non-allowlisted URLs fall back to the error images.
 - [ ] Rotate/verify local credentials: `.env` holds a Cloudflare token; a
       production-looking DB credential sits in ignored
       `.next/standalone/.env`. Bounded git-history scan found no committed
       secrets, but rotation status unverified. Delete stale `.next/`, `.swc/`,
       `.wrangler/` leftovers.
-- [ ] Pin GitHub Actions to commit SHAs (`.github/workflows/lint.yml:10`,
+
+      Note: stale `.next/` artifacts deleted 2026-09-07; rotation still to
+      verify.
+- [x] Pin GitHub Actions to commit SHAs (`.github/workflows/lint.yml:10`,
       `test.yml:10` — currently floating `@v4` tags); enable Dependabot.
-- [ ] Cache promises for one Eleventy build instead of a 5-minute TTL
+
+      **Fixed** on `chore/hardening`: all `actions/*` uses pinned to full
+      commit SHAs; `.github/dependabot.yml` added (weekly github-actions +
+      npm, minor/patch grouped).
+- [x] Cache promises for one Eleventy build instead of a 5-minute TTL
       (`eleventy/lib/utils.js`) — TTL and the `eleventy.before` cache clear
       can disagree mid-build; in-flight promises aren't shared.
-- [ ] Better build-failure diagnostics: validate `DATABASE_URL` explicitly,
+
+      **Fixed** on `chore/hardening`: caches now store promises for one build
+      (concurrent calls share one fetch), cleared by `clearCaches()`; TTL
+      logic removed; cache tests added.
+- [x] Better build-failure diagnostics: validate `DATABASE_URL` explicitly,
       include sport/year context in data errors, make `manifest.js` report
       missing entries. (Failing the build is correct; the messages aren't.)
-- [ ] Decide the fate of `src/500.njk` (built but mapped by nothing) — host
+
+      **Fixed** on `chore/hardening`: `db.js` names both expected env vars,
+      `utils.js` "Not found" errors include sport (and division/year context
+      where available), `manifest.js` names the missing entry key and path.
+- [x] Decide the fate of `src/500.njk` (built but mapped by nothing) — host
       error-page config or delete.
+
+      **Decided** on `chore/hardening`: keep it — built to `500.html` for
+      host error-page mapping; no code change.
 
 ## Minor cleanup
 
