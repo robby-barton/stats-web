@@ -157,14 +157,17 @@ a product decision.
       division lists stay hard-coded in 404.js — that JSON carries no division
       info; serializing a sport→divisions map into the page would be needed to
       remove them.
-- [~] Test coverage: `lib/teamChart.ts` (633 lines), `lib/tableSort.ts`,
+- [~] Test coverage: `lib/tableSort.ts`,
       `components/selector.ts`, and all components are untested (suite is 5
       tests over `eleventy/lib/utils.js`).
 
       **Partially fixed** on `chore/minor-cleanup`: `lib/tableSort.ts`, the
       selector URL builders, and the shared logo helper (`lib/logo.ts`) are
-      covered. **Open follow-up:** `lib/teamChart.ts` needs refactoring to
-      make its chart-building functions pure before it can be unit-tested.
+      covered. **Fixed** on `refactor/chart-math`: the pure chart math
+      (coordinate scales, window/brush/zoom clamping, tick generation) was
+      extracted from `createChart` into `lib/chartMath.ts` and is covered by
+      unit tests in `lib/chartMath.test.mjs`; the canvas renderer in
+      `lib/teamChart.ts` remains untested by design (DOM/canvas glue).
 - [ ] `sourcemap: true` ships source maps to production (`vite.config.ts`) —
       disable or upload privately.
 - [x] Doc drift: README still says React/`cfb`/`cbb` and references a
