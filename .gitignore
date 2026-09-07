@@ -4,6 +4,7 @@ _site
 src/assets/build
 src/_data/.assets-stamp
 next-env.d.ts
+tsconfig.tsbuildinfo
 yarn-error.log
 coverage
 out

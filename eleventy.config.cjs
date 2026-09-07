@@ -1,10 +1,12 @@
 module.exports = function (eleventyConfig) {
+	const { serializeJson } = require('./eleventy/lib/serialize');
+
 	eleventyConfig.on('eleventy.before', () => {
 		const { clearCaches } = require('./eleventy/lib/utils');
 		clearCaches();
 	});
 
-	eleventyConfig.addFilter('json', (value) => JSON.stringify(value));
+	eleventyConfig.addFilter('json', serializeJson);
 
 	eleventyConfig.addPassthroughCopy({ public: '.' });
 	eleventyConfig.addPassthroughCopy({ 'src/assets/build': 'assets/build' });
