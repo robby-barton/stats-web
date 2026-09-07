@@ -46,11 +46,7 @@ a product decision.
   config; add `*.module.css` ambient declaration); run `typecheck` and
   `yarn build:assets` in CI.
 - **[~] Deferred:** an Eleventy fixture-DB build job in CI (needs a schema
-  fixture; coordinate with stats-go). Decision (2026-09-07): when implemented,
-  use a static schema fixture and run on PRs/pushes only — no scheduled
-  stats-go-master watchdog. Cross-repo drift (a stats-go migration that never
-  touches stats-web) is accepted: it will be noticed server-side, the build
-  fails loudly, and Cloudflare serves the last good deploy.
+  fixture; coordinate with stats-go).
 
   **Fixed** on `chore/design-security-cleanup`: `yarn typecheck` script
   (`moduleResolution: "bundler"`, `css-modules.d.ts`); new `typecheck` and
