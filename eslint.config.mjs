@@ -113,6 +113,16 @@ const eslintConfig = [
 		},
 	},
 	{
+		// Static browser scripts served as-is (public/js/) — plain JS, not
+		// typechecked, so enable browser globals here.
+		files: ['public/js/**/*.js'],
+		languageOptions: {
+			globals: {
+				...globals.browser,
+			},
+		},
+	},
+	{
 		// Client tree: forbid the Node-only data layer (CJS tree eleventy/lib/, the
 		// postgres driver, dotenv). See CLAUDE.md — the CJS and ESM module trees
 		// are separate. Eleventy data files use require(), which this rule does

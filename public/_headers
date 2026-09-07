@@ -1,5 +1,19 @@
 /*
   Cache-Control: public, max-age=0, must-revalidate
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'sha256-USrvrbIWmSDj20BbaEezP2mi6DV1F/ruo+pwuxvtLD0='; style-src 'self' 'unsafe-inline'; img-src 'self' https://a.espncdn.com; font-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: DENY
+  Strict-Transport-Security: max-age=31536000
+
+# Regenerating the script-src hash: it covers the only inline <script>, the
+# head-less theme-paint block in src/_includes/layouts/base.njk. After changing
+# that block, run a full build (`yarn build:eleventy`), then extract the block
+# content (the bytes between <script> and </script>) from _site/index.html and
+# hash it:
+#   node -e "const fs=require('fs'),c=require('crypto');const h=fs.readFileSync('_site/index.html','utf8');const m=h.match(/<script>([\s\S]*?)<\/script>/);console.log('sha256-'+c.createHash('sha256').update(m[1]).digest('base64'))"
+# img-src allowlist mirrors lib/logoHosts.ts (hosts enumerated from
+# `SELECT DISTINCT logo, logo_dark FROM team_names`).
 
 /assets/build/*
   Cache-Control: public, max-age=31536000, immutable

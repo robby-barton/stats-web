@@ -1,6 +1,7 @@
 import { createChart } from '@lib/teamChart';
 import { SportTeamData, Team } from '@lib/types';
 import { ERROR_IMAGES } from '@lib/constants';
+import { isAllowedLogoUrl } from '@lib/logoHosts';
 
 // --- Theme helpers ---
 
@@ -12,8 +13,9 @@ function getTheme(): string {
 
 function getImgSrc(mode: string, team: Team): string {
 	const errImg = ERROR_IMAGES[team.team_id % 3];
-	if (mode === 'dark') return team.logo_dark || errImg;
-	return team.logo || errImg;
+	const candidate = mode === 'dark' ? team.logo_dark : team.logo;
+	if (!candidate || !isAllowedLogoUrl(candidate)) return errImg;
+	return candidate;
 }
 
 function espnLoader(src: string, width: number): string {

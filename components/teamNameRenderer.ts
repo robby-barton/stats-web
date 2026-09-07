@@ -1,5 +1,6 @@
 import styles from '@components/teamName.module.css';
 import { ERROR_IMAGES } from '@lib/constants';
+import { isAllowedLogoUrl } from '@lib/logoHosts';
 import { Team } from '@lib/types';
 
 function getTheme(): string {
@@ -8,8 +9,9 @@ function getTheme(): string {
 
 function getImgSrc(mode: string, team: Team): string {
 	const errImg = ERROR_IMAGES[team.team_id % 3];
-	if (mode === 'dark') return team.logo_dark || errImg;
-	return team.logo || errImg;
+	const candidate = mode === 'dark' ? team.logo_dark : team.logo;
+	if (!candidate || !isAllowedLogoUrl(candidate)) return errImg;
+	return candidate;
 }
 
 function espnLoader(src: string, width: number): string {
