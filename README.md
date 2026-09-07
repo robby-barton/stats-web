@@ -1,17 +1,17 @@
 # stats-web
 
-Static site for college sports computer rankings. Built with Eleventy and React
-islands for client-side interactivity. Data is updated by a scheduler in
-[stats-go](https://github.com/robby-barton/stats-go).
+Static site for college sports computer rankings. Built with Eleventy and
+vanilla TypeScript islands for client-side interactivity. Data is written to
+PostgreSQL by [stats-go](https://github.com/robby-barton/stats-go).
 
 ## Sports
 
-- **CFB** (College Football) — FBS and FCS divisions
-- **CBB** (College Basketball) — D1
+- **NCAAF** (College Football) — FBS and FCS divisions
+- **NCAAM** (College Basketball) — D1
 
 Team pages aggregate ranking history across all sports and provide tabs to switch
 between them. Ranking links include a `#sport` hash (e.g.
-`/team/123#cbb`) so the correct tab opens by default.
+`/team/123#ncaam`) so the correct tab opens by default.
 
 ## Local Dev
 
@@ -48,9 +48,6 @@ yarn test
 
 Provide a `.env` file with `DATABASE_URL` or `DEV_DATABASE_URL` for build-time
 data.
-
-Note: `yarn build:11ty` uses a lightweight progress ticker (see
-`scripts/eleventy-progress.mjs`).
 
 ### Optional: build all years per division
 
