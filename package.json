@@ -35,7 +35,7 @@
     "@typescript-eslint/eslint-plugin": "^8.69.0",
     "@typescript-eslint/parser": "^8.69.0",
     "chokidar-cli": "^3.0.0",
-    "concurrently": "^8.2.2",
+    "concurrently": "^10.0.5",
     "dotenv": "^17.4.2",
     "eslint": "^9.13.0",
     "eslint-config-prettier": "^10.1.8",
