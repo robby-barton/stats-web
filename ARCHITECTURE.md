@@ -127,7 +127,6 @@ The theme toggle is implemented as vanilla JS in `base.njk` (not an island).
 
 ```
 src/_data/availableRankings.js ──> utils.availableRankings()
-src/_data/availableTeams.js    ──> utils.availableTeams()
 src/_data/rankingPaths.js      ──> utils.getRankingPathParams()
 src/_data/teamPaths.js         ──> utils.getTeamPathParams()
 src/_data/site.js              ──> { title, url } constants
