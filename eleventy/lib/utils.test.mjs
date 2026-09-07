@@ -8,6 +8,61 @@ beforeEach(() => {
 	delete process.env.ELEVENTY_ALL_YEARS;
 });
 
+describe('caching', () => {
+	function makeDb(callCounts) {
+		return {
+			availableRankingsDB: async () => {
+				callCounts.rankings += 1;
+				return [{ year: 2024, weeks: 5, postseason: 1 }];
+			},
+			availableTeamsDB: async () => {
+				callCounts.teams += 1;
+				return [{ team_id: 1, name: 'Alpha', logo: '', logo_dark: '' }];
+			},
+			getRankingsForYearDB: async () => [],
+			getRankingsForDivisionDB: async () => [],
+			getAllTeamRankingsDB: async () => [],
+			allGamesDB: async () => [],
+		};
+	}
+
+	it('shares the cache between two sequential calls (one underlying fetch)', async () => {
+		const utils = await loadUtils();
+		const calls = { rankings: 0, teams: 0 };
+		utils.setDb(makeDb(calls));
+
+		const first = await utils.availableTeams('ncaaf');
+		const second = await utils.availableTeams('ncaaf');
+
+		expect(calls.teams).toBe(1);
+		expect(second).toBe(first);
+	});
+
+	it('shares one in-flight promise between concurrent calls (one underlying fetch)', async () => {
+		const utils = await loadUtils();
+		const calls = { rankings: 0, teams: 0 };
+		utils.setDb(makeDb(calls));
+
+		const [a, b] = await Promise.all([utils.availableRankings('ncaaf'), utils.availableRankings('ncaaf')]);
+
+		expect(calls.rankings).toBe(1);
+		expect(b).toBe(a);
+	});
+
+	it('clearCaches forces a refetch on the next call', async () => {
+		const utils = await loadUtils();
+		const calls = { rankings: 0, teams: 0 };
+		utils.setDb(makeDb(calls));
+
+		await utils.availableTeams('ncaaf');
+		expect(calls.teams).toBe(1);
+
+		utils.clearCaches();
+		await utils.availableTeams('ncaaf');
+		expect(calls.teams).toBe(2);
+	});
+});
+
 describe('rankings', () => {
 	it('builds rankings per year', async () => {
 		const utils = await loadUtils();

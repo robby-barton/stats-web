@@ -3,17 +3,31 @@ const postgres = require('postgres');
 require('dotenv').config();
 
 function getDatabaseUrl() {
-	return process.env.DATABASE_URL || process.env.DEV_DATABASE_URL;
+	const url = process.env.DATABASE_URL || process.env.DEV_DATABASE_URL;
+	if (!url) {
+		throw new Error(
+			'Missing database URL: set DATABASE_URL (or DEV_DATABASE_URL for local development) in the environment or .env',
+		);
+	}
+	return url;
 }
 
-const sql = postgres(getDatabaseUrl(), {
-	idle_timeout: 20,
-	max_lifetime: 60 * 30,
-	prepare: false,
-});
+// Lazily created on first query so importing this module (e.g. from tests that
+// use setDb) does not require a database URL.
+let sql;
+function getSql() {
+	if (!sql) {
+		sql = postgres(getDatabaseUrl(), {
+			idle_timeout: 20,
+			max_lifetime: 60 * 30,
+			prepare: false,
+		});
+	}
+	return sql;
+}
 
 async function availableRankingsDB(sport) {
-	const rankingObjects = await sql`
+	const rankingObjects = await getSql()`
 		select
 			year,
 			max(case when postseason = 0 then week else 0 end) as weeks,
@@ -31,7 +45,7 @@ async function availableRankingsDB(sport) {
 }
 
 async function availableTeamsDB(sport) {
-	const results = await sql`
+	const results = await getSql()`
 		select
 			team_id,
 			name,
@@ -49,7 +63,7 @@ async function availableTeamsDB(sport) {
 
 async function getRankingDB(sport, fbs, year, week) {
 	const isFinal = week.toLowerCase() === 'final';
-	const results = await sql`
+	const results = await getSql()`
 		select
 			team_id,
 			conf,
@@ -74,7 +88,7 @@ async function getRankingDB(sport, fbs, year, week) {
 }
 
 async function getRankingsForYearDB(sport, fbs, year) {
-	const results = await sql`
+	const results = await getSql()`
 		select
 			team_id,
 			conf,
@@ -102,7 +116,7 @@ async function getRankingsForYearDB(sport, fbs, year) {
 }
 
 async function getRankingsForDivisionDB(sport, fbs) {
-	const results = await sql`
+	const results = await getSql()`
 		select
 			team_id,
 			conf,
@@ -131,7 +145,7 @@ async function getRankingsForDivisionDB(sport, fbs) {
 }
 
 async function getTeamRankingsDB(sport, team) {
-	const results = await sql`
+	const results = await getSql()`
 		select
 			team_id,
 			final_rank,
@@ -152,7 +166,7 @@ async function getTeamRankingsDB(sport, team) {
 }
 
 async function getAllTeamRankingsDB(sport) {
-	const results = await sql`
+	const results = await getSql()`
 		select
 			team_id,
 			final_rank,
@@ -173,7 +187,7 @@ async function getAllTeamRankingsDB(sport) {
 }
 
 async function getRankedTeamsDB(sport) {
-	const results = await sql`
+	const results = await getSql()`
 		select
 			distinct team_id
 		from team_week_results
@@ -185,7 +199,7 @@ async function getRankedTeamsDB(sport) {
 }
 
 async function allGamesDB(sport) {
-	const results = await sql`
+	const results = await getSql()`
 		with gamesList as (
 			(
 				select
